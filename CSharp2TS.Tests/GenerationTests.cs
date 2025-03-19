@@ -24,13 +24,6 @@ namespace CSharp2TS.Tests {
             generator.Run(options);
         }
 
-        [TearDown]
-        public void TearDown() {
-            if (Directory.Exists(options.OutputFolder)) {
-                //Directory.Delete(options.OutputFolder, true);
-            }
-        }
-
         [Test]
         public void Generation_TestClass() {
             // Arrange
