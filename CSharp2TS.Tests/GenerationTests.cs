@@ -27,7 +27,7 @@ namespace CSharp2TS.Tests {
         [TearDown]
         public void TearDown() {
             if (Directory.Exists(options.OutputFolder)) {
-                Directory.Delete(options.OutputFolder, true);
+                //Directory.Delete(options.OutputFolder, true);
             }
         }
 
@@ -58,6 +58,29 @@ interface TestClass {
 export default TestClass;
 ";
 
+            Assert.That(contents, Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void Generation_TestEnum() {
+            // Arrange
+            string file = Path.Combine(options.OutputFolder, "TestEnum.ts");
+
+            if (!File.Exists(file)) {
+                Assert.Fail("File does not exist.");
+            }
+
+            string contents = File.ReadAllText(Path.Combine(options.OutputFolder, "TestEnum.ts"));
+
+            // Assert
+            string expected = @"enum TestEnum {
+  Value1 = 1,
+  Value2 = 2,
+  Value3 = 3,
+}
+
+export default TestEnum;
+";
 
             Assert.That(contents, Is.EqualTo(expected));
         }

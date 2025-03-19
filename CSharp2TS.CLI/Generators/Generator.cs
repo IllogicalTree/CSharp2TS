@@ -15,19 +15,34 @@ namespace CSharp2TS.CLI.Generators {
             foreach (string assemblyPath in Directory.GetFiles(options.AssemblyFolder, options.AssemblyFileFilter ?? "*.dll")) {
                 Assembly assembly = Assembly.LoadFrom(assemblyPath);
 
-                var types = GetTypesByAttribute(assembly);
-
-                foreach (Type type in types) {
-                    var generator = new TSInterfaceGenerator(type);
-                    string output = generator.Generate();
-                    File.WriteAllText(Path.Combine(options.OutputFolder, $"{type.Name}.ts"), output);
-                }
+                GenerateInterfaces(assembly, options);
+                GenerateEnums(assembly, options);
             }
         }
 
-        private IEnumerable<Type> GetTypesByAttribute(Assembly assembly) {
+        private void GenerateInterfaces(Assembly assembly, Options options) {
+            var types = GetTypesByAttribute(assembly, typeof(TSInterfaceAttribute));
+
+            foreach (Type type in types) {
+                var generator = new TSInterfaceGenerator(type);
+                string output = generator.Generate();
+                File.WriteAllText(Path.Combine(options.OutputFolder, $"{type.Name}.ts"), output);
+            }
+        }
+
+        private void GenerateEnums(Assembly assembly, Options options) {
+            var types = GetTypesByAttribute(assembly, typeof(TSEnumAttribute));
+
+            foreach (Type type in types) {
+                var generator = new TSEnumGenerator(type);
+                string output = generator.Generate();
+                File.WriteAllText(Path.Combine(options.OutputFolder, $"{type.Name}.ts"), output);
+            }
+        }
+
+        private IEnumerable<Type> GetTypesByAttribute(Assembly assembly, Type attributeType) {
             foreach (Type type in assembly.GetTypes()) {
-                if (type.GetCustomAttributes(typeof(TSInterfaceAttribute), false).Length > 0) {
+                if (type.GetCustomAttributes(attributeType, false).Length > 0) {
                     yield return type;
                 }
             }
