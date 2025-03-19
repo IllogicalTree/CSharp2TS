@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CSharp2TS.CLI\CSharp2TS.CLI.csproj" />
-    <ProjectReference Include="..\CSharp2TS.Tests.Assembly\CSharp2TS.Tests.Assembly.csproj" />
     <ProjectReference Include="..\CSharp2TS\CSharp2TS.csproj" />
   </ItemGroup>
 

@@ -15,7 +15,7 @@ namespace CSharp2TS.Tests {
             options = new Options {
                 OutputFolder = outputFolder,
                 AssemblyFolder = assemblyFolder,
-                AssemblyFileFilter = "CSharp2TS.Tests.Assembly.dll"
+                AssemblyFileFilter = "CSharp2TS.Tests.dll"
             };
 
             Directory.CreateDirectory(outputFolder);
