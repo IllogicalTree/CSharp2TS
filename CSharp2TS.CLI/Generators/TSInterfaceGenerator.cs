@@ -25,11 +25,11 @@ namespace CSharp2TS.CLI.Generators {
             foreach (PropertyInfo property in properties) {
                 var tsType = GetTSPropertyType(property.PropertyType);
 
-                if (tsType.IsObject && tsType.Name != type.Name) {
-                    imports.Add(tsType.Name);
+                if (tsType.IsObject && tsType.TSType != type.Name) {
+                    imports.Add(tsType.TSType);
                 }
 
-                fields.Add(new TSProperty(property.Name, tsType.Name));
+                fields.Add(new TSProperty(property.Name, tsType.TSTypeFull));
             }
         }
 

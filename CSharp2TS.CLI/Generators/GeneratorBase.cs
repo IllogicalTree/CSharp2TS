@@ -1,4 +1,6 @@
-﻿namespace CSharp2TS.CLI.Generators {
+﻿using System.Collections;
+
+namespace CSharp2TS.CLI.Generators {
     public abstract class GeneratorBase {
         private readonly Type[] stringTypes = { typeof(char), typeof(string), typeof(Guid) };
         private readonly Type[] numberTypes = {
@@ -8,28 +10,35 @@
             typeof(double), typeof(decimal)
         };
 
-        protected (string Name, bool IsObject) GetTSPropertyType(Type type) {
-            string result = string.Empty;
+        protected TSPropertyGenerationInfo GetTSPropertyType(Type type) {
+            string tsType = string.Empty;
 
             bool isCollection = CheckCollectionType(ref type);
+            bool isNullable = IsNullable(ref type);
             bool isObject = false;
 
             if (stringTypes.Contains(type)) {
-                result = "string";
+                tsType = "string";
             } else if (numberTypes.Contains(type)) {
-                result = "number";
+                tsType = "number";
             } else if (type == typeof(bool)) {
-                result = "boolean";
+                tsType = "boolean";
             } else {
-                result = type.Name;
+                tsType = type.Name;
                 isObject = true;
             }
 
+            string rawTsType = tsType;
+
             if (isCollection) {
-                result += "[]";
+                tsType += "[]";
             }
 
-            return (result, isObject);
+            if (isNullable) {
+                tsType += " | null";
+            }
+
+            return new TSPropertyGenerationInfo(rawTsType, tsType, isObject);
         }
 
         private bool CheckCollectionType(ref Type type) {
@@ -42,8 +51,8 @@
                 return false;
             }
 
-            if (!typeof(IEnumerable<object>).IsAssignableFrom(type) && type.GetGenericArguments().Length > 1) {
-                throw new Exception($"The generic type {type.FullName} must implement IEnumerable<T> and must have no more than 1 generic argument.");
+            if (!typeof(IEnumerable).IsAssignableFrom(type)) {
+                return false;
             }
 
             type = type.GetGenericArguments()[0];
@@ -51,8 +60,19 @@
             return true;
         }
 
+        private bool IsNullable(ref Type type) {
+            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>)) {
+                type = type.GetGenericArguments()[0];
+                return true;
+            }
+
+            return false;
+        }
+
         protected string ToCamelCase(string value) {
             return char.ToLowerInvariant(value[0]) + value.Substring(1);
         }
+
+        public record TSPropertyGenerationInfo(string TSType, string TSTypeFull, bool IsObject);
     }
 }

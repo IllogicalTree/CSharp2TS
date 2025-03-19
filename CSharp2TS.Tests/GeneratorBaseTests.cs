@@ -3,7 +3,7 @@ using CSharp2TS.CLI.Generators;
 namespace CSharp2TS.CLI.Tests.Generators {
     public class GeneratorBaseTests {
         private class TestGenerator : GeneratorBase {
-            public (string Name, bool IsObject) TestGetTSPropertyType(Type type) => GetTSPropertyType(type);
+            public TSPropertyGenerationInfo TestGetTSPropertyType(Type type) => GetTSPropertyType(type);
         }
 
         private TestGenerator generator;
@@ -32,25 +32,33 @@ namespace CSharp2TS.CLI.Tests.Generators {
         [TestCase(typeof(object), "Object", true)]
         public void GetTSPropertyType_ShouldReturnExpectedType(Type inputType, string name, bool isObject) {
             var result = generator.TestGetTSPropertyType(inputType);
-            Assert.That(result.Name, Is.EqualTo(name));
+            Assert.That(result.TSType, Is.EqualTo(name));
+            Assert.That(result.TSTypeFull, Is.EqualTo(name));
             Assert.That(result.IsObject, Is.EqualTo(isObject));
         }
 
         [Test]
-        [TestCase(typeof(List<string>), "string[]", false)]
-        [TestCase(typeof(bool[]), "boolean[]", false)]
-        [TestCase(typeof(IEnumerable<int>), "number[]", false)]
-        [TestCase(typeof(ICollection<Guid>), "string[]", false)]
-        [TestCase(typeof(ICollection<Object>), "Object[]", true)]
-        public void GetTSPropertyType_ShouldReturnExpectedTypeForCollections(Type inputType, string name, bool isObject) {
+        [TestCase(typeof(List<string>), "string", "string[]", false)]
+        [TestCase(typeof(bool[]), "boolean", "boolean[]", false)]
+        [TestCase(typeof(IEnumerable<int>), "number", "number[]", false)]
+        [TestCase(typeof(ICollection<Guid>), "string", "string[]", false)]
+        [TestCase(typeof(ICollection<Object>), "Object", "Object[]", true)]
+        public void GetTSPropertyType_ShouldReturnExpectedTypeForCollections(Type inputType, string tsType, string tsTypeFull, bool isObject) {
             var result = generator.TestGetTSPropertyType(inputType);
-            Assert.That(result.Name, Is.EqualTo(name));
+            Assert.That(result.TSType, Is.EqualTo(tsType));
+            Assert.That(result.TSTypeFull, Is.EqualTo(tsTypeFull));
             Assert.That(result.IsObject, Is.EqualTo(isObject));
         }
 
         [Test]
-        public void GetTSPropertyType_ShouldThrowExceptionForInvalidGenericType() {
-            Assert.Throws<Exception>(() => generator.TestGetTSPropertyType(typeof(Dictionary<int, string>)));
+        [TestCase(typeof(bool?), "boolean", "boolean | null", false)]
+        [TestCase(typeof(int?), "number", "number | null", false)]
+        [TestCase(typeof(Guid?), "string", "string | null", false)]
+        public void GetTSPropertyType_ShouldReturnExpectedTypeForNullables(Type inputType, string tsType, string tsTypeFull, bool isObject) {
+            var result = generator.TestGetTSPropertyType(inputType);
+            Assert.That(result.TSType, Is.EqualTo(tsType));
+            Assert.That(result.TSTypeFull, Is.EqualTo(tsTypeFull));
+            Assert.That(result.IsObject, Is.EqualTo(isObject));
         }
     }
 }

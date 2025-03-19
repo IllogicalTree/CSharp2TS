@@ -27,7 +27,7 @@ namespace CSharp2TS.Tests {
         [TearDown]
         public void TearDown() {
             if (Directory.Exists(options.OutputFolder)) {
-                //Directory.Delete(options.OutputFolder, true);
+                Directory.Delete(options.OutputFolder, true);
             }
         }
 
@@ -49,7 +49,9 @@ interface TestClass {
   thisIsANumber: number;
   thisIsMaybeAString: string;
   thisIsAGuid: string;
+  thisIsMaybeAGuid: string | null;
   thisIsAnObjectArray: Object[];
+  thisIsAStringList: string[];
   nestedObject: TestClass;
 }
 
@@ -58,7 +60,6 @@ export default TestClass;
 
 
             Assert.That(contents, Is.EqualTo(expected));
-
         }
     }
 }
