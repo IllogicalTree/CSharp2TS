@@ -8,9 +8,11 @@ namespace CSharp2TS.CLI.Generators {
                 throw new InvalidOperationException("Assembly folder does not exist.");
             }
 
-            if (!Directory.Exists(options.OutputFolder)) {
-                Directory.CreateDirectory(options.OutputFolder);
+            if (Directory.Exists(options.OutputFolder)) {
+                Directory.Delete(options.OutputFolder, true);
             }
+
+            Directory.CreateDirectory(options.OutputFolder);
 
             foreach (string assemblyPath in Directory.GetFiles(options.AssemblyFolder, options.AssemblyFileFilter ?? "*.dll")) {
                 Assembly assembly = Assembly.LoadFrom(assemblyPath);
@@ -24,9 +26,7 @@ namespace CSharp2TS.CLI.Generators {
             var types = GetTypesByAttribute(assembly, typeof(TSInterfaceAttribute));
 
             foreach (Type type in types) {
-                var generator = new TSInterfaceGenerator(type);
-                string output = generator.Generate();
-                File.WriteAllText(Path.Combine(options.OutputFolder, $"{type.Name}.ts"), output);
+                GenerateFile(options.OutputFolder, new TSInterfaceGenerator(type));
             }
         }
 
@@ -34,9 +34,7 @@ namespace CSharp2TS.CLI.Generators {
             var types = GetTypesByAttribute(assembly, typeof(TSEnumAttribute));
 
             foreach (Type type in types) {
-                var generator = new TSEnumGenerator(type);
-                string output = generator.Generate();
-                File.WriteAllText(Path.Combine(options.OutputFolder, $"{type.Name}.ts"), output);
+                GenerateFile(options.OutputFolder, new TSEnumGenerator(type));
             }
         }
 
@@ -46,6 +44,17 @@ namespace CSharp2TS.CLI.Generators {
                     yield return type;
                 }
             }
+        }
+
+        private void GenerateFile(string outputFolder, GeneratorBase generator) {
+            string output = generator.Generate();
+            string file = Path.Combine(outputFolder, $"{generator.Type.Name}.ts");
+
+            if (File.Exists(file)) {
+                throw new InvalidOperationException($"File {file} already exists.");
+            }
+
+            File.WriteAllText(file, output);
         }
     }
 }

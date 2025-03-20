@@ -4,6 +4,12 @@ namespace CSharp2TS.CLI.Tests.Generators {
     public class GeneratorBaseTests {
         private class TestGenerator : GeneratorBase {
             public TSPropertyGenerationInfo TestGetTSPropertyType(Type type) => GetTSPropertyType(type);
+
+            public TestGenerator() : base(typeof(object)) { }
+
+            public override string Generate() {
+                throw new NotImplementedException();
+            }
         }
 
         private TestGenerator generator;

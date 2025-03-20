@@ -10,6 +10,15 @@ namespace CSharp2TS.CLI.Generators {
             typeof(double), typeof(decimal)
         };
 
+        public Type Type { get; }
+
+        public abstract string Generate();
+
+        protected GeneratorBase(Type type) {
+            this.Type = type;
+        }
+
+
         protected TSPropertyGenerationInfo GetTSPropertyType(Type type) {
             string tsType = string.Empty;
 

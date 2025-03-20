@@ -2,22 +2,20 @@
 
 namespace CSharp2TS.CLI.Generators {
     public class TSEnumGenerator : GeneratorBase {
-        private Type type;
         private IList<TSProperty> items;
 
-        public TSEnumGenerator(Type type) {
-            this.type = type;
+        public TSEnumGenerator(Type type) : base(type) {
             items = new List<TSProperty>();
         }
 
-        public string Generate() {
+        public override string Generate() {
             ParseTypes();
 
             return BuildTsFile();
         }
 
         private void ParseTypes() {
-            var enumItems = type.GetFields();
+            var enumItems = Type.GetFields();
 
             foreach (var item in enumItems) {
                 if (item.IsSpecialName) {
@@ -33,7 +31,7 @@ namespace CSharp2TS.CLI.Generators {
         private string BuildTsFile() {
             StringBuilder builder = new StringBuilder();
 
-            builder.AppendLine($"enum {type.Name} {{");
+            builder.AppendLine($"enum {Type.Name} {{");
 
             foreach (var field in items) {
                 builder.AppendLine($"  {field.Name} = {field.Number},");
@@ -41,7 +39,7 @@ namespace CSharp2TS.CLI.Generators {
 
             builder.AppendLine("}");
             builder.AppendLine();
-            builder.AppendLine($"export default {type.Name};");
+            builder.AppendLine($"export default {Type.Name};");
 
             return builder.ToString();
         }

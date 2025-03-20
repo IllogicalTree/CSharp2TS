@@ -3,29 +3,27 @@ using System.Text;
 
 namespace CSharp2TS.CLI.Generators {
     public class TSInterfaceGenerator : GeneratorBase {
-        private Type type;
         private IList<string> imports;
         private IList<TSProperty> fields;
 
-        public TSInterfaceGenerator(Type type) {
-            this.type = type;
+        public TSInterfaceGenerator(Type type) : base(type) {
             imports = new List<string>();
             fields = new List<TSProperty>();
         }
 
-        public string Generate() {
+        public override string Generate() {
             ParseTypes();
 
             return BuildTsFile();
         }
 
         private void ParseTypes() {
-            var properties = type.GetProperties();
+            var properties = Type.GetProperties();
 
             foreach (PropertyInfo property in properties) {
                 var tsType = GetTSPropertyType(property.PropertyType);
 
-                if (tsType.IsObject && tsType.TSType != type.Name) {
+                if (tsType.IsObject && tsType.TSType != Type.Name) {
                     imports.Add(tsType.TSType);
                 }
 
@@ -44,7 +42,7 @@ namespace CSharp2TS.CLI.Generators {
                 builder.AppendLine();
             }
 
-            builder.AppendLine($"interface {type.Name} {{");
+            builder.AppendLine($"interface {Type.Name} {{");
 
             foreach (var field in fields) {
                 builder.AppendLine($"  {ToCamelCase(field.Name)}: {field.Type};");
@@ -52,7 +50,7 @@ namespace CSharp2TS.CLI.Generators {
 
             builder.AppendLine("}");
             builder.AppendLine();
-            builder.AppendLine($"export default {type.Name};");
+            builder.AppendLine($"export default {Type.Name};");
 
             return builder.ToString();
         }
