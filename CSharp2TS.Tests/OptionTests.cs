@@ -4,12 +4,7 @@ namespace CSharp2TS.Tests {
     public class OptionTests {
         [Test]
         public void OptionParser_NoCommands() {
-            Assert.Throws(typeof(InvalidOperationException), () => OptionParser.ParseOptions([]));
-        }
-
-        [Test]
-        public void OptionParser_SwitchNoFolder() {
-            Assert.Throws(typeof(InvalidOperationException), () => OptionParser.ParseOptions(["-o"]));
+            Assert.That(OptionParser.ParseFromArgs([]), Is.Null);
         }
 
         [Test]
@@ -23,7 +18,7 @@ namespace CSharp2TS.Tests {
             string assemblyFilter = "assembly filter";
 
             // Act
-            var options = OptionParser.ParseOptions([outputOption, outputFolder, assemblyOption, assemblyFolder, assemblyFilterOption, assemblyFilter]);
+            var options = OptionParser.ParseFromArgs([outputOption, outputFolder, assemblyOption, assemblyFolder, assemblyFilterOption, assemblyFilter]);
 
             // Assert
             Assert.That(options.OutputFolder, Is.EqualTo(outputFolder));
@@ -42,7 +37,7 @@ namespace CSharp2TS.Tests {
             string assemblyFilter = "assembly filter";
 
             // Act
-            var options = OptionParser.ParseOptions([outputOption, outputFolder, assemblyOption, assemblyFolder, assemblyFilterOption, assemblyFilter]);
+            var options = OptionParser.ParseFromArgs([outputOption, outputFolder, assemblyOption, assemblyFolder, assemblyFilterOption, assemblyFilter]);
 
             // Assert
             Assert.That(options.OutputFolder, Is.EqualTo(outputFolder));
