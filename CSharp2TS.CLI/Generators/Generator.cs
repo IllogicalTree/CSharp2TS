@@ -3,7 +3,13 @@ using CSharp2TS.Attributes;
 
 namespace CSharp2TS.CLI.Generators {
     public class Generator {
-        public void Run(Options options) {
+        private readonly Options options;
+
+        public Generator(Options options) {
+            this.options = options;
+        }
+
+        public void Run() {
             if (!Directory.Exists(options.AssemblyFolder)) {
                 throw new InvalidOperationException("Assembly folder does not exist.");
             }

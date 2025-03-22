@@ -3,7 +3,6 @@
 namespace CSharp2TS.CLI {
     public class Program {
         private static void Main(string[] args) {
-            Generator generator = new Generator();
             Options? options;
 
             if (args.Length == 1) {
@@ -19,7 +18,8 @@ namespace CSharp2TS.CLI {
                 return;
             }
 
-            generator.Run(options!);
+            Generator generator = new Generator(options!);
+            generator.Run();
         }
     }
 }

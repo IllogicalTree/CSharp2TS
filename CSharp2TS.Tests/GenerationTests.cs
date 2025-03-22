@@ -20,8 +20,8 @@ namespace CSharp2TS.Tests {
 
             Directory.CreateDirectory(outputFolder);
 
-            generator = new Generator();
-            generator.Run(options);
+            generator = new Generator(options);
+            generator.Run();
         }
 
         [Test]
