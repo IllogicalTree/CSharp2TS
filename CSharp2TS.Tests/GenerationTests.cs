@@ -1,6 +1,6 @@
-﻿using CSharp2TS.CLI;
+﻿using System.Reflection;
+using CSharp2TS.CLI;
 using CSharp2TS.CLI.Generators;
-using System.Reflection;
 
 namespace CSharp2TS.Tests {
     public class GenerationTests {

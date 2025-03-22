@@ -1,6 +1,6 @@
 ﻿using CSharp2TS.Attributes;
 
-namespace CSharp2TS.Tests {
+namespace CSharp2TS.Tests.Stubs {
     [TSEnum]
     public enum TestEnum {
         Value1 = 1,

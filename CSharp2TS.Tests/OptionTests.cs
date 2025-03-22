@@ -18,7 +18,7 @@ namespace CSharp2TS.Tests {
             string assemblyFilter = "assembly filter";
 
             // Act
-            var options = OptionParser.ParseFromArgs([outputOption, outputFolder, assemblyOption, assemblyFolder, assemblyFilterOption, assemblyFilter]);
+            var options = OptionParser.ParseFromArgs([outputOption, outputFolder, assemblyOption, assemblyFolder, assemblyFilterOption, assemblyFilter])!;
 
             // Assert
             Assert.That(options.OutputFolder, Is.EqualTo(outputFolder));
@@ -37,7 +37,7 @@ namespace CSharp2TS.Tests {
             string assemblyFilter = "assembly filter";
 
             // Act
-            var options = OptionParser.ParseFromArgs([outputOption, outputFolder, assemblyOption, assemblyFolder, assemblyFilterOption, assemblyFilter]);
+            var options = OptionParser.ParseFromArgs([outputOption, outputFolder, assemblyOption, assemblyFolder, assemblyFilterOption, assemblyFilter])!;
 
             // Assert
             Assert.That(options.OutputFolder, Is.EqualTo(outputFolder));
