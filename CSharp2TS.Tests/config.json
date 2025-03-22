@@ -1,0 +1,5 @@
+﻿{
+    "outputFolder": "output",
+    "assemblyFolder": "assembly",
+    "assemblyFileFilter": "*.dll"
+}

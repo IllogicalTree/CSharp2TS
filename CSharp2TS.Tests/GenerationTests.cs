@@ -27,13 +27,13 @@ namespace CSharp2TS.Tests {
         [Test]
         public void Generation_TestClass() {
             // Arrange
-            string file = Path.Combine(options.OutputFolder, "TestClass.ts");
+            string file = Path.Combine(options.OutputFolder!, "TestClass.ts");
 
             if (!File.Exists(file)) {
                 Assert.Fail("File does not exist.");
             }
 
-            string contents = File.ReadAllText(Path.Combine(options.OutputFolder, "TestClass.ts"));
+            string contents = File.ReadAllText(Path.Combine(options.OutputFolder!, "TestClass.ts"));
 
             // Assert
             string expected = @"import Object from './Object';
@@ -57,13 +57,13 @@ export default TestClass;
         [Test]
         public void Generation_TestEnum() {
             // Arrange
-            string file = Path.Combine(options.OutputFolder, "TestEnum.ts");
+            string file = Path.Combine(options.OutputFolder!, "TestEnum.ts");
 
             if (!File.Exists(file)) {
                 Assert.Fail("File does not exist.");
             }
 
-            string contents = File.ReadAllText(Path.Combine(options.OutputFolder, "TestEnum.ts"));
+            string contents = File.ReadAllText(Path.Combine(options.OutputFolder!, "TestEnum.ts"));
 
             // Assert
             string expected = @"enum TestEnum {

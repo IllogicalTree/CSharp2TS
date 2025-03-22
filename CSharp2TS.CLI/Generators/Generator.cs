@@ -1,5 +1,5 @@
-﻿using CSharp2TS.Attributes;
-using System.Reflection;
+﻿using System.Reflection;
+using CSharp2TS.Attributes;
 
 namespace CSharp2TS.CLI.Generators {
     public class Generator {
@@ -12,7 +12,7 @@ namespace CSharp2TS.CLI.Generators {
                 Directory.Delete(options.OutputFolder, true);
             }
 
-            Directory.CreateDirectory(options.OutputFolder);
+            Directory.CreateDirectory(options.OutputFolder!);
 
             foreach (string assemblyPath in Directory.GetFiles(options.AssemblyFolder, options.AssemblyFileFilter ?? "*.dll")) {
                 Assembly assembly = Assembly.LoadFrom(assemblyPath);
@@ -26,7 +26,7 @@ namespace CSharp2TS.CLI.Generators {
             var types = GetTypesByAttribute(assembly, typeof(TSInterfaceAttribute));
 
             foreach (Type type in types) {
-                GenerateFile(options.OutputFolder, new TSInterfaceGenerator(type));
+                GenerateFile(options.OutputFolder!, new TSInterfaceGenerator(type));
             }
         }
 
@@ -34,7 +34,7 @@ namespace CSharp2TS.CLI.Generators {
             var types = GetTypesByAttribute(assembly, typeof(TSEnumAttribute));
 
             foreach (Type type in types) {
-                GenerateFile(options.OutputFolder, new TSEnumGenerator(type));
+                GenerateFile(options.OutputFolder!, new TSEnumGenerator(type));
             }
         }
 

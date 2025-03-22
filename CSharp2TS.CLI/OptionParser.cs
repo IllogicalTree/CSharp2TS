@@ -20,7 +20,9 @@ namespace CSharp2TS.CLI {
             }
 
             using (var stream = File.OpenRead(optionsPath)) {
-                return JsonSerializer.Deserialize<Options>(stream);
+                return JsonSerializer.Deserialize<Options>(stream, new JsonSerializerOptions {
+                    PropertyNameCaseInsensitive = true,
+                });
             }
         }
 
