@@ -1,6 +1,6 @@
 using CSharp2TS.CLI.Generators;
 
-namespace CSharp2TS.CLI.Tests.Generators {
+namespace CSharp2TS.Tests {
     public class GeneratorBaseTests {
         private class TestGenerator : GeneratorBase {
             public TSPropertyGenerationInfo TestGetTSPropertyType(Type type) => GetTSPropertyType(type);
