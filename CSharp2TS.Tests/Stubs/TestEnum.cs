@@ -1,4 +1,4 @@
-﻿using CSharp2TS.Attributes;
+﻿using CSharp2TS.Core.Attributes;
 
 namespace CSharp2TS.Tests.Stubs {
     [TSEnum]
