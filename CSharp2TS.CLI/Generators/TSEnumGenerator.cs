@@ -31,6 +31,9 @@ namespace CSharp2TS.CLI.Generators {
         private string BuildTsFile() {
             StringBuilder builder = new StringBuilder();
 
+            builder.AppendLine($"// Auto-generated from {Type.Name}.cs");
+            builder.AppendLine();
+
             builder.AppendLine($"enum {Type.Name} {{");
 
             foreach (var field in items) {

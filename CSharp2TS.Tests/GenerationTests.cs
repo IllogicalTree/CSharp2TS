@@ -36,7 +36,9 @@ namespace CSharp2TS.Tests {
             string contents = File.ReadAllText(Path.Combine(options.OutputFolder!, "TestClass.ts"));
 
             // Assert
-            string expected = @"import Object from './Object';
+            string expected = @"// Auto-generated from TestClass.cs
+
+import Object from './Object';
 import TestClassWithFolder from './Models/TestClassWithFolder';
 import TestEnumWithFolder from './Enums/TestEnumWithFolder';
 
@@ -70,7 +72,9 @@ export default TestClass;
             string contents = File.ReadAllText(Path.Combine(options.OutputFolder!, "TestEnum.ts"));
 
             // Assert
-            string expected = @"enum TestEnum {
+            string expected = @"// Auto-generated from TestEnum.cs
+
+enum TestEnum {
   Value1 = 1,
   Value2 = 2,
   Value3 = 3,

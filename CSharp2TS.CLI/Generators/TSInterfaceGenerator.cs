@@ -49,6 +49,9 @@ namespace CSharp2TS.CLI.Generators {
         private string BuildTsFile() {
             StringBuilder builder = new StringBuilder();
 
+            builder.AppendLine($"// Auto-generated from {Type.Name}.cs");
+            builder.AppendLine();
+
             foreach (var import in imports) {
                 builder.AppendLine($"import {import.Value.Name} from '{import.Value.Path}';");
             }
