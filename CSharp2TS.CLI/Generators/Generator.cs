@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using CSharp2TS.Attributes;
+using CSharp2TS.Core.Attributes;
 
 namespace CSharp2TS.CLI.Generators {
     public class Generator {

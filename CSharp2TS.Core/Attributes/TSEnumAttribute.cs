@@ -1,5 +1,5 @@
-﻿namespace CSharp2TS.Attributes {
+﻿namespace CSharp2TS.Core.Attributes {
     [AttributeUsage(AttributeTargets.Enum, AllowMultiple = false, Inherited = false)]
-    public class TSEnumAttribute : Attribute {
+    public class TSEnumAttribute : TSAttributeBase {
     }
 }
