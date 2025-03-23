@@ -46,7 +46,7 @@ namespace CSharp2TS.CLI.Generators {
 
         private IEnumerable<Type> GetTypesByAttribute(Assembly assembly, Type attributeType) {
             foreach (Type type in assembly.GetTypes()) {
-                if (type.GetCustomAttributes(attributeType, false).Length > 0) {
+                if (type.GetCustomAttribute(attributeType, false) != null) {
                     yield return type;
                 }
             }
@@ -54,7 +54,13 @@ namespace CSharp2TS.CLI.Generators {
 
         private void GenerateFile(string outputFolder, GeneratorBase generator) {
             string output = generator.Generate();
-            string file = Path.Combine(outputFolder, $"{generator.Type.Name}.ts");
+            string folder = Path.Combine(outputFolder, generator.FolderLocation ?? string.Empty);
+
+            if (!Directory.Exists(folder)) {
+                Directory.CreateDirectory(folder);
+            }
+
+            string file = Path.Combine(folder, $"{generator.Type.Name}.ts");
 
             if (File.Exists(file)) {
                 throw new InvalidOperationException($"File {file} already exists.");

@@ -1,4 +1,6 @@
 ﻿using System.Collections;
+using System.Reflection;
+using CSharp2TS.Core.Attributes;
 
 namespace CSharp2TS.CLI.Generators {
     public abstract class GeneratorBase {
@@ -13,10 +15,12 @@ namespace CSharp2TS.CLI.Generators {
 
         public Type Type { get; }
 
+        public string? FolderLocation => Type.GetCustomAttribute<TSAttributeBase>()?.Folder;
+
         public abstract string Generate();
 
         protected GeneratorBase(Type type) {
-            this.Type = type;
+            Type = type;
         }
 
 
@@ -50,7 +54,7 @@ namespace CSharp2TS.CLI.Generators {
                 tsType += " | null";
             }
 
-            return new TSPropertyGenerationInfo(rawTsType, tsType, isObject);
+            return new TSPropertyGenerationInfo(type, rawTsType, tsType, isObject);
         }
 
         private bool CheckCollectionType(ref Type type) {
@@ -85,6 +89,6 @@ namespace CSharp2TS.CLI.Generators {
             return char.ToLowerInvariant(value[0]) + value.Substring(1);
         }
 
-        public record TSPropertyGenerationInfo(string TSType, string TSTypeFull, bool IsObject);
+        public record TSPropertyGenerationInfo(Type Type, string TSType, string TSTypeFull, bool IsObject);
     }
 }

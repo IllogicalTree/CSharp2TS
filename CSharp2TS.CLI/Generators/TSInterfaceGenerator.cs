@@ -1,13 +1,14 @@
 ﻿using System.Reflection;
 using System.Text;
+using CSharp2TS.Core.Attributes;
 
 namespace CSharp2TS.CLI.Generators {
     public class TSInterfaceGenerator : GeneratorBase {
-        private HashSet<string> imports;
+        private IDictionary<Type, TSImport> imports;
         private IList<TSProperty> fields;
 
         public TSInterfaceGenerator(Type type) : base(type) {
-            imports = new();
+            imports = new Dictionary<Type, TSImport>();
             fields = new List<TSProperty>();
         }
 
@@ -23,19 +24,33 @@ namespace CSharp2TS.CLI.Generators {
             foreach (PropertyInfo property in properties) {
                 var tsType = GetTSPropertyType(property.PropertyType);
 
-                if (tsType.IsObject && tsType.TSType != Type.Name) {
-                    imports.Add(tsType.TSType);
+                if (!imports.ContainsKey(tsType.Type) && tsType.IsObject && tsType.TSType != Type.Name) {
+                    CreateTSImport(tsType);
                 }
 
                 fields.Add(new TSProperty(property.Name, tsType.TSTypeFull));
             }
         }
 
+        private void CreateTSImport(TSPropertyGenerationInfo tsType) {
+            string importPath;
+
+            var tsAttribute = tsType.Type.GetCustomAttribute<TSAttributeBase>(false);
+
+            if (string.IsNullOrWhiteSpace((tsAttribute?.Folder))) {
+                importPath = $"./{tsType.TSType}";
+            } else {
+                importPath = $"./{tsAttribute.Folder}/{tsType.TSType}";
+            }
+
+            imports.Add(tsType.Type, new TSImport(tsType.TSType, importPath));
+        }
+
         private string BuildTsFile() {
             StringBuilder builder = new StringBuilder();
 
             foreach (var import in imports) {
-                builder.AppendLine($"import {import} from './{import}';");
+                builder.AppendLine($"import {import.Value.Name} from '{import.Value.Path}';");
             }
 
             if (imports.Count > 0) {
@@ -56,5 +71,6 @@ namespace CSharp2TS.CLI.Generators {
         }
 
         private record TSProperty(string Name, string Type);
+        private record TSImport(string Name, string Path);
     }
 }

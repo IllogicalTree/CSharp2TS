@@ -10,5 +10,7 @@ namespace CSharp2TS.Tests.Stubs {
         public object[] ThisIsAnObjectArray { get; set; } = [];
         public IList<string> ThisIsAStringList { get; set; } = [];
         public TestClass? NestedObject { get; set; }
+        public TestClassWithFolder? ObjectInAnotherFolder { get; set; }
+        public TestEnumWithFolder? EnumInAnotherFolder { get; set; }
     }
 }
