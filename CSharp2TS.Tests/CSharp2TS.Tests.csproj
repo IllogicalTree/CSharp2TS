@@ -18,7 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CSharp2TS.CLI\CSharp2TS.CLI.csproj" />
-    <ProjectReference Include="..\CSharp2TS\CSharp2TS.csproj" />
+    <ProjectReference Include="..\CSharp2TS\CSharp2TS.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
