@@ -24,20 +24,20 @@ namespace CSharp2TS.CLI.Generators {
             foreach (PropertyInfo property in properties) {
                 var tsType = GetTSPropertyType(property.PropertyType);
 
-                if (!imports.ContainsKey(tsType.Type) && tsType.IsObject && tsType.TSType != Type.Name) {
-                    CreateTSImport(tsType);
+                if (!imports.ContainsKey(tsType.Type) && tsType.IsObject && tsType.Type != Type) {
+                    AddTSImport(tsType);
                 }
 
                 fields.Add(new TSProperty(property.Name, tsType.TSTypeFull));
             }
         }
 
-        private void CreateTSImport(TSPropertyGenerationInfo tsType) {
+        private void AddTSImport(TSPropertyGenerationInfo tsType) {
             string importPath;
 
             var tsAttribute = tsType.Type.GetCustomAttribute<TSAttributeBase>(false);
 
-            if (string.IsNullOrWhiteSpace((tsAttribute?.Folder))) {
+            if (string.IsNullOrWhiteSpace(tsAttribute?.Folder)) {
                 importPath = $"./{tsType.TSType}";
             } else {
                 importPath = $"./{tsAttribute.Folder}/{tsType.TSType}";
