@@ -3,6 +3,7 @@
 namespace CSharp2TS.CLI.Generators {
     public abstract class GeneratorBase {
         private readonly Type[] stringTypes = { typeof(char), typeof(string), typeof(Guid) };
+        private readonly Type[] dateTypes = { typeof(DateTime), typeof(DateTimeOffset) };
         private readonly Type[] numberTypes = {
             typeof(sbyte), typeof(byte), typeof(short),
             typeof(ushort), typeof(int), typeof(uint),
@@ -32,6 +33,8 @@ namespace CSharp2TS.CLI.Generators {
                 tsType = "number";
             } else if (type == typeof(bool)) {
                 tsType = "boolean";
+            } else if (dateTypes.Contains(type)) {
+                tsType = "Date";
             } else {
                 tsType = type.Name;
                 isObject = true;
