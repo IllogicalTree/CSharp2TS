@@ -43,7 +43,7 @@ namespace CSharp2TS.CLI {
 
             Console.WriteLine($"csharp2ts v{versionString}");
             Console.WriteLine("-------------");
-            Console.WriteLine("Run csharp2ts -h or csharp2ts -help to see commands");
+            Console.WriteLine("Run csharp2ts [-h | -help] to see commands");
             Console.WriteLine("-------------");
             Console.WriteLine("\nUsage:");
             Console.WriteLine("  cshart2ts <path to config>");
