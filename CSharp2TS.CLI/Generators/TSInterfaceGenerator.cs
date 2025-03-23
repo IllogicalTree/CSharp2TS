@@ -3,11 +3,11 @@ using System.Text;
 
 namespace CSharp2TS.CLI.Generators {
     public class TSInterfaceGenerator : GeneratorBase {
-        private IList<string> imports;
+        private HashSet<string> imports;
         private IList<TSProperty> fields;
 
         public TSInterfaceGenerator(Type type) : base(type) {
-            imports = new List<string>();
+            imports = new();
             fields = new List<TSProperty>();
         }
 
