@@ -11,7 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CSharp2TS\CSharp2TS.Core.csproj" />
+    <ProjectReference Include="..\CSharp2TS.Core\CSharp2TS.Core.csproj" />
   </ItemGroup>
 
 </Project>
