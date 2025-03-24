@@ -61,6 +61,31 @@ export default TestClass;
         }
 
         [Test]
+        public void Generation_TestInheritance() {
+            // Arrange
+            string file = Path.Combine(options.OutputFolder!, "TestInheritanceChild.ts");
+
+            if (!File.Exists(file)) {
+                Assert.Fail("File does not exist.");
+            }
+
+            string contents = File.ReadAllText(Path.Combine(options.OutputFolder!, "TestInheritanceChild.ts"));
+
+            // Assert
+            string expected = @"// Auto-generated from TestInheritanceChild.cs
+
+interface TestInheritanceChild {
+  childClassProperty: number;
+  parentClassProperty: number;
+}
+
+export default TestInheritanceChild;
+";
+
+            Assert.That(contents, Is.EqualTo(expected));
+        }
+
+        [Test]
         public void Generation_TestEnum() {
             // Arrange
             string file = Path.Combine(options.OutputFolder!, "TestEnum.ts");

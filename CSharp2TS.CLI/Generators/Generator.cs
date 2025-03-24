@@ -11,7 +11,7 @@ namespace CSharp2TS.CLI.Generators {
 
         public void Run() {
             if (!Directory.Exists(options.AssemblyFolder)) {
-                throw new InvalidOperationException("Assembly folder does not exist.");
+                throw new DirectoryNotFoundException("Assembly folder does not exist.");
             }
 
             if (Directory.Exists(options.OutputFolder)) {
