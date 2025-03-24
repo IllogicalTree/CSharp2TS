@@ -4,7 +4,7 @@ namespace CSharp2TS.CLI.Generators {
     public class TSEnumGenerator : GeneratorBase {
         private IList<TSProperty> items;
 
-        public TSEnumGenerator(Type type) : base(type) {
+        public TSEnumGenerator(Type type, Options options) : base(type, options) {
             items = new List<TSProperty>();
         }
 

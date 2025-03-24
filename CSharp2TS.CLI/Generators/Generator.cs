@@ -32,7 +32,7 @@ namespace CSharp2TS.CLI.Generators {
             var types = GetTypesByAttribute(assembly, typeof(TSInterfaceAttribute));
 
             foreach (Type type in types) {
-                GenerateFile(options.OutputFolder!, new TSInterfaceGenerator(type));
+                GenerateFile(options.OutputFolder!, new TSInterfaceGenerator(type, options));
             }
         }
 
@@ -40,7 +40,7 @@ namespace CSharp2TS.CLI.Generators {
             var types = GetTypesByAttribute(assembly, typeof(TSEnumAttribute));
 
             foreach (Type type in types) {
-                GenerateFile(options.OutputFolder!, new TSEnumGenerator(type));
+                GenerateFile(options.OutputFolder!, new TSEnumGenerator(type, options));
             }
         }
 

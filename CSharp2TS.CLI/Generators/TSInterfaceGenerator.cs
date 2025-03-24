@@ -7,7 +7,7 @@ namespace CSharp2TS.CLI.Generators {
         private IDictionary<Type, TSImport> imports;
         private IList<TSProperty> fields;
 
-        public TSInterfaceGenerator(Type type) : base(type) {
+        public TSInterfaceGenerator(Type type, Options options) : base(type, options) {
             imports = new Dictionary<Type, TSImport>();
             fields = new List<TSProperty>();
         }
@@ -37,16 +37,13 @@ namespace CSharp2TS.CLI.Generators {
         }
 
         private void AddTSImport(TSPropertyGenerationInfo tsType) {
-            string importPath;
-
             var tsAttribute = tsType.Type.GetCustomAttribute<TSAttributeBase>(false);
+            string currentFolder = Path.Combine(Options.OutputFolder!, FolderLocation ?? string.Empty);
+            string targetFolder = Path.Combine(Options.OutputFolder!, tsAttribute?.Folder ?? string.Empty);
 
-            if (string.IsNullOrWhiteSpace(tsAttribute?.Folder)) {
-                importPath = $"./{tsType.TSType}";
-            } else {
-                importPath = $"./{tsAttribute.Folder}/{tsType.TSType}";
-            }
+            string relativePath = GetRelativeImportPath(currentFolder, targetFolder);
 
+            string importPath = $"{relativePath}{tsType.TSType}";
             imports.Add(tsType.Type, new TSImport(tsType.TSType, importPath));
         }
 

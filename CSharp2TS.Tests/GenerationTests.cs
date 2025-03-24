@@ -116,6 +116,49 @@ export default TestEnum;
             // Arrange
             string file = Path.Combine(options.OutputFolder!, "Models", "TestClassWithFolder.ts");
 
+            string contents = File.ReadAllText(Path.Combine(options.OutputFolder!, "Models", "TestClassWithFolder.ts"));
+
+            // Assert
+            string expected = @"// Auto-generated from TestClassWithFolder.cs
+
+import TestClass from '../TestClass';
+
+interface TestClassWithFolder {
+  thisIsANumber: number;
+  testClass: TestClass;
+}
+
+export default TestClassWithFolder;
+";
+
+            Assert.That(contents, Is.EqualTo(expected));
+
+            // Assert
+            Assert.That(File.Exists(file), Is.True);
+        }
+
+        [Test]
+        public void Generation_TestClassSubFolder() {
+            // Arrange
+            string file = Path.Combine(options.OutputFolder!, "Models", "Sub", "TestClassWithSubFolder.ts");
+
+            string contents = File.ReadAllText(Path.Combine(options.OutputFolder!, "Models", "Sub", "TestClassWithSubFolder.ts"));
+
+            // Assert
+            string expected = @"// Auto-generated from TestClassWithSubFolder.cs
+
+import TestClass from '../../TestClass';
+
+interface TestClassWithSubFolder {
+  thisIsANumber: number;
+  testClass: TestClass;
+}
+
+export default TestClassWithSubFolder;
+";
+
+            Assert.That(contents, Is.EqualTo(expected));
+
             // Assert
             Assert.That(File.Exists(file), Is.True);
         }

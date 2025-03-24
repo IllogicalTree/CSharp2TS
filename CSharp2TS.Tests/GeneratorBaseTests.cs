@@ -4,6 +4,7 @@ namespace CSharp2TS.Tests {
     public class GeneratorBaseTests {
         private class TestGenerator : GeneratorBase {
             public TSPropertyGenerationInfo TestGetTSPropertyType(Type type) => GetTSPropertyType(type);
+            public string TestGetRelativeImportPath(string currentFolder, string targetFolder) => GetRelativeImportPath(currentFolder, targetFolder);
 
             public TestGenerator() : base(typeof(object)) { }
 
@@ -65,6 +66,20 @@ namespace CSharp2TS.Tests {
             Assert.That(result.TSType, Is.EqualTo(tsType));
             Assert.That(result.TSTypeFull, Is.EqualTo(tsTypeFull));
             Assert.That(result.IsObject, Is.EqualTo(isObject));
+        }
+
+        [Test]
+        [TestCase("/path/to/folder", "/path/to/folder", "./")]
+        [TestCase("/path/to/folder", "/path/to/folder/subfolder", "./subfolder/")]
+        [TestCase("/path/to/folder/subfolder", "/path/to/folder", "../")]
+        [TestCase("C:\\path\\to\\folder", "C:\\path\\to\\other\\folder", "../other/folder/")]
+        [TestCase("/base/path", "/other/path", "../../other/path/")]
+        public void GetRelativeImportPath_SameFolder_ReturnsCurrentDirectory(string currentFolder, string targetFolder, string expected) {
+            // Act
+            string result = generator.TestGetRelativeImportPath(currentFolder, targetFolder);
+
+            // Assert
+            Assert.That(result, Is.EqualTo(expected));
         }
     }
 }

@@ -14,15 +14,16 @@ namespace CSharp2TS.CLI.Generators {
         };
 
         public Type Type { get; }
+        public Options Options { get; }
 
         public string? FolderLocation => Type.GetCustomAttribute<TSAttributeBase>()?.Folder;
 
         public abstract string Generate();
 
-        protected GeneratorBase(Type type) {
+        protected GeneratorBase(Type type, Options options) {
             Type = type;
+            Options = options;
         }
-
 
         protected TSPropertyGenerationInfo GetTSPropertyType(Type type) {
             string tsType = string.Empty;
@@ -83,6 +84,20 @@ namespace CSharp2TS.CLI.Generators {
             }
 
             return false;
+        }
+
+        protected string GetRelativeImportPath(string currentFolder, string targetFolder) {
+            if (currentFolder == targetFolder) {
+                return "./";
+            }
+
+            string relativePath = Path.GetRelativePath(currentFolder, targetFolder).Replace('\\', '/');
+
+            if (!relativePath.StartsWith('.')) {
+                relativePath = $"./{relativePath}";
+            }
+
+            return $"{relativePath}/";
         }
 
         protected string ToCamelCase(string value) {
