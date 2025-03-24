@@ -12,5 +12,7 @@ namespace CSharp2TS.Tests.Stubs {
         public TestClass? NestedObject { get; set; }
         public TestClassWithFolder? ObjectInAnotherFolder { get; set; }
         public TestEnumWithFolder? EnumInAnotherFolder { get; set; }
+        [TSExclude]
+        public int ExcludedProperty { get; set; }
     }
 }

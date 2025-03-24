@@ -22,6 +22,10 @@ namespace CSharp2TS.CLI.Generators {
             var properties = Type.GetProperties();
 
             foreach (PropertyInfo property in properties) {
+                if (property.GetCustomAttribute<TSExcludeAttribute>() != null) {
+                    continue;
+                }
+
                 var tsType = GetTSPropertyType(property.PropertyType);
 
                 if (!imports.ContainsKey(tsType.Type) && tsType.IsObject && tsType.Type != Type) {
