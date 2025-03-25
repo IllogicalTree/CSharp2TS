@@ -8,8 +8,8 @@ namespace CSharp2TS.CLI {
             }
 
             return new Options {
-                OutputFolder = TryParseSwitch(args, "--output-folder", "-o"),
-                AssemblyPath = TryParseSwitch(args, "--assembly-path", "-a"),
+                OutputFolder = TryParseSwitch(args, "--output-folder", "-o") ?? string.Empty,
+                AssemblyPath = TryParseSwitch(args, "--assembly-path", "-a") ?? string.Empty,
                 FileNameCasingStyle = TryParseSwitch(args, "--file-casing", "-fc") ?? Consts.PascalCase,
             };
         }

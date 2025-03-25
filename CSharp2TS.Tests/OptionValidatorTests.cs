@@ -14,10 +14,9 @@ namespace CSharp2TS.Tests {
             Assert.That(result, Is.EqualTo("Failed to parse options"));
         }
 
-        [TestCase(null)]
         [TestCase("")]
         [TestCase("  ")]
-        public void Validate_NullOutputfolder(string? outputFolder) {
+        public void Validate_NullOutputfolder(string outputFolder) {
             // Arrange
             var options = new Options {
                 OutputFolder = outputFolder,
@@ -31,10 +30,9 @@ namespace CSharp2TS.Tests {
             Assert.That(result, Is.EqualTo("Output folder is required"));
         }
 
-        [TestCase(null)]
         [TestCase("")]
         [TestCase("  ")]
-        public void Validate_NullAssemblyPath(string? assemblyPath) {
+        public void Validate_NullAssemblyPath(string assemblyPath) {
             // Arrange
             var options = new Options {
                 OutputFolder = "SomeFolder",

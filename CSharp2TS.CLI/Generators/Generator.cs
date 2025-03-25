@@ -18,7 +18,7 @@ namespace CSharp2TS.CLI.Generators {
                 Directory.Delete(options.OutputFolder, true);
             }
 
-            Directory.CreateDirectory(options.OutputFolder!);
+            Directory.CreateDirectory(options.OutputFolder);
 
             Assembly assembly = Assembly.LoadFrom(options.AssemblyPath);
 
@@ -30,7 +30,7 @@ namespace CSharp2TS.CLI.Generators {
             var types = GetTypesByAttribute(assembly, typeof(TSInterfaceAttribute));
 
             foreach (Type type in types) {
-                GenerateFile(options.OutputFolder!, new TSInterfaceGenerator(type, options));
+                GenerateFile(options.OutputFolder, new TSInterfaceGenerator(type, options));
             }
         }
 
@@ -38,7 +38,7 @@ namespace CSharp2TS.CLI.Generators {
             var types = GetTypesByAttribute(assembly, typeof(TSEnumAttribute));
 
             foreach (Type type in types) {
-                GenerateFile(options.OutputFolder!, new TSEnumGenerator(type, options));
+                GenerateFile(options.OutputFolder, new TSEnumGenerator(type, options));
             }
         }
 

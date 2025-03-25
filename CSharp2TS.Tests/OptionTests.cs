@@ -8,60 +8,51 @@ namespace CSharp2TS.Tests {
         }
 
         [Test]
-        public void OptionParser_Args_OutputFolder() {
+        [TestCase("-o")]
+        [TestCase("--output-folder")]
+        public void OptionParser_Args_OutputFolder(string option) {
             // Arrange
-            string outputOption1 = "-o";
-            string outputOption2 = "--output-folder";
             string outputFolder = "output folder";
 
             // Act
-            var result1 = OptionParser.ParseFromArgs([outputOption1, outputFolder])!;
-            var result2 = OptionParser.ParseFromArgs([outputOption2, outputFolder])!;
+            var result = OptionParser.ParseFromArgs([option, outputFolder])!;
+            var noValueResult = OptionParser.ParseFromArgs([option])!;
 
             // Assert
-            Assert.That(result1.OutputFolder, Is.EqualTo(outputFolder));
-            Assert.That(result2.OutputFolder, Is.EqualTo(outputFolder));
+            Assert.That(result.OutputFolder, Is.EqualTo(outputFolder));
+            Assert.That(noValueResult.OutputFolder, Is.EqualTo(string.Empty));
         }
 
         [Test]
-        public void OptionParser_Args_AssemblyPath() {
+        [TestCase("-a")]
+        [TestCase("--assembly-path")]
+        public void OptionParser_Args_AssemblyPath(string option) {
             // Arrange
-            string assemblyOption1 = "-a";
-            string assemblyOption2 = "--assembly-path";
-            string assemblyPath = "assembly path";
+            string assemblyFile = "assembly file";
 
             // Act
-            var result1 = OptionParser.ParseFromArgs([assemblyOption1, assemblyPath])!;
-            var result2 = OptionParser.ParseFromArgs([assemblyOption2, assemblyPath])!;
+            var result = OptionParser.ParseFromArgs([option, assemblyFile])!;
+            var noValueResult = OptionParser.ParseFromArgs([option])!;
 
             // Assert
-            Assert.That(result1.AssemblyPath, Is.EqualTo(assemblyPath));
-            Assert.That(result2.AssemblyPath, Is.EqualTo(assemblyPath));
+            Assert.That(result.AssemblyPath, Is.EqualTo(assemblyFile));
+            Assert.That(noValueResult.AssemblyPath, Is.EqualTo(string.Empty));
         }
 
         [Test]
-        public void OptionParser_Args_FileNameCasingStyle_Valid() {
+        [TestCase("-fc")]
+        [TestCase("--file-casing")]
+        public void OptionParser_Args_FileNameCasingStyle(string option) {
             // Arrange
-            string option1 = "-fc";
-            string option2 = "--file-casing";
-            string casing = Consts.CamelCase;
+            string casingStyle = "camel";
 
             // Act
-            var result1 = OptionParser.ParseFromArgs([option1, casing])!;
-            var result2 = OptionParser.ParseFromArgs([option2, casing])!;
+            var result = OptionParser.ParseFromArgs([option, casingStyle])!;
+            var noValueResult = OptionParser.ParseFromArgs([option])!;
 
             // Assert
-            Assert.That(result1.FileNameCasingStyle, Is.EqualTo(casing));
-            Assert.That(result2.FileNameCasingStyle, Is.EqualTo(casing));
-        }
-
-        [Test]
-        public void OptionParser_Args_FileNameCasingStyle_Default() {
-            // Act
-            var result1 = OptionParser.ParseFromArgs(["at least one arg"])!;
-
-            // Assert
-            Assert.That(result1.FileNameCasingStyle, Is.EqualTo(Consts.PascalCase));
+            Assert.That(result.FileNameCasingStyle, Is.EqualTo(casingStyle));
+            Assert.That(noValueResult.FileNameCasingStyle, Is.EqualTo(Consts.PascalCase));
         }
 
         [Test]

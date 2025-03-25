@@ -38,8 +38,8 @@ namespace CSharp2TS.CLI.Generators {
 
         private void AddTSImport(TSPropertyGenerationInfo tsType) {
             var tsAttribute = tsType.Type.GetCustomAttribute<TSAttributeBase>(false);
-            string currentFolder = Path.Combine(Options.OutputFolder!, FolderLocation ?? string.Empty);
-            string targetFolder = Path.Combine(Options.OutputFolder!, tsAttribute?.Folder ?? string.Empty);
+            string currentFolder = Path.Combine(Options.OutputFolder, FolderLocation ?? string.Empty);
+            string targetFolder = Path.Combine(Options.OutputFolder, tsAttribute?.Folder ?? string.Empty);
 
             string relativePath = GetRelativeImportPath(currentFolder, targetFolder);
 

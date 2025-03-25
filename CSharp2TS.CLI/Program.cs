@@ -42,10 +42,7 @@ namespace CSharp2TS.CLI {
         }
 
         private static void CreateDefaultConfig() {
-            Options options = new Options {
-                OutputFolder = string.Empty,
-                AssemblyPath = string.Empty,
-            };
+            Options options = new Options();
 
             using (var stream = File.Create("csharp2ts.json")) {
                 JsonSerializer.Serialize(stream, options);
