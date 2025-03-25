@@ -2,5 +2,6 @@
     public class Options {
         public string? OutputFolder { get; set; }
         public string? AssemblyPath { get; set; }
+        public string FileNameCasingStyle { get; set; } = Consts.PascalCase;
     }
 }

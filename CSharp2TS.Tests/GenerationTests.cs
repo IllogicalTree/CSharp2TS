@@ -15,6 +15,7 @@ namespace CSharp2TS.Tests {
             options = new Options {
                 OutputFolder = outputFolder,
                 AssemblyPath = assemblyPath,
+                FileNameCasingStyle = Consts.CamelCase,
             };
 
             Directory.CreateDirectory(outputFolder);

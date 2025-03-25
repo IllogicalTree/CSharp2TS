@@ -104,6 +104,15 @@ namespace CSharp2TS.CLI.Generators {
             return char.ToLowerInvariant(value[0]) + value.Substring(1);
         }
 
+        public string GetTypeFileName(string typeName) {
+            if (Options.FileNameCasingStyle == Consts.CamelCase) {
+                return ToCamelCase(typeName);
+            }
+
+            // We assume PascalCase for C# types by default
+            return typeName;
+        }
+
         public record TSPropertyGenerationInfo(Type Type, string TSType, string TSTypeFull, bool IsObject);
     }
 }

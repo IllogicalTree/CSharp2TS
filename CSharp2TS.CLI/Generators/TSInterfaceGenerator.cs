@@ -43,7 +43,7 @@ namespace CSharp2TS.CLI.Generators {
 
             string relativePath = GetRelativeImportPath(currentFolder, targetFolder);
 
-            string importPath = $"{relativePath}{tsType.TSType}";
+            string importPath = $"{relativePath}{GetTypeFileName(tsType.TSType)}";
             imports.Add(tsType.Type, new TSImport(tsType.TSType, importPath));
         }
 

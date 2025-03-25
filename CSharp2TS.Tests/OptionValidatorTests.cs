@@ -49,6 +49,22 @@ namespace CSharp2TS.Tests {
         }
 
         [Test]
+        public void Validate_InvalidFileNameCasingStyle() {
+            // Arrange
+            var options = new Options {
+                OutputFolder = "SomeFolder",
+                AssemblyPath = "SomeAssembly",
+                FileNameCasingStyle = "invalid",
+            };
+
+            // Act
+            var result = OptionParser.Validate(options);
+
+            // Assert
+            Assert.That(result, Is.EqualTo($"Invalid file name casing style ({Consts.CamelCase} | {Consts.PascalCase})"));
+        }
+
+        [Test]
         public void Validate_Valid() {
             // Arrange
             var options = new Options {

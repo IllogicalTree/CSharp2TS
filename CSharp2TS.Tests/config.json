@@ -1,4 +1,5 @@
 ﻿{
     "outputFolder": "output",
-    "assemblyPath": "assembly"
+    "assemblyPath": "assembly",
+    "fileNameCasingStyle": "camel"
 }

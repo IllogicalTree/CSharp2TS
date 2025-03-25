@@ -58,7 +58,7 @@ namespace CSharp2TS.CLI.Generators {
                 Directory.CreateDirectory(folder);
             }
 
-            string file = Path.Combine(folder, $"{generator.Type.Name}.ts");
+            string file = Path.Combine(folder, $"{generator.GetTypeFileName(generator.Type.Name)}.ts");
 
             if (File.Exists(file)) {
                 throw new InvalidOperationException($"File {file} already exists.");

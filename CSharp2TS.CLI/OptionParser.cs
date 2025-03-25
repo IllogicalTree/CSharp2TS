@@ -10,12 +10,13 @@ namespace CSharp2TS.CLI {
             return new Options {
                 OutputFolder = TryParseSwitch(args, "--output-folder", "-o"),
                 AssemblyPath = TryParseSwitch(args, "--assembly-path", "-a"),
+                FileNameCasingStyle = TryParseSwitch(args, "--file-casing", "-fc") ?? Consts.PascalCase,
             };
         }
 
         public static Options? ParseFromFile(string optionsPath) {
             if (!File.Exists(optionsPath)) {
-                throw new FileNotFoundException();
+                throw new FileNotFoundException($"Config file does not exist at path: {optionsPath}");
             }
 
             using (var stream = File.OpenRead(optionsPath)) {
@@ -48,6 +49,10 @@ namespace CSharp2TS.CLI {
 
             if (string.IsNullOrWhiteSpace(options.AssemblyPath)) {
                 return "Assembly path is required";
+            }
+
+            if (options.FileNameCasingStyle != Consts.CamelCase && options.FileNameCasingStyle != Consts.PascalCase) {
+                return $"Invalid file name casing style ({Consts.CamelCase} | {Consts.PascalCase})";
             }
 
             return null;
