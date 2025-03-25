@@ -10,6 +10,7 @@
     <Company />
     <PackageProjectUrl>https://github.com/ormesam/CSharp2TS</PackageProjectUrl>
       <RepositoryUrl>https://github.com/ormesam/CSharp2TS</RepositoryUrl>
+      <PackageOutputPath>../nupkg</PackageOutputPath>
   </PropertyGroup>
 
 </Project>
