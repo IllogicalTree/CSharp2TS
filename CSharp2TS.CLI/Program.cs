@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using System.Text.Json;
 using CSharp2TS.CLI.Generators;
 
 namespace CSharp2TS.CLI {
@@ -9,16 +10,21 @@ namespace CSharp2TS.CLI {
                 return;
             }
 
-            string[] helpCommands = ["-h", "-help", "--help"];
-
-            if (args.Length == 1 && helpCommands.Contains(args[0])) {
-                ShowHelp();
-                return;
-            }
-
             Options? options;
 
             if (args.Length == 1) {
+                string[] helpCommands = ["-h", "-help", "--help"];
+
+                if (helpCommands.Contains(args[0])) {
+                    ShowHelp();
+                    return;
+                }
+
+                if (args[0] == "create-config") {
+                    CreateDefaultConfig();
+                    return;
+                }
+
                 options = OptionParser.ParseFromFile(args[0]);
             } else {
                 options = OptionParser.ParseFromArgs(args);
@@ -33,6 +39,19 @@ namespace CSharp2TS.CLI {
 
             Generator generator = new Generator(options!);
             generator.Run();
+        }
+
+        private static void CreateDefaultConfig() {
+            Options options = new Options {
+                OutputFolder = string.Empty,
+                AssemblyPath = string.Empty,
+            };
+
+            using (var stream = File.Create("csharp2ts.json")) {
+                JsonSerializer.Serialize(stream, options);
+            }
+
+            Console.WriteLine("Config successfully created");
         }
 
         private static void ShowIntro() {
