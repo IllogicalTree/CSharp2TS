@@ -61,8 +61,7 @@ namespace CSharp2TS.CLI {
             Console.WriteLine("Arguments:");
             Console.WriteLine("  Usage: csharp2ts [option] [option args]");
             Console.WriteLine("  --output-folder, -o:      The folder where the generated files will be saved");
-            Console.WriteLine("  --assembly-folder, -a:    The folder where the assemblies are located");
-            Console.WriteLine("  --assembly-filter, -af:   The filter to apply to the assemblies");
+            Console.WriteLine("  --assembly-path, -a:      The path to the assembly");
             Console.WriteLine("Example");
             Console.WriteLine("  csharp2ts -o ./output -a ./assemblies -af *.dll");
             Console.WriteLine("-------------");

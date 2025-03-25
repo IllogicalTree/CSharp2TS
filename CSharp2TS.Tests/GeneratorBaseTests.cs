@@ -1,3 +1,4 @@
+using CSharp2TS.CLI;
 using CSharp2TS.CLI.Generators;
 
 namespace CSharp2TS.Tests {
@@ -6,7 +7,7 @@ namespace CSharp2TS.Tests {
             public TSPropertyGenerationInfo TestGetTSPropertyType(Type type) => GetTSPropertyType(type);
             public string TestGetRelativeImportPath(string currentFolder, string targetFolder) => GetRelativeImportPath(currentFolder, targetFolder);
 
-            public TestGenerator() : base(typeof(object)) { }
+            public TestGenerator() : base(typeof(object), new Options()) { }
 
             public override string Generate() {
                 throw new NotImplementedException();

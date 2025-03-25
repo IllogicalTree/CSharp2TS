@@ -13,17 +13,14 @@ namespace CSharp2TS.Tests {
             string outputOption = "-o";
             string outputFolder = "output folder";
             string assemblyOption = "-a";
-            string assemblyFolder = "assembly folder";
-            string assemblyFilterOption = "-af";
-            string assemblyFilter = "assembly filter";
+            string assemblyPath = "assembly path";
 
             // Act
-            var options = OptionParser.ParseFromArgs([outputOption, outputFolder, assemblyOption, assemblyFolder, assemblyFilterOption, assemblyFilter])!;
+            var options = OptionParser.ParseFromArgs([outputOption, outputFolder, assemblyOption, assemblyPath])!;
 
             // Assert
             Assert.That(options.OutputFolder, Is.EqualTo(outputFolder));
-            Assert.That(options.AssemblyFolder, Is.EqualTo(assemblyFolder));
-            Assert.That(options.AssemblyFileFilter, Is.EqualTo(assemblyFilter));
+            Assert.That(options.AssemblyPath, Is.EqualTo(assemblyPath));
         }
 
         [Test]
@@ -31,18 +28,15 @@ namespace CSharp2TS.Tests {
             // Arrange
             string outputOption = "--output-folder";
             string outputFolder = "output folder";
-            string assemblyOption = "--assembly-folder";
-            string assemblyFolder = "assembly folder";
-            string assemblyFilterOption = "-af";
-            string assemblyFilter = "assembly filter";
+            string assemblyOption = "--assembly-path";
+            string assemblyPath = "assembly path";
 
             // Act
-            var options = OptionParser.ParseFromArgs([outputOption, outputFolder, assemblyOption, assemblyFolder, assemblyFilterOption, assemblyFilter])!;
+            var options = OptionParser.ParseFromArgs([outputOption, outputFolder, assemblyOption, assemblyPath])!;
 
             // Assert
             Assert.That(options.OutputFolder, Is.EqualTo(outputFolder));
-            Assert.That(options.AssemblyFolder, Is.EqualTo(assemblyFolder));
-            Assert.That(options.AssemblyFileFilter, Is.EqualTo(assemblyFilter));
+            Assert.That(options.AssemblyPath, Is.EqualTo(assemblyPath));
         }
 
         [Test]
@@ -57,8 +51,7 @@ namespace CSharp2TS.Tests {
             Assert.That(File.Exists(fileName), Is.True);
             Assert.That(options, Is.Not.Null);
             Assert.That(options.OutputFolder, Is.EqualTo("output"));
-            Assert.That(options.AssemblyFolder, Is.EqualTo("assembly"));
-            Assert.That(options.AssemblyFileFilter, Is.EqualTo("*.dll"));
+            Assert.That(options.AssemblyPath, Is.EqualTo("assembly"));
         }
 
         [Test]

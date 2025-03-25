@@ -10,8 +10,8 @@ namespace CSharp2TS.CLI.Generators {
         }
 
         public void Run() {
-            if (!Directory.Exists(options.AssemblyFolder)) {
-                throw new DirectoryNotFoundException("Assembly folder does not exist.");
+            if (!File.Exists(options.AssemblyPath)) {
+                throw new FileNotFoundException($"Assembly does not exist at {options.AssemblyPath}");
             }
 
             if (Directory.Exists(options.OutputFolder)) {
@@ -20,12 +20,10 @@ namespace CSharp2TS.CLI.Generators {
 
             Directory.CreateDirectory(options.OutputFolder!);
 
-            foreach (string assemblyPath in Directory.GetFiles(options.AssemblyFolder, options.AssemblyFileFilter ?? "*.dll")) {
-                Assembly assembly = Assembly.LoadFrom(assemblyPath);
+            Assembly assembly = Assembly.LoadFrom(options.AssemblyPath);
 
-                GenerateInterfaces(assembly, options);
-                GenerateEnums(assembly, options);
-            }
+            GenerateInterfaces(assembly, options);
+            GenerateEnums(assembly, options);
         }
 
         private void GenerateInterfaces(Assembly assembly, Options options) {

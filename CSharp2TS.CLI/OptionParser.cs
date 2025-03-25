@@ -9,8 +9,7 @@ namespace CSharp2TS.CLI {
 
             return new Options {
                 OutputFolder = TryParseSwitch(args, "--output-folder", "-o"),
-                AssemblyFolder = TryParseSwitch(args, "--assembly-folder", "-a"),
-                AssemblyFileFilter = TryParseSwitch(args, "--assembly-filter", "-af"),
+                AssemblyPath = TryParseSwitch(args, "--assembly-path", "-a"),
             };
         }
 
@@ -47,8 +46,8 @@ namespace CSharp2TS.CLI {
                 return "Output folder is required";
             }
 
-            if (string.IsNullOrWhiteSpace(options.AssemblyFolder)) {
-                return "Assembly folder is required";
+            if (string.IsNullOrWhiteSpace(options.AssemblyPath)) {
+                return "Assembly path is required";
             }
 
             return null;

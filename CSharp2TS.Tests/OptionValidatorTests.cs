@@ -21,7 +21,7 @@ namespace CSharp2TS.Tests {
             // Arrange
             var options = new Options {
                 OutputFolder = outputFolder,
-                AssemblyFolder = "SomeFolder"
+                AssemblyPath = "SomeFolder"
             };
 
             // Act
@@ -34,18 +34,18 @@ namespace CSharp2TS.Tests {
         [TestCase(null)]
         [TestCase("")]
         [TestCase("  ")]
-        public void Validate_NullAssemblyFolder(string? assemblyFolder) {
+        public void Validate_NullAssemblyPath(string? assemblyPath) {
             // Arrange
             var options = new Options {
                 OutputFolder = "SomeFolder",
-                AssemblyFolder = assemblyFolder
+                AssemblyPath = assemblyPath
             };
 
             // Act
             var result = OptionParser.Validate(options);
 
             // Assert
-            Assert.That(result, Is.EqualTo("Assembly folder is required"));
+            Assert.That(result, Is.EqualTo("Assembly path is required"));
         }
 
         [Test]
@@ -53,7 +53,7 @@ namespace CSharp2TS.Tests {
             // Arrange
             var options = new Options {
                 OutputFolder = "OutputFolder",
-                AssemblyFolder = "AssemblyFolder"
+                AssemblyPath = "AssemblyPath"
             };
 
             // Act

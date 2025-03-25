@@ -10,12 +10,11 @@ namespace CSharp2TS.Tests {
         [SetUp]
         public void Setup() {
             string outputFolder = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!, "TestResults");
-            string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
+            string assemblyPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!, "CSharp2TS.Tests.dll");
 
             options = new Options {
                 OutputFolder = outputFolder,
-                AssemblyFolder = assemblyFolder,
-                AssemblyFileFilter = "CSharp2TS.Tests.dll"
+                AssemblyPath = assemblyPath,
             };
 
             Directory.CreateDirectory(outputFolder);
