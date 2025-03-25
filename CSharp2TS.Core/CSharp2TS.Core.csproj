@@ -4,6 +4,12 @@
     <TargetFrameworks>net9.0;net8.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>$(AssemblyName)</Title>
+    <Authors>Sam Orme</Authors>
+    <Company />
+    <PackageProjectUrl>https://github.com/ormesam/CSharp2TS</PackageProjectUrl>
+      <RepositoryUrl>https://github.com/ormesam/CSharp2TS</RepositoryUrl>
   </PropertyGroup>
 
 </Project>
