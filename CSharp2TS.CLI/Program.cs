@@ -48,7 +48,7 @@ namespace CSharp2TS.CLI {
                 JsonSerializer.Serialize(stream, options);
             }
 
-            Console.WriteLine("Config successfully created");
+            Console.WriteLine("Config created successfully");
         }
 
         private static void ShowIntro() {
@@ -61,7 +61,10 @@ namespace CSharp2TS.CLI {
             Console.WriteLine("-------------");
             Console.WriteLine("Run csharp2ts [-h | -help] to see commands");
             Console.WriteLine("-------------");
-            Console.WriteLine("\nUsage:");
+            Console.WriteLine("Create empty config file:");
+            Console.WriteLine("  cshart2ts create-config");
+            Console.WriteLine("-------------");
+            Console.WriteLine("Usage:");
             Console.WriteLine("  cshart2ts <path to config>");
             Console.WriteLine("  --- OR ---");
             Console.WriteLine("  cshart2ts <arguments>");
@@ -71,6 +74,9 @@ namespace CSharp2TS.CLI {
         private static void ShowHelp() {
             Console.WriteLine("csharp2ts");
             Console.WriteLine("-------------");
+            Console.WriteLine("Create empty config file:");
+            Console.WriteLine("  cshart2ts create-config");
+            Console.WriteLine("-------------");
             Console.WriteLine("Config:");
             Console.WriteLine("  csharp2ts <path to config>");
             Console.WriteLine("-------------");
@@ -78,8 +84,9 @@ namespace CSharp2TS.CLI {
             Console.WriteLine("  Usage: csharp2ts [option] [option args]");
             Console.WriteLine("  --output-folder, -o:      The folder where the generated files will be saved");
             Console.WriteLine("  --assembly-path, -a:      The path to the assembly");
-            Console.WriteLine("Example");
-            Console.WriteLine("  csharp2ts -o ./output -a ./assemblies -af *.dll");
+            Console.WriteLine($"  --file-casing, -fc:       The file name casing style ({Consts.CamelCase} | {Consts.PascalCase} (default))");
+            Console.WriteLine("Example Usage");
+            Console.WriteLine("  csharp2ts -o ./output -a ./assembly.dll -fc camel");
             Console.WriteLine("-------------");
         }
     }
