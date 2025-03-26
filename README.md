@@ -2,7 +2,19 @@
 
 ## Install
 
+**Core**
+
 WIP
+
+**CLI Tool**
+
+Add the GitHub nuget as a feed:
+
+1. Create a GitHub API token with read access for packages: https://docs.github.com/en/packages/learn-github-packages/introduction-to-github-packages#authenticating-to-github-packages
+
+2. `dotnet nuget add source --username YOUR_GITHUB_USERNAME --password YOUR_GITHUB_TOKEN --store-password-in-clear-text --name github-ormesam "https://nuget.pkg.github.com/ormesam/index.json"`
+
+3. Install tool: `dotnet tool install -g csharp2ts.cli`
 
 ## Getting Started
 
