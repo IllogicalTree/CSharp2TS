@@ -73,7 +73,7 @@ namespace CSharp2TS.Tests {
         [TestCase("/path/to/folder", "/path/to/folder", "./")]
         [TestCase("/path/to/folder", "/path/to/folder/subfolder", "./subfolder/")]
         [TestCase("/path/to/folder/subfolder", "/path/to/folder", "../")]
-        [TestCase("C:\\path\\to\\folder", "C:\\path\\to\\other\\folder", "../other/folder/")]
+        [TestCase("\\path\\to\\folder", "\\path\\to\\other\\folder", "../other/folder/")]
         [TestCase("/base/path", "/other/path", "../../other/path/")]
         public void GetRelativeImportPath_SameFolder_ReturnsCurrentDirectory(string currentFolder, string targetFolder, string expected) {
             // Act
