@@ -27,4 +27,4 @@ jobs:
     - name: Add Nuget Source
       run: dotnet nuget add source --username ormesam --password ${{ secrets.NUGET_PACKAGE_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/ormesam/index.json"
     - name: Publish
-      run: dotnet nuget push "nupkg/*.nupkg" --source "github"
+      run: dotnet nuget push "nupkg/*.nupkg" --source "github" --skip-duplicate
