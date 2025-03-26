@@ -24,3 +24,5 @@ jobs:
       run: dotnet build --no-restore -c Release
     - name: Pack
       run: dotnet pack -c Release  --no-build --no-restore
+    - name: Publish
+      run: dotnet nuget push "nupkg/CSharp2TS.Core.1.0.0.nupkg" --api-key ${{ secrets.NUGET_PACKAGE_TOKEN }} --source "github"
