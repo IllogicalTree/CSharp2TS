@@ -26,7 +26,5 @@ jobs:
       run: dotnet pack -c Release  --no-build --no-restore
     - name: Add Nuget Source
       run: dotnet nuget add source --username ormesam --password ${{ secrets.NUGET_PACKAGE_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/ormesam/index.json"
-    - name: Publish Core
-      run: dotnet nuget push "nupkg/CSharp2TS.Core.1.0.0.nupkg" --source "github"
-    - name: Publish CLI
-      run: dotnet nuget push "nupkg/CSharp2TS.CLI.1.0.0.nupkg" --source "github"
+    - name: Publish
+      run: dotnet nuget push "nupkg/*.nupkg" --source "github"
