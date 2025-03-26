@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+    
   <PropertyGroup>
     <TargetFrameworks>net9.0;net8.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -9,8 +9,9 @@
     <Authors>Sam Orme</Authors>
     <Company />
     <PackageProjectUrl>https://github.com/ormesam/CSharp2TS</PackageProjectUrl>
-      <RepositoryUrl>https://github.com/ormesam/CSharp2TS</RepositoryUrl>
-      <PackageOutputPath>../nupkg</PackageOutputPath>
+    <RepositoryUrl>https://github.com/ormesam/CSharp2TS</RepositoryUrl>
+    <PackageOutputPath>../nupkg</PackageOutputPath>
+     <PackageVersion>0.0.1</PackageVersion>
   </PropertyGroup>
-
+    
 </Project>
