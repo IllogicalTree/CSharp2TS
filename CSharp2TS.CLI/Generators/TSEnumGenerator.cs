@@ -1,11 +1,11 @@
-﻿using System.Text;
+﻿using CSharp2TS.CLI.Templates;
 
 namespace CSharp2TS.CLI.Generators {
     public class TSEnumGenerator : GeneratorBase {
-        private IList<TSProperty> items;
+        private IList<TSEnumProperty> items;
 
         public TSEnumGenerator(Type type, Options options) : base(type, options) {
-            items = new List<TSProperty>();
+            items = new List<TSEnumProperty>();
         }
 
         public override string Generate() {
@@ -24,29 +24,17 @@ namespace CSharp2TS.CLI.Generators {
 
                 int number = Convert.ToInt32(item.GetRawConstantValue());
 
-                items.Add(new TSProperty(item.Name, number));
+                items.Add(new TSEnumProperty(item.Name, number));
             }
         }
 
         private string BuildTsFile() {
-            StringBuilder builder = new StringBuilder();
-
-            builder.AppendLine($"// Auto-generated from {Type.Name}.cs");
-            builder.AppendLine();
-
-            builder.AppendLine($"enum {Type.Name} {{");
-
-            foreach (var field in items) {
-                builder.AppendLine($"  {field.Name} = {field.Number},");
-            }
-
-            builder.AppendLine("}");
-            builder.AppendLine();
-            builder.AppendLine($"export default {Type.Name};");
-
-            return builder.ToString();
+            return new TSEnumTemplate {
+                Items = items,
+                Type = Type,
+            }.TransformText();
         }
-
-        private record TSProperty(string Name, int Number);
     }
+
+    public record TSEnumProperty(string Name, int Number);
 }

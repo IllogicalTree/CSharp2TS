@@ -1,0 +1,19 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="CSharp2TS.CLI.Generators" #>
+// Auto-generated from <#= Type.Name #>.cs
+
+enum <#= Type.Name #> {
+<# foreach (var item in Items) { #>
+  <#= item.Name #> = <#= item.Number #>,
+<# } #>
+}
+
+export default <#= Type.Name #>;
+<#+
+public Type Type { get; set; }
+public IList<TSEnumProperty> Items { get; set; }
+#>
