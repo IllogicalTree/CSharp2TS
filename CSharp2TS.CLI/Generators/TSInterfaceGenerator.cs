@@ -1,15 +1,15 @@
 ﻿using System.Reflection;
-using System.Text;
+using CSharp2TS.CLI.Templates;
 using CSharp2TS.Core.Attributes;
 
 namespace CSharp2TS.CLI.Generators {
     public class TSInterfaceGenerator : GeneratorBase {
         private IDictionary<Type, TSImport> imports;
-        private IList<TSProperty> fields;
+        private IList<TSProperty> properties;
 
         public TSInterfaceGenerator(Type type, Options options) : base(type, options) {
             imports = new Dictionary<Type, TSImport>();
-            fields = new List<TSProperty>();
+            properties = new List<TSProperty>();
         }
 
         public override string Generate() {
@@ -32,7 +32,7 @@ namespace CSharp2TS.CLI.Generators {
                     AddTSImport(tsType);
                 }
 
-                fields.Add(new TSProperty(property.Name, tsType.TSTypeFull));
+                this.properties.Add(new TSProperty(ToCamelCase(property.Name), tsType.TSTypeFull));
             }
         }
 
@@ -48,33 +48,14 @@ namespace CSharp2TS.CLI.Generators {
         }
 
         private string BuildTsFile() {
-            StringBuilder builder = new StringBuilder();
-
-            builder.AppendLine($"// Auto-generated from {Type.Name}.cs");
-            builder.AppendLine();
-
-            foreach (var import in imports) {
-                builder.AppendLine($"import {import.Value.Name} from '{import.Value.Path}';");
-            }
-
-            if (imports.Count > 0) {
-                builder.AppendLine();
-            }
-
-            builder.AppendLine($"interface {Type.Name} {{");
-
-            foreach (var field in fields) {
-                builder.AppendLine($"  {ToCamelCase(field.Name)}: {field.Type};");
-            }
-
-            builder.AppendLine("}");
-            builder.AppendLine();
-            builder.AppendLine($"export default {Type.Name};");
-
-            return builder.ToString();
+            return new TSInterfaceTemplate {
+                Type = Type,
+                Imports = imports.Select(i => i.Value).ToList(),
+                Properties = properties,
+            }.TransformText();
         }
-
-        private record TSProperty(string Name, string Type);
-        private record TSImport(string Name, string Path);
     }
+
+    public record TSProperty(string Name, string Type);
+    public record TSImport(string Name, string Path);
 }

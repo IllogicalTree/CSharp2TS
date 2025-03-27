@@ -25,6 +25,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Templates\TSInterfaceTemplate.tt">
+      <LastGenOutput>TSInterfaceTemplate.cs</LastGenOutput>
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+    </None>
     <None Update="Templates\TSEnumTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>TSEnumTemplate.cs</LastGenOutput>
@@ -36,6 +40,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Templates\TSInterfaceTemplate.cs">
+      <DependentUpon>TSInterfaceTemplate.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="Templates\TSEnumTemplate.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
