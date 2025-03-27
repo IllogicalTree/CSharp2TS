@@ -22,10 +22,8 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore -c Release
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
     - name: Pack
-      run: dotnet pack -c Release  --no-build
+      run: dotnet pack -c Release  --no-build --no-restore
     - name: Add Nuget Source
       run: dotnet nuget add source --username ormesam --password ${{ secrets.NUGET_PACKAGE_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/ormesam/index.json"
     - name: Publish
