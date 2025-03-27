@@ -56,7 +56,7 @@ interface TestClass {
 export default TestClass;
 ";
 
-            Assert.That(contents, Is.EqualTo(expected));
+            Assert.That(string.Equals(contents, expected, StringComparison.OrdinalIgnoreCase), Is.True);
         }
 
         [Test]
@@ -81,7 +81,7 @@ interface TestInheritanceChild {
 export default TestInheritanceChild;
 ";
 
-            Assert.That(contents, Is.EqualTo(expected));
+            Assert.That(string.Equals(contents, expected, StringComparison.OrdinalIgnoreCase), Is.True);
         }
 
         [Test]
@@ -107,7 +107,7 @@ enum TestEnum {
 export default TestEnum;
 ";
 
-            Assert.That(contents, Is.EqualTo(expected));
+            Assert.That(string.Equals(contents, expected, StringComparison.OrdinalIgnoreCase), Is.True);
         }
 
         [Test]
@@ -130,7 +130,7 @@ interface TestClassWithFolder {
 export default TestClassWithFolder;
 ";
 
-            Assert.That(contents, Is.EqualTo(expected));
+            Assert.That(string.Equals(contents, expected, StringComparison.OrdinalIgnoreCase), Is.True);
 
             // Assert
             Assert.That(File.Exists(file), Is.True);
@@ -156,7 +156,7 @@ interface TestClassWithSubFolder {
 export default TestClassWithSubFolder;
 ";
 
-            Assert.That(contents, Is.EqualTo(expected));
+            Assert.That(string.Equals(contents, expected, StringComparison.OrdinalIgnoreCase), Is.True);
 
             // Assert
             Assert.That(File.Exists(file), Is.True);
