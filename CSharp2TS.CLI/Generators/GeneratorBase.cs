@@ -87,9 +87,12 @@ namespace CSharp2TS.CLI.Generators {
         }
 
         protected string GetRelativeImportPath(string currentFolder, string targetFolder) {
-            if (currentFolder == targetFolder) {
+            if (string.Equals(currentFolder, targetFolder, StringComparison.InvariantCultureIgnoreCase)) {
                 return "./";
             }
+
+            currentFolder = currentFolder.Replace('\\', '/');
+            targetFolder = targetFolder.Replace('\\', '/');
 
             string relativePath = Path.GetRelativePath(currentFolder, targetFolder).Replace('\\', '/');
 
