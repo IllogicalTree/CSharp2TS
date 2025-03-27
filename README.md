@@ -1,5 +1,5 @@
 # CSharp2TS
-
+[![Build & Deploy](https://github.com/ormesam/CSharp2TS/actions/workflows/deploy-package.yml/badge.svg)](https://github.com/ormesam/CSharp2TS/actions/workflows/deploy-package.yml)
 ## Install
 
 **Core**
