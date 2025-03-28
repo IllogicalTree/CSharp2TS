@@ -33,16 +33,15 @@ namespace CSharp2TS.CLI.Generators {
                 string httpMethod = GetHttpMethod(httpMethodAttribute);
                 string route = GetRoute(httpMethodAttribute);
                 var returnType = GetTSPropertyType(method.ReturnType);
-                var parametersArray = method.GetParameters()
+                var parameters = method.GetParameters()
                     .Select(i => new TSServiceMethodParam(ToCamelCase(i.Name!), GetTSPropertyType(i.ParameterType)))
                     .ToArray();
 
-                string parameters = string.Join(", ", parametersArray.Select(i => $"{i.Name}: {i.Property.TSTypeFull}"));
-                string queryString = GetQueryString(httpMethodAttribute, parametersArray);
+                string queryString = GetQueryString(httpMethodAttribute, parameters);
 
                 TryAddTSImport(returnType, Options.ServicesOutputFolder, Options.OutputFolder);
 
-                foreach (var param in parametersArray) {
+                foreach (var param in parameters) {
                     TryAddTSImport(param.Property, Options.ServicesOutputFolder, Options.OutputFolder);
                 }
 

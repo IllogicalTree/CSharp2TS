@@ -4,6 +4,6 @@
         string HttpMethod,
         string Route,
         string ReturnType,
-        string Params,
+        TSServiceMethodParam[] Params,
         string QueryString);
 }
