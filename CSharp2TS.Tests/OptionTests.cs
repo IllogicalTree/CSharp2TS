@@ -40,6 +40,54 @@ namespace CSharp2TS.Tests {
         }
 
         [Test]
+        [TestCase("-so")]
+        [TestCase("--services-output-folder")]
+        public void OptionParser_Args_ServicesOutputFolder(string option) {
+            // Arrange
+            string outputFolder = "output folder";
+
+            // Act
+            var result = OptionParser.ParseFromArgs([option, outputFolder])!;
+            var noValueResult = OptionParser.ParseFromArgs([option])!;
+
+            // Assert
+            Assert.That(result.ServicesOutputFolder, Is.EqualTo(outputFolder));
+            Assert.That(noValueResult.ServicesOutputFolder, Is.EqualTo(string.Empty));
+        }
+
+        [Test]
+        [TestCase("-sa")]
+        [TestCase("--services-assembly-path")]
+        public void OptionParser_Args_ServicesAssemblyPath(string option) {
+            // Arrange
+            string assemblyFile = "assembly file";
+
+            // Act
+            var result = OptionParser.ParseFromArgs([option, assemblyFile])!;
+            var noValueResult = OptionParser.ParseFromArgs([option])!;
+
+            // Assert
+            Assert.That(result.ServicesAssemblyPath, Is.EqualTo(assemblyFile));
+            Assert.That(noValueResult.ServicesAssemblyPath, Is.EqualTo(string.Empty));
+        }
+
+        [Test]
+        [TestCase("-sg")]
+        [TestCase("--service-generator")]
+        public void OptionParser_Args_ServiceGenerator(string option) {
+            // Arrange
+            string serviceGenerator = "test";
+
+            // Act
+            var result = OptionParser.ParseFromArgs([option, serviceGenerator])!;
+            var noValueResult = OptionParser.ParseFromArgs([option])!;
+
+            // Assert
+            Assert.That(result.ServiceGenerator, Is.EqualTo(serviceGenerator));
+            Assert.That(noValueResult.ServiceGenerator, Is.EqualTo(Consts.AxiosService));
+        }
+
+        [Test]
         [TestCase("-fc")]
         [TestCase("--file-casing")]
         public void OptionParser_Args_FileNameCasingStyle(string option) {

@@ -10,7 +10,10 @@ namespace CSharp2TS.CLI {
             return new Options {
                 OutputFolder = TryParseSwitch(args, "--output-folder", "-o") ?? string.Empty,
                 AssemblyPath = TryParseSwitch(args, "--assembly-path", "-a") ?? string.Empty,
+                ServicesOutputFolder = TryParseSwitch(args, "--services-output-folder", "-so") ?? string.Empty,
+                ServicesAssemblyPath = TryParseSwitch(args, "--services-assembly-path", "-sa") ?? string.Empty,
                 FileNameCasingStyle = TryParseSwitch(args, "--file-casing", "-fc") ?? Consts.PascalCase,
+                ServiceGenerator = TryParseSwitch(args, "--service-generator", "-sg") ?? Consts.AxiosService,
             };
         }
 
@@ -43,12 +46,35 @@ namespace CSharp2TS.CLI {
                 return "Failed to parse options";
             }
 
-            if (string.IsNullOrWhiteSpace(options.OutputFolder)) {
-                return "Output folder is required";
+            bool generateModels = !string.IsNullOrWhiteSpace(options.OutputFolder) || !string.IsNullOrWhiteSpace(options.AssemblyPath);
+            bool generateServices = !string.IsNullOrWhiteSpace(options.ServicesOutputFolder) || !string.IsNullOrWhiteSpace(options.ServicesAssemblyPath);
+
+            if (!generateModels && !generateServices) {
+                return "No generation tasks specified";
             }
 
-            if (string.IsNullOrWhiteSpace(options.AssemblyPath)) {
-                return "Assembly path is required";
+            if (generateModels) {
+                if (string.IsNullOrWhiteSpace(options.OutputFolder)) {
+                    return "Models output folder is required";
+                }
+
+                if (string.IsNullOrWhiteSpace(options.AssemblyPath)) {
+                    return "Models assembly path is required";
+                }
+            }
+
+            if (generateServices) {
+                if (string.IsNullOrWhiteSpace(options.ServicesOutputFolder)) {
+                    return "Services output folder is required";
+                }
+
+                if (string.IsNullOrWhiteSpace(options.ServicesAssemblyPath)) {
+                    return "Services assembly path is required";
+                }
+
+                if (options.ServiceGenerator != Consts.AxiosService) {
+                    return $"Invalid service generator {options.ServiceGenerator}. Available options: {Consts.AxiosService})";
+                }
             }
 
             if (options.FileNameCasingStyle != Consts.CamelCase && options.FileNameCasingStyle != Consts.PascalCase) {
