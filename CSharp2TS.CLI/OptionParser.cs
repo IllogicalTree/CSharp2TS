@@ -46,8 +46,8 @@ namespace CSharp2TS.CLI {
                 return "Failed to parse options";
             }
 
-            bool generateModels = !string.IsNullOrWhiteSpace(options.OutputFolder) || !string.IsNullOrWhiteSpace(options.AssemblyPath);
-            bool generateServices = !string.IsNullOrWhiteSpace(options.ServicesOutputFolder) || !string.IsNullOrWhiteSpace(options.ServicesAssemblyPath);
+            bool generateModels = options.GenerateModels;
+            bool generateServices = options.GenerateServices;
 
             if (!generateModels && !generateServices) {
                 return "No generation tasks specified";

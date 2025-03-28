@@ -10,8 +10,18 @@ namespace CSharp2TS.CLI.Generators {
         }
 
         public void Run() {
+            if (options.GenerateModels) {
+                GenerateModels();
+            }
+
+            if (options.GenerateServices) {
+                GenerateServices();
+            }
+        }
+
+        private void GenerateModels() {
             if (!File.Exists(options.AssemblyPath)) {
-                throw new FileNotFoundException($"Assembly does not exist at {options.AssemblyPath}");
+                throw new FileNotFoundException($"Model assembly does not exist at {options.AssemblyPath}");
             }
 
             if (Directory.Exists(options.OutputFolder)) {
@@ -24,6 +34,22 @@ namespace CSharp2TS.CLI.Generators {
 
             GenerateInterfaces(assembly, options);
             GenerateEnums(assembly, options);
+        }
+
+        private void GenerateServices() {
+            if (!File.Exists(options.ServicesAssemblyPath)) {
+                throw new FileNotFoundException($"Service assembly does not exist at {options.ServicesAssemblyPath}");
+            }
+
+            if (Directory.Exists(options.ServicesOutputFolder)) {
+                Directory.Delete(options.ServicesOutputFolder, true);
+            }
+
+            Directory.CreateDirectory(options.ServicesOutputFolder);
+
+            Assembly assembly = Assembly.LoadFrom(options.ServicesAssemblyPath);
+
+            GenerateServices(assembly, options);
         }
 
         private void GenerateInterfaces(Assembly assembly, Options options) {
@@ -39,6 +65,14 @@ namespace CSharp2TS.CLI.Generators {
 
             foreach (Type type in types) {
                 GenerateFile(options.OutputFolder, new TSEnumGenerator(type, options));
+            }
+        }
+
+        private void GenerateServices(Assembly assembly, Options options) {
+            var types = GetTypesByAttribute(assembly, typeof(TSServiceAttribute));
+
+            foreach (Type type in types) {
+                GenerateFile(options.ServicesOutputFolder, new TSAxiosServiceGenerator(type, options));
             }
         }
 
