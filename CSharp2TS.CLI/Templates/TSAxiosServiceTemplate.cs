@@ -81,7 +81,7 @@ namespace CSharp2TS.CLI.Templates
             this.Write("(");
             
             #line 16 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(string.Join(", ", item.Params.Select(i => $"{i.Name}: {i.Property.TSTypeFull}"))));
+            this.Write(this.ToStringHelper.ToStringWithCulture(string.Join(", ", item.AllParams.Select(i => $"{i.Name}: {i.Property.TSTypeFull}"))));
             
             #line default
             #line hidden
@@ -113,6 +113,12 @@ namespace CSharp2TS.CLI.Templates
             
             #line default
             #line hidden
+            
+            #line 17 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(item.QueryString));
+            
+            #line default
+            #line hidden
             this.Write("`");
             
             #line 17 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
@@ -120,7 +126,13 @@ namespace CSharp2TS.CLI.Templates
             
             #line default
             #line hidden
-            this.Write(", action ");
+            this.Write(", ");
+            
+            #line 17 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(item.BodyParam.Name));
+            
+            #line default
+            #line hidden
             
             #line 17 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
  } 

@@ -4,6 +4,21 @@
         string HttpMethod,
         string Route,
         string ReturnType,
-        TSServiceMethodParam[] Params,
-        string QueryString);
+        TSServiceMethodParam[] RouteParams,
+        TSServiceMethodParam[] QueryParams,
+        TSServiceMethodParam? BodyParam,
+        string QueryString) {
+
+        public IList<TSServiceMethodParam> AllParams {
+            get {
+                List<TSServiceMethodParam> allParams = [.. RouteParams, .. QueryParams];
+
+                if (BodyParam != null) {
+                    allParams.Add(BodyParam);
+                }
+
+                return allParams;
+            }
+        }
+    }
 }

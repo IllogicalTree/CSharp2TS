@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CSharp2TS.Tests.Stubs {
     [TSService]
-    public class TestService {
+    public class TestController {
         [HttpGet]
         public string Get() {
             return "Hello, World!";
@@ -14,8 +14,17 @@ namespace CSharp2TS.Tests.Stubs {
             return new TestClass();
         }
 
+        [HttpGet("test")]
+        public TestClass GetWithIdInParam(Guid id) {
+            return new TestClass();
+        }
+
         [HttpPost]
         public void Create(TestClassWithFolder model) {
+        }
+
+        [HttpPost("test/{id}")]
+        public void CreateWithId(Guid id, TestClassWithFolder model) {
         }
     }
 }

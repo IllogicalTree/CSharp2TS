@@ -33,16 +33,26 @@ namespace CSharp2TS.CLI.Generators {
                 string httpMethod = GetHttpMethod(httpMethodAttribute);
                 string route = GetRoute(httpMethodAttribute);
                 var returnType = GetTSPropertyType(method.ReturnType);
-                var parameters = method.GetParameters()
-                    .Select(i => new TSServiceMethodParam(ToCamelCase(i.Name!), GetTSPropertyType(i.ParameterType)))
-                    .ToArray();
 
-                string queryString = GetQueryString(httpMethodAttribute, parameters);
+                var allParams = method.GetParameters();
+                var routeParams = GetRouteParams(httpMethodAttribute, allParams);
+                var queryParams = GetQueryParams(httpMethodAttribute, allParams);
+                var bodyParam = GetBodyParam(httpMethodAttribute, allParams);
+
+                string queryString = GetQueryString(httpMethodAttribute, queryParams);
 
                 TryAddTSImport(returnType, Options.ServicesOutputFolder, Options.OutputFolder);
 
-                foreach (var param in parameters) {
+                foreach (var param in routeParams) {
                     TryAddTSImport(param.Property, Options.ServicesOutputFolder, Options.OutputFolder);
+                }
+
+                foreach (var param in queryParams) {
+                    TryAddTSImport(param.Property, Options.ServicesOutputFolder, Options.OutputFolder);
+                }
+
+                if (bodyParam != null) {
+                    TryAddTSImport(bodyParam.Property, Options.ServicesOutputFolder, Options.OutputFolder);
                 }
 
                 items.Add(new TSServiceMethod(
@@ -50,9 +60,52 @@ namespace CSharp2TS.CLI.Generators {
                     httpMethod,
                     route,
                     returnType.TSType,
-                    parameters,
+                    routeParams,
+                    queryParams,
+                    bodyParam,
                     queryString));
             }
+        }
+
+        private TSServiceMethodParam[] GetRouteParams(HttpMethodAttribute httpMethodAttribute, ParameterInfo[] allParams) {
+            if (string.IsNullOrWhiteSpace(httpMethodAttribute.Template)) {
+                return [];
+            }
+
+            return allParams
+                .Where(i => httpMethodAttribute.Template.Contains($"{{{i.Name}}}"))
+                .Select(i => new TSServiceMethodParam(ToCamelCase(i.Name!), GetTSPropertyType(i.ParameterType)))
+                .ToArray();
+        }
+
+        private TSServiceMethodParam[] GetQueryParams(HttpMethodAttribute httpMethodAttribute, ParameterInfo[] allParams) {
+            if (string.IsNullOrWhiteSpace(httpMethodAttribute.Template)) {
+                return [];
+            }
+
+            return allParams
+                .Where(i => !httpMethodAttribute.Template.Contains($"{{{i.Name}}}"))
+                .Select(i => new TSServiceMethodParam(ToCamelCase(i.Name!), GetTSPropertyType(i.ParameterType)))
+                .Where(row => !row.Property.IsObject)
+                .ToArray();
+        }
+
+        private TSServiceMethodParam? GetBodyParam(HttpMethodAttribute httpMethodAttribute, ParameterInfo[] allParams) {
+            if (httpMethodAttribute is HttpGetAttribute) {
+                return null;
+            }
+
+            if (string.IsNullOrWhiteSpace(httpMethodAttribute.Template)) {
+                return allParams
+                    .Select(i => new TSServiceMethodParam(ToCamelCase(i.Name!), GetTSPropertyType(i.ParameterType)))
+                    .Where(row => row.Property.IsObject)
+                    .FirstOrDefault();
+            }
+
+            return allParams
+                .Where(i => !httpMethodAttribute.Template.Contains($"{{{i.Name}}}"))
+                .Select(i => new TSServiceMethodParam(ToCamelCase(i.Name!), GetTSPropertyType(i.ParameterType)))
+                .FirstOrDefault();
         }
 
         private string GetHttpMethod(HttpMethodAttribute httpMethodAttribute) {
@@ -81,28 +134,28 @@ namespace CSharp2TS.CLI.Generators {
             return url;
         }
 
-        private string GetQueryString(HttpMethodAttribute httpMethodAttribute, TSServiceMethodParam[] parameters) {
+        private string GetQueryString(HttpMethodAttribute httpMethodAttribute, TSServiceMethodParam[] queryParameters) {
             var route = httpMethodAttribute.Template;
 
             if (string.IsNullOrEmpty(route)) {
                 return string.Empty;
             }
 
-            string queryString = string.Empty;
+            IList<string> querySections = [];
 
-            foreach (var param in parameters) {
+            foreach (var param in queryParameters) {
                 if (route.Contains($"{{{param.Name}}}")) {
                     continue;
                 }
 
-                queryString += $"&{param.Name}=${{{param.Name}}}";
+                querySections.Add($"{param.Name}=${{{param.Name}}}");
             }
 
-            if (string.IsNullOrWhiteSpace(queryString)) {
-                queryString = $"?{queryString}";
+            if (querySections.Count == 0) {
+                return string.Empty;
             }
 
-            return queryString;
+            return $"?{string.Join('&', querySections)}";
         }
 
         private string BuildTsFile() {
