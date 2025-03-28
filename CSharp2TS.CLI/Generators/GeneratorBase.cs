@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Reflection;
+using CSharp2TS.CLI.Generators.Entities;
 using CSharp2TS.Core.Attributes;
 
 namespace CSharp2TS.CLI.Generators {
@@ -13,6 +14,8 @@ namespace CSharp2TS.CLI.Generators {
             typeof(double), typeof(decimal)
         };
 
+        protected IDictionary<Type, TSImport> imports { get; }
+
         public Type Type { get; }
         public Options Options { get; }
 
@@ -23,6 +26,7 @@ namespace CSharp2TS.CLI.Generators {
         protected GeneratorBase(Type type, Options options) {
             Type = type;
             Options = options;
+            imports = new Dictionary<Type, TSImport>();
         }
 
         protected TSPropertyGenerationInfo GetTSPropertyType(Type type) {
@@ -40,6 +44,8 @@ namespace CSharp2TS.CLI.Generators {
                 tsType = "boolean";
             } else if (dateTypes.Contains(type)) {
                 tsType = "Date";
+            } else if (type == typeof(void)) {
+                tsType = "void";
             } else {
                 tsType = type.Name;
                 isObject = true;
@@ -116,6 +122,19 @@ namespace CSharp2TS.CLI.Generators {
             return typeName;
         }
 
-        public record TSPropertyGenerationInfo(Type Type, string TSType, string TSTypeFull, bool IsObject);
+        protected void TryAddTSImport(TSPropertyGenerationInfo tsType, string currentFolderRoot, string targetFolderRoot) {
+            if (imports.ContainsKey(tsType.Type) || !tsType.IsObject) {
+                return;
+            }
+
+            var tsAttribute = tsType.Type.GetCustomAttribute<TSAttributeBase>(false);
+            string currentFolder = Path.Combine(currentFolderRoot, FolderLocation ?? string.Empty);
+            string targetFolder = Path.Combine(targetFolderRoot, tsAttribute?.Folder ?? string.Empty);
+
+            string relativePath = GetRelativeImportPath(currentFolder, targetFolder);
+
+            string importPath = $"{relativePath}{GetTypeFileName(tsType.TSType)}";
+            imports.Add(tsType.Type, new TSImport(tsType.TSType, importPath));
+        }
     }
 }

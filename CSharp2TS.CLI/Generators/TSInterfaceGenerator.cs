@@ -1,14 +1,13 @@
 ﻿using System.Reflection;
+using CSharp2TS.CLI.Generators.Entities;
 using CSharp2TS.CLI.Templates;
 using CSharp2TS.Core.Attributes;
 
 namespace CSharp2TS.CLI.Generators {
     public class TSInterfaceGenerator : GeneratorBase {
-        private IDictionary<Type, TSImport> imports;
         private IList<TSProperty> properties;
 
         public TSInterfaceGenerator(Type type, Options options) : base(type, options) {
-            imports = new Dictionary<Type, TSImport>();
             properties = new List<TSProperty>();
         }
 
@@ -28,23 +27,12 @@ namespace CSharp2TS.CLI.Generators {
 
                 var tsType = GetTSPropertyType(property.PropertyType);
 
-                if (!imports.ContainsKey(tsType.Type) && tsType.IsObject && tsType.Type != Type) {
-                    AddTSImport(tsType);
+                if (tsType.Type != Type) {
+                    TryAddTSImport(tsType, Options.OutputFolder, Options.OutputFolder);
                 }
 
                 this.properties.Add(new TSProperty(ToCamelCase(property.Name), tsType.TSTypeFull));
             }
-        }
-
-        private void AddTSImport(TSPropertyGenerationInfo tsType) {
-            var tsAttribute = tsType.Type.GetCustomAttribute<TSAttributeBase>(false);
-            string currentFolder = Path.Combine(Options.OutputFolder, FolderLocation ?? string.Empty);
-            string targetFolder = Path.Combine(Options.OutputFolder, tsAttribute?.Folder ?? string.Empty);
-
-            string relativePath = GetRelativeImportPath(currentFolder, targetFolder);
-
-            string importPath = $"{relativePath}{GetTypeFileName(tsType.TSType)}";
-            imports.Add(tsType.Type, new TSImport(tsType.TSType, importPath));
         }
 
         private string BuildTsFile() {
@@ -55,7 +43,4 @@ namespace CSharp2TS.CLI.Generators {
             }.TransformText();
         }
     }
-
-    public record TSProperty(string Name, string Type);
-    public record TSImport(string Name, string Path);
 }

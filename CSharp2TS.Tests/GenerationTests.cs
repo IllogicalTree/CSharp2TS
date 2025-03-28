@@ -15,6 +15,10 @@ namespace CSharp2TS.Tests {
             options = new Options {
                 OutputFolder = outputFolder,
                 AssemblyPath = assemblyPath,
+                ServiceGenerator = Consts.AxiosService,
+                FileNameCasingStyle = Consts.PascalCase,
+                ServicesAssemblyPath = assemblyPath,
+                ServicesOutputFolder = Path.Combine(outputFolder, "Services"),
             };
 
             Directory.CreateDirectory(outputFolder);

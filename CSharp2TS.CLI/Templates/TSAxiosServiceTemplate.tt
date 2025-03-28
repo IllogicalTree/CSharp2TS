@@ -3,13 +3,18 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
-<#@ import namespace="CSharp2TS.CLI.Generators" #>
+<#@ import namespace="CSharp2TS.CLI.Generators.Entities" #>
 // Auto-generated from <#= Type.Name #>.cs
+
+import { apiClient } from './apiService';
+<# foreach (var item in Imports) { #>
+import <#= item.Name #> from '<#= item.Path #>';
+<# } #>
 
 export default {
 <# foreach (var item in Items) { #>
-  async create(action: ActionModel): Promise<<#= item.ReturnType #>> {
-    var response = await apiClient.post<<#= item.ReturnType #>>('action', action);
+  async <#= item.MethodName #>(<#= item.Params #>): Promise<<#= item.ReturnType #>> {
+    var response = await apiClient.<#= item.HttpMethod #><<#= item.ReturnType #>>(`<#= item.Route #>`<# if (item.HttpMethod != Consts.HttpGet) { #>, action <# } #>);
     return response.data;
   },
 <# } #>
@@ -17,5 +22,6 @@ export default {
 
 <#+
 public Type Type { get; set; }
+public IList<TSImport> Imports { get; set; }
 public IList<TSServiceMethod> Items { get; set; }
 #>

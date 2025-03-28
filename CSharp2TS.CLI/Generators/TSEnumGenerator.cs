@@ -1,4 +1,5 @@
-﻿using CSharp2TS.CLI.Templates;
+﻿using CSharp2TS.CLI.Generators.Entities;
+using CSharp2TS.CLI.Templates;
 
 namespace CSharp2TS.CLI.Generators {
     public class TSEnumGenerator : GeneratorBase {
@@ -35,6 +36,4 @@ namespace CSharp2TS.CLI.Generators {
             }.TransformText();
         }
     }
-
-    public record TSEnumProperty(string Name, int Number);
 }
