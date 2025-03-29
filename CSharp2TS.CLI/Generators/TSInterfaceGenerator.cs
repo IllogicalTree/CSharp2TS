@@ -28,7 +28,7 @@ namespace CSharp2TS.CLI.Generators {
                 var tsType = GetTSPropertyType(property.PropertyType);
 
                 if (tsType.Type != Type) {
-                    TryAddTSImport(tsType, Options.OutputFolder, Options.OutputFolder);
+                    TryAddTSImport(tsType, Options.ModelOutputFolder, Options.ModelOutputFolder);
                 }
 
                 this.properties.Add(new TSProperty(ToCamelCase(property.Name), tsType.TSTypeFull));

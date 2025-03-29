@@ -122,8 +122,8 @@ namespace CSharp2TS.CLI.Generators {
             return typeName;
         }
 
-        protected void TryAddTSImport(TSPropertyGenerationInfo tsType, string currentFolderRoot, string targetFolderRoot) {
-            if (imports.ContainsKey(tsType.Type) || !tsType.IsObject) {
+        protected void TryAddTSImport(TSPropertyGenerationInfo tsType, string? currentFolderRoot, string? targetFolderRoot) {
+            if (currentFolderRoot == null || targetFolderRoot == null || imports.ContainsKey(tsType.Type) || !tsType.IsObject) {
                 return;
             }
 

@@ -13,11 +13,11 @@ namespace CSharp2TS.Tests {
             string assemblyPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!, "CSharp2TS.Tests.dll");
 
             options = new Options {
-                OutputFolder = outputFolder,
-                AssemblyPath = assemblyPath,
+                ModelOutputFolder = outputFolder,
+                ModelAssemblyPaths = [assemblyPath],
                 ServiceGenerator = Consts.AxiosService,
                 FileNameCasingStyle = Consts.PascalCase,
-                ServicesAssemblyPath = assemblyPath,
+                ServicesAssemblyPaths = [assemblyPath],
                 ServicesOutputFolder = Path.Combine(outputFolder, "Services"),
             };
 
@@ -30,13 +30,13 @@ namespace CSharp2TS.Tests {
         [Test]
         public void Generation_TestClass() {
             // Arrange
-            string file = Path.Combine(options.OutputFolder, "TestClass.ts");
+            string file = Path.Combine(options.ModelOutputFolder!, "TestClass.ts");
 
             if (!File.Exists(file)) {
                 Assert.Fail("File does not exist.");
             }
 
-            string contents = File.ReadAllText(Path.Combine(options.OutputFolder, "TestClass.ts"));
+            string contents = File.ReadAllText(Path.Combine(options.ModelOutputFolder!, "TestClass.ts"));
 
             // Assert
             string expected = @"// Auto-generated from TestClass.cs
@@ -66,13 +66,13 @@ export default TestClass;
         [Test]
         public void Generation_TestInheritance() {
             // Arrange
-            string file = Path.Combine(options.OutputFolder, "TestInheritanceChild.ts");
+            string file = Path.Combine(options.ModelOutputFolder!, "TestInheritanceChild.ts");
 
             if (!File.Exists(file)) {
                 Assert.Fail("File does not exist.");
             }
 
-            string contents = File.ReadAllText(Path.Combine(options.OutputFolder, "TestInheritanceChild.ts"));
+            string contents = File.ReadAllText(Path.Combine(options.ModelOutputFolder!, "TestInheritanceChild.ts"));
 
             // Assert
             string expected = @"// Auto-generated from TestInheritanceChild.cs
@@ -91,13 +91,13 @@ export default TestInheritanceChild;
         [Test]
         public void Generation_TestEnum() {
             // Arrange
-            string file = Path.Combine(options.OutputFolder, "TestEnum.ts");
+            string file = Path.Combine(options.ModelOutputFolder!, "TestEnum.ts");
 
             if (!File.Exists(file)) {
                 Assert.Fail("File does not exist.");
             }
 
-            string contents = File.ReadAllText(Path.Combine(options.OutputFolder, "TestEnum.ts"));
+            string contents = File.ReadAllText(Path.Combine(options.ModelOutputFolder!, "TestEnum.ts"));
 
             // Assert
             string expected = @"// Auto-generated from TestEnum.cs
@@ -117,9 +117,9 @@ export default TestEnum;
         [Test]
         public void Generation_TestClassFolder() {
             // Arrange
-            string file = Path.Combine(options.OutputFolder, "Models", "TestClassWithFolder.ts");
+            string file = Path.Combine(options.ModelOutputFolder!, "Models", "TestClassWithFolder.ts");
 
-            string contents = File.ReadAllText(Path.Combine(options.OutputFolder, "Models", "TestClassWithFolder.ts"));
+            string contents = File.ReadAllText(Path.Combine(options.ModelOutputFolder!, "Models", "TestClassWithFolder.ts"));
 
             // Assert
             string expected = @"// Auto-generated from TestClassWithFolder.cs
@@ -143,9 +143,9 @@ export default TestClassWithFolder;
         [Test]
         public void Generation_TestClassSubFolder() {
             // Arrange
-            string file = Path.Combine(options.OutputFolder, "Models", "Sub", "TestClassWithSubFolder.ts");
+            string file = Path.Combine(options.ModelOutputFolder!, "Models", "Sub", "TestClassWithSubFolder.ts");
 
-            string contents = File.ReadAllText(Path.Combine(options.OutputFolder, "Models", "Sub", "TestClassWithSubFolder.ts"));
+            string contents = File.ReadAllText(Path.Combine(options.ModelOutputFolder!, "Models", "Sub", "TestClassWithSubFolder.ts"));
 
             // Assert
             string expected = @"// Auto-generated from TestClassWithSubFolder.cs
@@ -169,7 +169,7 @@ export default TestClassWithSubFolder;
         [Test]
         public void Generation_TestEnumFolder() {
             // Arrange
-            string file = Path.Combine(options.OutputFolder, "Enums", "TestEnumWithFolder.ts");
+            string file = Path.Combine(options.ModelOutputFolder!, "Enums", "TestEnumWithFolder.ts");
 
             // Assert
             Assert.That(File.Exists(file), Is.True);

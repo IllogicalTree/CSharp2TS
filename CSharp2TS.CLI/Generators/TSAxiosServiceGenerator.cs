@@ -15,8 +15,8 @@ namespace CSharp2TS.CLI.Generators {
         public TSAxiosServiceGenerator(Type type, Options options) : base(type, options) {
             items = new List<TSServiceMethod>();
             generateApiClient = string.IsNullOrWhiteSpace(options.ApiClientPath);
-            apiClientFileName = generateApiClient ? "apiClient" : Path.GetFileNameWithoutExtension(options.ApiClientPath);
-            apiClientPath = generateApiClient ? options.ServicesOutputFolder : Path.GetDirectoryName(options.ApiClientPath)!;
+            apiClientFileName = generateApiClient ? "apiClient" : Path.GetFileNameWithoutExtension(options.ApiClientPath)!;
+            apiClientPath = generateApiClient ? options.ServicesOutputFolder! : Path.GetDirectoryName(options.ApiClientPath)!;
         }
 
         public override string Generate() {
@@ -59,18 +59,18 @@ namespace CSharp2TS.CLI.Generators {
 
                 string queryString = GetQueryString(httpMethodAttribute, queryParams);
 
-                TryAddTSImport(returnType, Options.ServicesOutputFolder, Options.OutputFolder);
+                TryAddTSImport(returnType, Options.ServicesOutputFolder, Options.ModelOutputFolder);
 
                 foreach (var param in routeParams) {
-                    TryAddTSImport(param.Property, Options.ServicesOutputFolder, Options.OutputFolder);
+                    TryAddTSImport(param.Property, Options.ServicesOutputFolder, Options.ModelOutputFolder);
                 }
 
                 foreach (var param in queryParams) {
-                    TryAddTSImport(param.Property, Options.ServicesOutputFolder, Options.OutputFolder);
+                    TryAddTSImport(param.Property, Options.ServicesOutputFolder, Options.ModelOutputFolder);
                 }
 
                 if (bodyParam != null) {
-                    TryAddTSImport(bodyParam.Property, Options.ServicesOutputFolder, Options.OutputFolder);
+                    TryAddTSImport(bodyParam.Property, Options.ServicesOutputFolder, Options.ModelOutputFolder);
                 }
 
                 items.Add(new TSServiceMethod(
@@ -178,7 +178,7 @@ namespace CSharp2TS.CLI.Generators {
 
         private string BuildTsFile() {
             return new TSAxiosServiceTemplate {
-                ApiClientPath = GetRelativeImportPath(Options.ServicesOutputFolder, apiClientPath) + apiClientFileName,
+                ApiClientPath = GetRelativeImportPath(Options.ServicesOutputFolder!, apiClientPath) + apiClientFileName,
                 Items = items,
                 Imports = imports.Select(i => i.Value).ToList(),
                 Type = Type,

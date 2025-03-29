@@ -20,20 +20,26 @@ Add the GitHub nuget as a feed:
 
 The CSharp2TS tool can be run with a config or command line arguments.
 
-### Config File (Optional)
-
 To create an empty config file run `csharp2ts create-config`
+
+To create a basic axios api client run `csharp2ts create-axios-api-client`
+
+### Config File (Optional)
 
 This will create a csharp2ts.config file:
 
 ```json
 {
-    "OutputFolder": "",
-    "AssemblyPath": "",
-    "ServicesOutputFolder": "",
-    "ServicesAssemblyPath": "",
+    "GenerateModels": false,
+    "ModelOutputFolder": null,
+    "ModelAssemblyPaths": [],
+    
+    "GenerateServices": false,
+    "ServicesOutputFolder": null,
+    "ServicesAssemblyPaths": [],
     "ServiceGenerator": "axios",
-    "ApiClientPath": "",
+    "ApiClientPath": null,
+    
     "FileNameCasingStyle": "pascal"
 }
 ```

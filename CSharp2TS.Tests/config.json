@@ -1,5 +1,6 @@
 ﻿{
-    "outputFolder": "output",
-    "assemblyPath": "assembly",
+    "generateModels": true,
+    "modelOutputFolder": "output",
+    "modelAssemblyPaths": [ "assembly1", "assembly2" ],
     "fileNameCasingStyle": "camel"
 }

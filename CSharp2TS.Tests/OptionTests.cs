@@ -8,8 +8,8 @@ namespace CSharp2TS.Tests {
         }
 
         [Test]
-        [TestCase("-o")]
-        [TestCase("--output-folder")]
+        [TestCase("-mo")]
+        [TestCase("--model-output-folder")]
         public void OptionParser_Args_OutputFolder(string option) {
             // Arrange
             string outputFolder = "output folder";
@@ -19,13 +19,13 @@ namespace CSharp2TS.Tests {
             var noValueResult = OptionParser.ParseFromArgs([option])!;
 
             // Assert
-            Assert.That(result.OutputFolder, Is.EqualTo(outputFolder));
-            Assert.That(noValueResult.OutputFolder, Is.EqualTo(string.Empty));
+            Assert.That(result.ModelOutputFolder, Is.EqualTo(outputFolder));
+            Assert.That(noValueResult.ModelOutputFolder, Is.Null);
         }
 
         [Test]
-        [TestCase("-a")]
-        [TestCase("--assembly-path")]
+        [TestCase("-ma")]
+        [TestCase("--model-assembly-path")]
         public void OptionParser_Args_AssemblyPath(string option) {
             // Arrange
             string assemblyFile = "assembly file";
@@ -35,8 +35,8 @@ namespace CSharp2TS.Tests {
             var noValueResult = OptionParser.ParseFromArgs([option])!;
 
             // Assert
-            Assert.That(result.AssemblyPath, Is.EqualTo(assemblyFile));
-            Assert.That(noValueResult.AssemblyPath, Is.EqualTo(string.Empty));
+            Assert.That(result.ModelAssemblyPaths[0], Is.EqualTo(assemblyFile));
+            Assert.That(noValueResult.ModelAssemblyPaths.Length, Is.EqualTo(0));
         }
 
         [Test]
@@ -52,7 +52,7 @@ namespace CSharp2TS.Tests {
 
             // Assert
             Assert.That(result.ServicesOutputFolder, Is.EqualTo(outputFolder));
-            Assert.That(noValueResult.ServicesOutputFolder, Is.EqualTo(string.Empty));
+            Assert.That(noValueResult.ServicesOutputFolder, Is.Null);
         }
 
         [Test]
@@ -67,8 +67,8 @@ namespace CSharp2TS.Tests {
             var noValueResult = OptionParser.ParseFromArgs([option])!;
 
             // Assert
-            Assert.That(result.ServicesAssemblyPath, Is.EqualTo(assemblyFile));
-            Assert.That(noValueResult.ServicesAssemblyPath, Is.EqualTo(string.Empty));
+            Assert.That(result.ServicesAssemblyPaths[0], Is.EqualTo(assemblyFile));
+            Assert.That(noValueResult.ServicesAssemblyPaths.Length, Is.EqualTo(0));
         }
 
         [Test]
@@ -116,7 +116,7 @@ namespace CSharp2TS.Tests {
 
             // Assert
             Assert.That(result.ApiClientPath, Is.EqualTo(path));
-            Assert.That(noValueResult.ApiClientPath, Is.EqualTo(string.Empty));
+            Assert.That(noValueResult.ApiClientPath, Is.Null);
         }
 
         [Test]
@@ -130,8 +130,9 @@ namespace CSharp2TS.Tests {
             // Assert
             Assert.That(File.Exists(fileName), Is.True);
             Assert.That(options, Is.Not.Null);
-            Assert.That(options.OutputFolder, Is.EqualTo("output"));
-            Assert.That(options.AssemblyPath, Is.EqualTo("assembly"));
+            Assert.That(options.ModelOutputFolder, Is.EqualTo("output"));
+            Assert.That(options.ModelAssemblyPaths[0], Is.EqualTo("assembly1"));
+            Assert.That(options.ModelAssemblyPaths[1], Is.EqualTo("assembly2"));
             Assert.That(options.FileNameCasingStyle, Is.EqualTo("camel"));
         }
 

@@ -20,43 +20,39 @@ namespace CSharp2TS.CLI.Generators {
         }
 
         private void GenerateModels() {
-            if (!File.Exists(options.AssemblyPath)) {
-                throw new FileNotFoundException($"Model assembly does not exist at {options.AssemblyPath}");
+            if (Directory.Exists(options.ModelOutputFolder)) {
+                Directory.Delete(options.ModelOutputFolder, true);
             }
 
-            if (Directory.Exists(options.OutputFolder)) {
-                Directory.Delete(options.OutputFolder, true);
+            Directory.CreateDirectory(options.ModelOutputFolder!);
+
+            foreach (var assemblyPath in options.ModelAssemblyPaths) {
+                Assembly assembly = Assembly.LoadFrom(assemblyPath);
+
+                GenerateInterfaces(assembly, options);
+                GenerateEnums(assembly, options);
             }
-
-            Directory.CreateDirectory(options.OutputFolder);
-
-            Assembly assembly = Assembly.LoadFrom(options.AssemblyPath);
-
-            GenerateInterfaces(assembly, options);
-            GenerateEnums(assembly, options);
         }
 
         private void GenerateServices() {
-            if (!File.Exists(options.ServicesAssemblyPath)) {
-                throw new FileNotFoundException($"Service assembly does not exist at {options.ServicesAssemblyPath}");
-            }
-
             if (Directory.Exists(options.ServicesOutputFolder)) {
                 Directory.Delete(options.ServicesOutputFolder, true);
             }
 
-            Directory.CreateDirectory(options.ServicesOutputFolder);
+            Directory.CreateDirectory(options.ServicesOutputFolder!);
 
-            Assembly assembly = Assembly.LoadFrom(options.ServicesAssemblyPath);
+            foreach (var assemblyPath in options.ServicesAssemblyPaths) {
+                Assembly assembly = Assembly.LoadFrom(assemblyPath);
 
-            GenerateServices(assembly, options);
+                GenerateServices(assembly, options);
+            }
         }
 
         private void GenerateInterfaces(Assembly assembly, Options options) {
             var types = GetTypesByAttribute(assembly, typeof(TSInterfaceAttribute));
 
             foreach (Type type in types) {
-                GenerateFile(options.OutputFolder, new TSInterfaceGenerator(type, options));
+                GenerateFile(options.ModelOutputFolder!, new TSInterfaceGenerator(type, options));
             }
         }
 
@@ -64,7 +60,7 @@ namespace CSharp2TS.CLI.Generators {
             var types = GetTypesByAttribute(assembly, typeof(TSEnumAttribute));
 
             foreach (Type type in types) {
-                GenerateFile(options.OutputFolder, new TSEnumGenerator(type, options));
+                GenerateFile(options.ModelOutputFolder!, new TSEnumGenerator(type, options));
             }
         }
 
@@ -72,7 +68,7 @@ namespace CSharp2TS.CLI.Generators {
             var types = GetTypesByAttribute(assembly, typeof(TSServiceAttribute));
 
             foreach (Type type in types) {
-                GenerateFile(options.ServicesOutputFolder, new TSAxiosServiceGenerator(type, options));
+                GenerateFile(options.ServicesOutputFolder!, new TSAxiosServiceGenerator(type, options));
             }
         }
 

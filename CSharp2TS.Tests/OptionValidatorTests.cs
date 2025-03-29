@@ -28,8 +28,9 @@ namespace CSharp2TS.Tests {
         public void Validate_ValidModelOptions_ReturnsNull() {
             // Arrange
             var options = new Options {
-                OutputFolder = "out",
-                AssemblyPath = "assembly.dll",
+                GenerateModels = true,
+                ModelOutputFolder = "out",
+                ModelAssemblyPaths = ["CSharp2TS.Tests.dll"],
                 FileNameCasingStyle = Consts.PascalCase,
                 ServiceGenerator = Consts.AxiosService
             };
@@ -45,8 +46,9 @@ namespace CSharp2TS.Tests {
         public void Validate_ValidServiceOptions_ReturnsNull() {
             // Arrange
             var options = new Options {
+                GenerateServices = true,
                 ServicesOutputFolder = "services",
-                ServicesAssemblyPath = "services.dll",
+                ServicesAssemblyPaths = ["CSharp2TS.Tests.dll"],
                 FileNameCasingStyle = Consts.PascalCase,
                 ServiceGenerator = Consts.AxiosService
             };
@@ -62,8 +64,9 @@ namespace CSharp2TS.Tests {
         public void Validate_InvalidServiceGenerator_ReturnsErrorMessage() {
             // Arrange
             var options = new Options {
+                GenerateServices = true,
                 ServicesOutputFolder = "services",
-                ServicesAssemblyPath = "services.dll",
+                ServicesAssemblyPaths = ["CSharp2TS.Tests.dll"],
                 ServiceGenerator = "invalid"
             };
 
@@ -78,8 +81,9 @@ namespace CSharp2TS.Tests {
         public void Validate_InvalidCasingStyle_ReturnsErrorMessage() {
             // Arrange
             var options = new Options {
-                OutputFolder = "out",
-                AssemblyPath = "assembly.dll",
+                GenerateModels = true,
+                ModelOutputFolder = "out",
+                ModelAssemblyPaths = ["CSharp2TS.Tests.dll"],
                 FileNameCasingStyle = "invalid"
             };
 
@@ -94,7 +98,8 @@ namespace CSharp2TS.Tests {
         public void Validate_MissingModelOutputFolder_ReturnsErrorMessage() {
             // Arrange
             var options = new Options {
-                AssemblyPath = "assembly.dll"
+                GenerateModels = true,
+                ModelAssemblyPaths = ["CSharp2TS.Tests.dll"]
             };
 
             // Act
@@ -108,21 +113,23 @@ namespace CSharp2TS.Tests {
         public void Validate_MissingModelAssemblyPath_ReturnsErrorMessage() {
             // Arrange
             var options = new Options {
-                OutputFolder = "out"
+                GenerateModels = true,
+                ModelOutputFolder = "out"
             };
 
             // Act
             var result = OptionParser.Validate(options);
 
             // Assert
-            Assert.That(result, Is.EqualTo("Models assembly path is required"));
+            Assert.That(result, Is.EqualTo("At least one model assembly path is required"));
         }
 
         [Test]
         public void Validate_MissingServiceOutputFolder_ReturnsErrorMessage() {
             // Arrange
             var options = new Options {
-                ServicesAssemblyPath = "services.dll"
+                GenerateServices = true,
+                ServicesAssemblyPaths = ["CSharp2TS.Tests.dll"]
             };
 
             // Act
@@ -136,6 +143,7 @@ namespace CSharp2TS.Tests {
         public void Validate_MissingServiceAssemblyPath_ReturnsErrorMessage() {
             // Arrange
             var options = new Options {
+                GenerateServices = true,
                 ServicesOutputFolder = "services"
             };
 
@@ -143,7 +151,7 @@ namespace CSharp2TS.Tests {
             var result = OptionParser.Validate(options);
 
             // Assert
-            Assert.That(result, Is.EqualTo("Services assembly path is required"));
+            Assert.That(result, Is.EqualTo("At least one service assembly path is required"));
         }
     }
 }

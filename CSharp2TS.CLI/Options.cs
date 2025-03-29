@@ -1,14 +1,15 @@
 ﻿namespace CSharp2TS.CLI {
     public class Options {
-        public string OutputFolder { get; set; } = string.Empty;
-        public string AssemblyPath { get; set; } = string.Empty;
-        public string ServicesOutputFolder { get; set; } = string.Empty;
-        public string ServicesAssemblyPath { get; set; } = string.Empty;
-        public string ServiceGenerator { get; set; } = Consts.AxiosService;
-        public string ApiClientPath { get; set; } = string.Empty;
-        public string FileNameCasingStyle { get; set; } = Consts.PascalCase;
+        public bool GenerateModels { get; set; }
+        public string? ModelOutputFolder { get; set; }
+        public string[] ModelAssemblyPaths { get; set; } = [];
 
-        public bool GenerateModels => !string.IsNullOrWhiteSpace(OutputFolder) || !string.IsNullOrWhiteSpace(AssemblyPath);
-        public bool GenerateServices => !string.IsNullOrWhiteSpace(ServicesOutputFolder) || !string.IsNullOrWhiteSpace(ServicesAssemblyPath);
+        public bool GenerateServices { get; set; }
+        public string? ServicesOutputFolder { get; set; }
+        public string[] ServicesAssemblyPaths { get; set; } = [];
+        public string ServiceGenerator { get; set; } = Consts.AxiosService;
+        public string? ApiClientPath { get; set; }
+
+        public string FileNameCasingStyle { get; set; } = Consts.PascalCase;
     }
 }
