@@ -8,15 +8,33 @@ using Microsoft.AspNetCore.Mvc.Routing;
 namespace CSharp2TS.CLI.Generators {
     public class TSAxiosServiceGenerator : GeneratorBase {
         private IList<TSServiceMethod> items;
+        private bool generateApiClient;
+        private string apiClientPath;
+        private string apiClientFileName;
 
         public TSAxiosServiceGenerator(Type type, Options options) : base(type, options) {
             items = new List<TSServiceMethod>();
+            generateApiClient = string.IsNullOrWhiteSpace(options.ApiClientPath);
+            apiClientFileName = generateApiClient ? "apiClient" : Path.GetFileNameWithoutExtension(options.ApiClientPath);
+            apiClientPath = generateApiClient ? options.ServicesOutputFolder : Path.GetDirectoryName(options.ApiClientPath)!;
         }
 
         public override string Generate() {
+            if (generateApiClient) {
+                GenerateApiClient();
+            }
+
             ParseTypes();
 
             return BuildTsFile();
+        }
+
+        public static void GenerateApiClient() {
+            string apiClientTemplate = new TSAxiosApiClientTemplate().TransformText();
+
+            using (var streamWriter = new StreamWriter("apiClient.ts")) {
+                streamWriter.Write(apiClientTemplate);
+            }
         }
 
         private void ParseTypes() {
@@ -160,6 +178,7 @@ namespace CSharp2TS.CLI.Generators {
 
         private string BuildTsFile() {
             return new TSAxiosServiceTemplate {
+                ApiClientPath = GetRelativeImportPath(Options.ServicesOutputFolder, apiClientPath) + apiClientFileName,
                 Items = items,
                 Imports = imports.Select(i => i.Value).ToList(),
                 Type = Type,

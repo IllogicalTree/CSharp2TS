@@ -5,6 +5,7 @@
         public string ServicesOutputFolder { get; set; } = string.Empty;
         public string ServicesAssemblyPath { get; set; } = string.Empty;
         public string ServiceGenerator { get; set; } = Consts.AxiosService;
+        public string ApiClientPath { get; set; } = string.Empty;
         public string FileNameCasingStyle { get; set; } = Consts.PascalCase;
 
         public bool GenerateModels => !string.IsNullOrWhiteSpace(OutputFolder) || !string.IsNullOrWhiteSpace(AssemblyPath);

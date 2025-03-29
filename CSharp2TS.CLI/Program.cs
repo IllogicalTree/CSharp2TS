@@ -5,6 +5,8 @@ using CSharp2TS.CLI.Generators;
 namespace CSharp2TS.CLI {
     public class Program {
         private static void Main(string[] args) {
+            args = ["create-axios-api-client"];
+
             if (args.Length == 0) {
                 ShowIntro();
                 return;
@@ -22,6 +24,12 @@ namespace CSharp2TS.CLI {
 
                 if (args[0] == "create-config") {
                     CreateDefaultConfig();
+                    return;
+                }
+
+                if (args[0] == "create-axios-api-client") {
+                    TSAxiosServiceGenerator.GenerateApiClient();
+                    Console.WriteLine("Axios API Client created successfully");
                     return;
                 }
 
