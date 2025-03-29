@@ -26,5 +26,13 @@ namespace CSharp2TS.Tests.Stubs {
         [HttpPost("test/{id}")]
         public void CreateWithId(Guid id, TestClassWithFolder model) {
         }
+
+        [HttpPut("test/{id}")]
+        public void UpdateWithId(Guid id, TestClassWithFolder model) {
+        }
+
+        [HttpDelete("{id}")]
+        public void Delete(Guid id) {
+        }
     }
 }

@@ -14,7 +14,7 @@ import <#= item.Name #> from '<#= item.Path #>';
 export default {
 <# foreach (var item in Items) { #>
   async <#= item.MethodName #>(<#= string.Join(", ", item.AllParams.Select(i => $"{i.Name}: {i.Property.TSTypeFull}")) #>): Promise<<#= item.ReturnType #>> {
-    var response = await apiClient.<#= item.HttpMethod #><<#= item.ReturnType #>>(`<#= item.Route #><#= item.QueryString #>`<# if (item.HttpMethod != Consts.HttpGet) { #>, <#= item.BodyParam.Name #><# } #>);
+    var response = await apiClient.<#= item.HttpMethod #><<#= item.ReturnType #>>(`<#= item.Route #><#= item.QueryString #>`<# if (item.BodyParam != null) { #>, <#= item.BodyParam.Name #><# } #>);
     return response.data;
   },
 <# } #>

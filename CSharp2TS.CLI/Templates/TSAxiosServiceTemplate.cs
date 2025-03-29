@@ -122,7 +122,7 @@ namespace CSharp2TS.CLI.Templates
             this.Write("`");
             
             #line 17 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
- if (item.HttpMethod != Consts.HttpGet) { 
+ if (item.BodyParam != null) { 
             
             #line default
             #line hidden
