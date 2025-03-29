@@ -92,7 +92,21 @@ namespace CSharp2TS.CLI.Templates
             
             #line default
             #line hidden
-            this.Write("> {\r\n    var response = await apiClient.");
+            this.Write("> {\r\n    ");
+            
+            #line 17 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+ if (item.ReturnType != "void") { 
+            
+            #line default
+            #line hidden
+            this.Write("var response = ");
+            
+            #line 17 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("await apiClient.");
             
             #line 17 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.HttpMethod));
@@ -139,9 +153,23 @@ namespace CSharp2TS.CLI.Templates
             
             #line default
             #line hidden
-            this.Write(");\r\n    return response.data;\r\n  },\r\n");
+            this.Write(");\r\n");
+            
+            #line 18 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+ if (item.ReturnType != "void") { 
+            
+            #line default
+            #line hidden
+            this.Write("    return response.data; \r\n");
             
             #line 20 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("  },\r\n\r\n");
+            
+            #line 23 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
  } 
             
             #line default
@@ -150,7 +178,7 @@ namespace CSharp2TS.CLI.Templates
             return this.GenerationEnvironment.ToString();
         }
         
-        #line 23 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+        #line 26 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
 
 public Type Type { get; set; }
 public IList<TSImport> Imports { get; set; }
