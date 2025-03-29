@@ -5,8 +5,6 @@ using CSharp2TS.CLI.Generators;
 namespace CSharp2TS.CLI {
     public class Program {
         private static void Main(string[] args) {
-            args = ["create-axios-api-client"];
-
             if (args.Length == 0) {
                 ShowIntro();
                 return;
@@ -72,6 +70,9 @@ namespace CSharp2TS.CLI {
             Console.WriteLine("Create empty config file:");
             Console.WriteLine("  cshart2ts create-config");
             Console.WriteLine("-------------");
+            Console.WriteLine("Create basic axios api client:");
+            Console.WriteLine("  cshart2ts create-axios-api-client");
+            Console.WriteLine("-------------");
             Console.WriteLine("Usage:");
             Console.WriteLine("  cshart2ts <path to config>");
             Console.WriteLine("  --- OR ---");
@@ -84,6 +85,9 @@ namespace CSharp2TS.CLI {
             Console.WriteLine("-------------");
             Console.WriteLine("Create empty config file:");
             Console.WriteLine("  cshart2ts create-config");
+            Console.WriteLine("-------------");
+            Console.WriteLine("Create basic axios api client:");
+            Console.WriteLine("  cshart2ts create-axios-api-client");
             Console.WriteLine("-------------");
             Console.WriteLine("Config:");
             Console.WriteLine("  csharp2ts <path to config>");

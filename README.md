@@ -28,9 +28,13 @@ This will create a csharp2ts.config file:
 
 ```json
 {
-  "OutputFolder": "",
-  "AssemblyPath": "",
-  "FileNameCasingStyle": "pascal"
+    "OutputFolder": "",
+    "AssemblyPath": "",
+    "ServicesOutputFolder": "",
+    "ServicesAssemblyPath": "",
+    "ServiceGenerator": "axios",
+    "ApiClientPath": "",
+    "FileNameCasingStyle": "pascal"
 }
 ```
 
@@ -44,11 +48,15 @@ Run using config: `csharp2ts C:\path_to_config.json`
 
 Usage: `csharp2ts [option] [option args]`
 
-| option                | Option Args                                        |
-| --------------------- | -------------------------------------------------- |
-| --output-folder \| -o | The folder where the generated files will be saved |
-| --assembly-path \| -a | The path to the assembly                           |
-| --file-casing \| -fc  | The file name casing style (camel                  |
+| option                          | Option Args                                                  |
+| ------------------------------- | ------------------------------------------------------------ |
+| --output-folder \| -o           | The folder where the generated model files will be saved     |
+| --assembly-path \| -a           | The path to the model assembly                               |
+| --file-casing \| -fc            | The file name casing style (camel \| pascal)                 |
+| --services-output-folder \| -so | The folder where the services will be saved                  |
+| --services-assembly-path \| -sa | The path to the assembly with the controllers                |
+| --service-generator \| -sg      | The type of service - currently only Axios is supported      |
+| --api-client-path \| -ac        | The path to the api client file. The file must export an "apiClient" for use in the services |
 
 Example
 

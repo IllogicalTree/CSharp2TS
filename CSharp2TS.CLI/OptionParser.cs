@@ -12,6 +12,7 @@ namespace CSharp2TS.CLI {
                 AssemblyPath = TryParseSwitch(args, "--assembly-path", "-a") ?? string.Empty,
                 ServicesOutputFolder = TryParseSwitch(args, "--services-output-folder", "-so") ?? string.Empty,
                 ServicesAssemblyPath = TryParseSwitch(args, "--services-assembly-path", "-sa") ?? string.Empty,
+                ApiClientPath = TryParseSwitch(args, "--api-client-path", "-ac") ?? string.Empty,
                 FileNameCasingStyle = TryParseSwitch(args, "--file-casing", "-fc") ?? Consts.PascalCase,
                 ServiceGenerator = TryParseSwitch(args, "--service-generator", "-sg") ?? Consts.AxiosService,
             };

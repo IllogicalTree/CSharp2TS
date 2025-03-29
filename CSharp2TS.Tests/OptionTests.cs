@@ -104,6 +104,22 @@ namespace CSharp2TS.Tests {
         }
 
         [Test]
+        [TestCase("-ac")]
+        [TestCase("--api-client-path")]
+        public void OptionParser_Args_ApiClientPath(string option) {
+            // Arrange
+            string path = "/test/";
+
+            // Act
+            var result = OptionParser.ParseFromArgs([option, path])!;
+            var noValueResult = OptionParser.ParseFromArgs([option])!;
+
+            // Assert
+            Assert.That(result.ApiClientPath, Is.EqualTo(path));
+            Assert.That(noValueResult.ApiClientPath, Is.EqualTo(string.Empty));
+        }
+
+        [Test]
         public void OptionParser_Config_Exists() {
             // Arrange
             string fileName = "config.json";
