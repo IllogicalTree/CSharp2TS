@@ -56,8 +56,8 @@ Usage: `csharp2ts [option] [option args]`
 
 | option                          | Option Args                                                  |
 | ------------------------------- | ------------------------------------------------------------ |
-| --output-folder \| -o           | The folder where the generated model files will be saved     |
-| --assembly-path \| -a           | The path to the model assembly                               |
+| --model-output-folder \| -mo    | The folder where the generated model files will be saved     |
+| --model-assembly-path \| -ma    | The path to the model assembly                               |
 | --file-casing \| -fc            | The file name casing style (camel \| pascal)                 |
 | --services-output-folder \| -so | The folder where the services will be saved                  |
 | --services-assembly-path \| -sa | The path to the assembly with the controllers                |
