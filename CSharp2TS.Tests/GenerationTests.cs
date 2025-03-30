@@ -19,6 +19,8 @@ namespace CSharp2TS.Tests {
                 FileNameCasingStyle = Consts.PascalCase,
                 ServicesAssemblyPaths = [assemblyPath],
                 ServicesOutputFolder = Path.Combine(outputFolder, "Services"),
+                GenerateModels = true,
+                GenerateServices = true,
             };
 
             Directory.CreateDirectory(outputFolder);

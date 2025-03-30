@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CSharp2TS.Tests.Stubs {
     [TSService]
-    public class TestController {
+    [ApiController]
+    public class TestController : ControllerBase {
         [HttpGet]
         public string Get() {
             return "Hello, World!";
