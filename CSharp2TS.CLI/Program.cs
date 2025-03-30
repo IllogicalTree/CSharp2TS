@@ -52,7 +52,9 @@ namespace CSharp2TS.CLI {
             Options options = new Options();
 
             using (var stream = File.Create("csharp2ts.json")) {
-                JsonSerializer.Serialize(stream, options);
+                JsonSerializer.Serialize(stream, options, new JsonSerializerOptions {
+                    WriteIndented = true,
+                });
             }
 
             Console.WriteLine("Config created successfully");
