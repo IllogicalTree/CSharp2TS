@@ -3,6 +3,23 @@
 namespace CSharp2TS.Tests {
     public class OptionTests {
         [Test]
+        [TestCase("-c")]
+        [TestCase("--config")]
+        public void OptionParser_Args_Config(string option) {
+            // Arrange
+            string configPath = "/config/path/config.json";
+
+            // Act
+            var result = OptionParser.TryParseConfigFilePath([option, configPath], out string path)!;
+            var noValueResult = OptionParser.TryParseConfigFilePath([option], out string _);
+
+            // Assert
+            Assert.That(result, Is.True);
+            Assert.That(path, Is.EqualTo(configPath));
+            Assert.That(noValueResult, Is.False);
+        }
+
+        [Test]
         public void OptionParser_NoCommands() {
             Assert.That(OptionParser.ParseFromArgs([]), Is.Null);
         }

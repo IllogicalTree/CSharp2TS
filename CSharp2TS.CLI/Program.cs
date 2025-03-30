@@ -29,8 +29,10 @@ namespace CSharp2TS.CLI {
                     Console.WriteLine("Axios API Client created successfully");
                     return;
                 }
+            }
 
-                options = OptionParser.ParseFromFile(args[0]);
+            if (OptionParser.TryParseConfigFilePath(args, out string configPath)) {
+                options = OptionParser.ParseFromFile(configPath);
             } else {
                 options = OptionParser.ParseFromArgs(args);
             }
@@ -39,7 +41,7 @@ namespace CSharp2TS.CLI {
 
             if (!string.IsNullOrWhiteSpace(errorMessage)) {
                 Console.WriteLine(errorMessage);
-                return;
+                Environment.Exit(-1);
             }
 
             Generator generator = new Generator(options!);
@@ -62,37 +64,31 @@ namespace CSharp2TS.CLI {
             Console.WriteLine("Run csharp2ts [-h | -help] to see commands");
             Console.WriteLine();
             Console.WriteLine("Usage:");
-            Console.WriteLine("  cshart2ts <path to config>");
+            Console.WriteLine("  cshart2ts -c <path to config>");
             Console.WriteLine("  --- OR ---");
             Console.WriteLine("  cshart2ts <arguments>");
             Console.WriteLine("-------------");
         }
 
         private static void ShowHelp() {
-            Console.WriteLine("csharp2ts");
-            Console.WriteLine("-------------");
-            Console.WriteLine("Create empty config file:");
-            Console.WriteLine("  cshart2ts create-config");
+            Console.WriteLine("Usage:");
+            Console.WriteLine("csharp2ts [options]");
             Console.WriteLine();
-            Console.WriteLine("Create basic axios api client:");
-            Console.WriteLine("  cshart2ts create-axios-api-client");
+            Console.WriteLine("From Config File:");
+            Console.WriteLine("--config, -c <path to config>        Path to the config file");
             Console.WriteLine();
-            Console.WriteLine("Config:");
-            Console.WriteLine("  csharp2ts <path to config>");
+            Console.WriteLine("CLI Options:");
+            Console.WriteLine("--model-assembly-path, -ma <path>    Path to the assembly containing the models");
+            Console.WriteLine("--model-output-folder, -mo <path>    Path to the output folder for the generated models");
+            Console.WriteLine("--services-assembly-path, -sa <path> Path to the assembly containing the services");
+            Console.WriteLine("--services-output-folder, -so <path> Path to the output folder for the generated services");
+            Console.WriteLine("--service-generator, -sg <name>      Service generator to use (axios)");
+            Console.WriteLine("--api-client-path, -ac <path>        Path to the generated API client file");
+            Console.WriteLine("--file-casing, -fc <style>           File name casing style (camel | pascal)");
             Console.WriteLine();
-            Console.WriteLine("Arguments:");
-            Console.WriteLine("  Usage: csharp2ts [option] [option args]");
-            Console.WriteLine("  --model-output-folder, -mo:      The folder where the generated model files will be saved");
-            Console.WriteLine("  --model-assembly-path, -ma:      The path to the model assembly");
-            Console.WriteLine("  --service-output-folder, -so:    The folder where the generated service files will be saved");
-            Console.WriteLine("  --service-assembly-path, -sa:    The path to the service assembly");
-            Console.WriteLine("  --service-generator, -sg:        The type of service generator - currently only axios supported");
-            Console.WriteLine("  --api-client-path, -ac:          The path to the api client file. The file must export an \"apiClient\" for use in the services. The file is generated if it doesn't exist.");
-            Console.WriteLine($"  --file-casing, -fc:              The file name casing style ({Consts.CamelCase} | {Consts.PascalCase} (default))");
-            Console.WriteLine();
-            Console.WriteLine("Example Usage");
-            Console.WriteLine("  csharp2ts -o ./output -a ./assembly.dll -fc camel");
-            Console.WriteLine("-------------");
+            Console.WriteLine("Commands:");
+            Console.WriteLine("create-config                        Create a default config file");
+            Console.WriteLine("create-axios-api-client              Create an Axios API client file");
         }
     }
 }

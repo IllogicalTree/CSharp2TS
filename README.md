@@ -46,24 +46,30 @@ This will create a csharp2ts.config file:
 
 ## Usage
 
-**Config**
+**Run using config**
 
-Run using config: `csharp2ts C:\path_to_config.json`
+Run using config: `csharp2ts -c C:\path_to_config.json`
 
-**Command line args**
+**Run using command line**
 
-Usage: `csharp2ts [option] [option args]`
+Usage: `csharp2ts [option]`
 
-| option                          | Option Args                                                  |
-| ------------------------------- | ------------------------------------------------------------ |
-| --model-output-folder \| -mo    | The folder where the generated model files will be saved     |
-| --model-assembly-path \| -ma    | The path to the model assembly                               |
-| --file-casing \| -fc            | The file name casing style (camel \| pascal)                 |
-| --services-output-folder \| -so | The folder where the services will be saved                  |
-| --services-assembly-path \| -sa | The path to the assembly with the controllers                |
-| --service-generator \| -sg      | The type of service - currently only Axios is supported      |
-| --api-client-path \| -ac        | The path to the api client file. The file must export an "apiClient" for use in the services |
+| Option                               | Description                                                  |
+| ------------------------------------ | ------------------------------------------------------------ |
+| --model-output-folder, -mo <path>    | The folder where the generated model files will be saved     |
+| --model-assembly-path, -ma <path>    | The path to the model assembly                               |
+| --file-casing, -fc <path>            | The file name casing style (camel \| pascal)                 |
+| --services-output-folder, -so <path> | The folder where the services will be saved                  |
+| --services-assembly-path, -sa <path> | The path to the assembly with the controllers                |
+| --service-generator, -sg <path>      | The type of service - currently only Axios is supported      |
+| --api-client-path, -ac <path>        | The path to the api client file. The file must export an "apiClient" for use in the services |
 
-Example
+**Commands**
 
-`csharp2ts -o ./output -a ./assembly.dll`
+Usage: `csharp2ts [command]`
+
+| Command                 | Description                           |
+| ----------------------- | ------------------------------------- |
+| -h, -help, --help       | Show command and command line options |
+| create-config           | Create a default config file          |
+| create-axios-api-client | Create an Axios API client file       |

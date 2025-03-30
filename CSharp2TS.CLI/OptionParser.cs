@@ -2,6 +2,18 @@
 
 namespace CSharp2TS.CLI {
     public static class OptionParser {
+        public static bool TryParseConfigFilePath(string[] args, out string configPath) {
+            string? parsedPath = TryParseSwitch(args, "--config", "-c");
+
+            if (!string.IsNullOrWhiteSpace(parsedPath)) {
+                configPath = parsedPath;
+                return true;
+            }
+
+            configPath = string.Empty;
+            return false;
+        }
+
         public static Options? ParseFromArgs(string[] args) {
             if (args.Length == 0) {
                 return null;
