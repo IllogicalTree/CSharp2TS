@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using System.Text.Json;
+﻿using System.Text.Json;
 using CSharp2TS.CLI.Generators;
 
 namespace CSharp2TS.CLI {
@@ -58,12 +57,7 @@ namespace CSharp2TS.CLI {
         }
 
         private static void ShowIntro() {
-            var versionString = Assembly.GetEntryAssembly()?
-                .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
-                .InformationalVersion
-                .ToString();
-
-            Console.WriteLine($"csharp2ts v{versionString}");
+            Console.WriteLine("csharp2ts");
             Console.WriteLine("-------------");
             Console.WriteLine("Run csharp2ts [-h | -help] to see commands");
             Console.WriteLine();
