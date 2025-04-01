@@ -32,14 +32,14 @@ namespace CSharp2TS.CLI.Templates
             this.Write("// Auto-generated from ");
             
             #line 7 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSEnumTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Type.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(TypeName));
             
             #line default
             #line hidden
             this.Write(".cs\r\n\r\nenum ");
             
             #line 9 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSEnumTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Type.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(TypeName));
             
             #line default
             #line hidden
@@ -74,7 +74,7 @@ namespace CSharp2TS.CLI.Templates
             this.Write("}\r\n\r\nexport default ");
             
             #line 15 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSEnumTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Type.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(TypeName));
             
             #line default
             #line hidden
@@ -84,7 +84,7 @@ namespace CSharp2TS.CLI.Templates
         
         #line 16 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSEnumTemplate.tt"
 
-public Type Type { get; set; }
+public string TypeName { get; set; }
 public IList<TSEnumProperty> Items { get; set; }
 
         

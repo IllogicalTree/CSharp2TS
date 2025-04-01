@@ -4,16 +4,16 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="CSharp2TS.CLI.Generators.Entities" #>
-// Auto-generated from <#= Type.Name #>.cs
+// Auto-generated from <#= TypeName #>.cs
 
-enum <#= Type.Name #> {
+enum <#= TypeName #> {
 <# foreach (var item in Items) { #>
   <#= item.Name #> = <#= item.Number #>,
 <# } #>
 }
 
-export default <#= Type.Name #>;
+export default <#= TypeName #>;
 <#+
-public Type Type { get; set; }
+public string TypeName { get; set; }
 public IList<TSEnumProperty> Items { get; set; }
 #>

@@ -4,7 +4,7 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="CSharp2TS.CLI.Generators.Entities" #>
-// Auto-generated from <#= Type.Name #>.cs
+// Auto-generated from <#= TypeName #>.cs
 <# if (Imports.Count > 0) { #>
 
 <# foreach (var item in Imports) { #>
@@ -12,15 +12,15 @@ import <#= item.Name #> from '<#= item.Path #>';
 <# } #>
 <# } #>
 
-interface <#= Type.Name #> {
+interface <#= TypeName #> {
 <# foreach (var item in Properties) { #>
   <#= item.Name #>: <#= item.Type #>;
 <# } #>
 }
 
-export default <#= Type.Name #>;
+export default <#= TypeName #>;
 <#+
-public Type Type { get; set; }
+public string TypeName { get; set; }
 public IList<TSImport> Imports { get; set; }
 public IList<TSProperty> Properties { get; set; }
 #>

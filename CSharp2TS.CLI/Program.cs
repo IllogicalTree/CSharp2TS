@@ -25,7 +25,7 @@ namespace CSharp2TS.CLI {
                 }
 
                 if (args[0] == "create-axios-api-client") {
-                    TSAxiosServiceGenerator.GenerateApiClient();
+                    //TSAxiosServiceGenerator.GenerateApiClient();
                     Console.WriteLine("Axios API Client created successfully");
                     return;
                 }

@@ -32,7 +32,7 @@ namespace CSharp2TS.CLI.Templates
             this.Write("// Auto-generated from ");
             
             #line 7 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSInterfaceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Type.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(TypeName));
             
             #line default
             #line hidden
@@ -80,7 +80,7 @@ namespace CSharp2TS.CLI.Templates
             this.Write("\r\ninterface ");
             
             #line 15 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSInterfaceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Type.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(TypeName));
             
             #line default
             #line hidden
@@ -115,7 +115,7 @@ namespace CSharp2TS.CLI.Templates
             this.Write("}\r\n\r\nexport default ");
             
             #line 21 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSInterfaceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Type.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(TypeName));
             
             #line default
             #line hidden
@@ -125,7 +125,7 @@ namespace CSharp2TS.CLI.Templates
         
         #line 22 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSInterfaceTemplate.tt"
 
-public Type Type { get; set; }
+public string TypeName { get; set; }
 public IList<TSImport> Imports { get; set; }
 public IList<TSProperty> Properties { get; set; }
 

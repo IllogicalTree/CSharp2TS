@@ -1,5 +1,6 @@
-﻿using System.Reflection;
+﻿using CSharp2TS.CLI.Utility;
 using CSharp2TS.Core.Attributes;
+using Mono.Cecil;
 
 namespace CSharp2TS.CLI.Generators {
     public class Generator {
@@ -27,10 +28,10 @@ namespace CSharp2TS.CLI.Generators {
             Directory.CreateDirectory(options.ModelOutputFolder!);
 
             foreach (var assemblyPath in options.ModelAssemblyPaths) {
-                Assembly assembly = Assembly.LoadFrom(assemblyPath);
-
-                GenerateInterfaces(assembly, options);
-                GenerateEnums(assembly, options);
+                using (var assembly = AssemblyDefinition.ReadAssembly(assemblyPath)) {
+                    GenerateInterfaces(assembly.MainModule, options);
+                    GenerateEnums(assembly.MainModule, options);
+                }
             }
         }
 
@@ -42,45 +43,45 @@ namespace CSharp2TS.CLI.Generators {
             Directory.CreateDirectory(options.ServicesOutputFolder!);
 
             foreach (var assemblyPath in options.ServicesAssemblyPaths) {
-                Assembly assembly = Assembly.LoadFrom(assemblyPath);
-
-                GenerateServices(assembly, options);
+                using (var assembly = AssemblyDefinition.ReadAssembly(assemblyPath)) {
+                    GenerateServices(assembly.MainModule, options);
+                }
             }
         }
 
-        private void GenerateInterfaces(Assembly assembly, Options options) {
-            var types = GetTypesByAttribute(assembly, typeof(TSInterfaceAttribute));
+        private void GenerateInterfaces(ModuleDefinition module, Options options) {
+            var types = GetTypesByAttribute(module, typeof(TSInterfaceAttribute));
 
-            foreach (Type type in types) {
+            foreach (TypeDefinition type in types) {
                 GenerateFile(options.ModelOutputFolder!, new TSInterfaceGenerator(type, options));
             }
         }
 
-        private void GenerateEnums(Assembly assembly, Options options) {
-            var types = GetTypesByAttribute(assembly, typeof(TSEnumAttribute));
+        private void GenerateEnums(ModuleDefinition module, Options options) {
+            var types = GetTypesByAttribute(module, typeof(TSEnumAttribute));
 
-            foreach (Type type in types) {
+            foreach (TypeDefinition type in types) {
                 GenerateFile(options.ModelOutputFolder!, new TSEnumGenerator(type, options));
             }
         }
 
-        private void GenerateServices(Assembly assembly, Options options) {
-            var types = GetTypesByAttribute(assembly, typeof(TSServiceAttribute));
+        private void GenerateServices(ModuleDefinition module, Options options) {
+            var types = GetTypesByAttribute(module, typeof(TSServiceAttribute));
 
-            foreach (Type type in types) {
-                GenerateFile(options.ServicesOutputFolder!, new TSAxiosServiceGenerator(type, options));
+            foreach (TypeDefinition type in types) {
+                //GenerateFile(options.ServicesOutputFolder!, new TSAxiosServiceGenerator(type, options));
             }
         }
 
-        private IEnumerable<Type> GetTypesByAttribute(Assembly assembly, Type attributeType) {
-            foreach (Type type in assembly.GetTypes()) {
-                if (type.GetCustomAttribute(attributeType, false) != null) {
+        private IEnumerable<TypeDefinition> GetTypesByAttribute(ModuleDefinition module, Type attributeType) {
+            foreach (var type in module.GetTypes()) {
+                if (type.HasCustomAttribute(attributeType)) {
                     yield return type;
                 }
             }
         }
 
-        private void GenerateFile(string outputFolder, GeneratorBase generator) {
+        private void GenerateFile<TAttribute>(string outputFolder, GeneratorBase<TAttribute> generator) where TAttribute : TSAttributeBase {
             string output = generator.Generate();
             string folder = Path.Combine(outputFolder, generator.FolderLocation ?? string.Empty);
 

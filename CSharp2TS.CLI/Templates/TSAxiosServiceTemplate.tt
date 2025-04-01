@@ -4,7 +4,7 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="CSharp2TS.CLI.Generators.Entities" #>
-// Auto-generated from <#= Type.Name #>.cs
+// Auto-generated from <#= TypeName #>.cs
 
 import { apiClient } from '<#= ApiClientPath #>';
 <# foreach (var item in Imports) { #>
@@ -25,7 +25,7 @@ export default {
 
 <#+
 public string ApiClientPath { get; set; }
-public Type Type { get; set; }
+public string TypeName { get; set; }
 public IList<TSImport> Imports { get; set; }
 public IList<TSServiceMethod> Items { get; set; }
 #>

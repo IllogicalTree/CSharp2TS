@@ -32,7 +32,7 @@ namespace CSharp2TS.CLI.Templates
             this.Write("// Auto-generated from ");
             
             #line 7 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Type.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(TypeName));
             
             #line default
             #line hidden
@@ -188,7 +188,7 @@ namespace CSharp2TS.CLI.Templates
         #line 26 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
 
 public string ApiClientPath { get; set; }
-public Type Type { get; set; }
+public string TypeName { get; set; }
 public IList<TSImport> Imports { get; set; }
 public IList<TSServiceMethod> Items { get; set; }
 

@@ -1,27 +1,26 @@
-﻿using System.Reflection;
-using CSharp2TS.CLI.Generators.Entities;
+﻿using CSharp2TS.CLI.Generators.Entities;
 using CSharp2TS.CLI.Templates;
+using CSharp2TS.CLI.Utility;
 using CSharp2TS.Core.Attributes;
+using Mono.Cecil;
 
 namespace CSharp2TS.CLI.Generators {
-    public class TSInterfaceGenerator : GeneratorBase {
+    public class TSInterfaceGenerator : GeneratorBase<TSInterfaceAttribute> {
         private IList<TSProperty> properties;
 
-        public TSInterfaceGenerator(Type type, Options options) : base(type, options) {
+        public TSInterfaceGenerator(TypeDefinition type, Options options) : base(type, options) {
             properties = new List<TSProperty>();
         }
 
         public override string Generate() {
-            ParseTypes();
+            ParseTypes(Type);
 
             return BuildTsFile();
         }
 
-        private void ParseTypes() {
-            var properties = Type.GetProperties();
-
-            foreach (PropertyInfo property in properties) {
-                if (property.GetCustomAttribute<TSExcludeAttribute>() != null) {
+        private void ParseTypes(TypeDefinition typeDef) {
+            foreach (var property in typeDef.Properties) {
+                if (property.HasCustomAttribute(typeof(TSExcludeAttribute))) {
                     continue;
                 }
 
@@ -31,13 +30,17 @@ namespace CSharp2TS.CLI.Generators {
                     TryAddTSImport(tsType, Options.ModelOutputFolder, Options.ModelOutputFolder);
                 }
 
-                this.properties.Add(new TSProperty(ToCamelCase(property.Name), tsType.TSTypeFull));
+                properties.Add(new TSProperty(ToCamelCase(property.Name), tsType.TSTypeFull));
+            }
+
+            if (typeDef.BaseType != null) {
+                ParseTypes(typeDef.BaseType.Resolve());
             }
         }
 
         private string BuildTsFile() {
             return new TSInterfaceTemplate {
-                Type = Type,
+                TypeName = Type.Name,
                 Imports = imports.Select(i => i.Value).ToList(),
                 Properties = properties,
             }.TransformText();
