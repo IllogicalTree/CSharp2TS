@@ -10,7 +10,7 @@ namespace CSharp2TS.CLI.Generators {
         private IList<TSServiceMethod> items;
 
         public TSAxiosServiceGenerator(TypeDefinition type, Options options) : base(type, options) {
-            items = new List<TSServiceMethod>();
+            items = [];
         }
 
         public override string Generate() {

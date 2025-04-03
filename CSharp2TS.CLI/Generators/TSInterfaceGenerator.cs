@@ -9,7 +9,7 @@ namespace CSharp2TS.CLI.Generators {
         private IList<TSProperty> properties;
 
         public TSInterfaceGenerator(TypeDefinition type, Options options) : base(type, options) {
-            properties = new List<TSProperty>();
+            properties = [];
         }
 
         public override string Generate() {

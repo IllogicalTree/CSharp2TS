@@ -8,7 +8,7 @@ namespace CSharp2TS.CLI.Generators {
         private IList<TSEnumProperty> items;
 
         public TSEnumGenerator(TypeDefinition type, Options options) : base(type, options) {
-            items = new List<TSEnumProperty>();
+            items = [];
         }
 
         public override string Generate() {
