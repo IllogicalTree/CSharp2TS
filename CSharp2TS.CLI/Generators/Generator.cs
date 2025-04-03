@@ -69,7 +69,7 @@ namespace CSharp2TS.CLI.Generators {
             var types = GetTypesByAttribute(module, typeof(TSServiceAttribute));
 
             foreach (TypeDefinition type in types) {
-                //GenerateFile(options.ServicesOutputFolder!, new TSAxiosServiceGenerator(type, options));
+                GenerateFile(options.ServicesOutputFolder!, new TSAxiosServiceGenerator(type, options));
             }
         }
 

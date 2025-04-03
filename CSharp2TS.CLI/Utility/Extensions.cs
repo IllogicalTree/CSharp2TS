@@ -14,6 +14,12 @@ namespace CSharp2TS.CLI.Utility {
                 .Any();
         }
 
+        public static bool HasCustomAttribute(this MethodDefinition typeReference, Type type) {
+            return typeReference.CustomAttributes
+                .Where(a => a.AttributeType.FullName == type.FullName)
+                .Any();
+        }
+
         public static T? GetCustomAttributeValue<T>(this TypeDefinition typeDef, Type type, string propertyName) {
             var attribute = typeDef.CustomAttributes
                 .Where(a => a.AttributeType.FullName == type.FullName)
@@ -33,6 +39,29 @@ namespace CSharp2TS.CLI.Utility {
                 .Where(f => f.Name == propertyName)
                 .Select(f => (T)f.Argument.Value)
                 .FirstOrDefault();
+        }
+
+        public static bool TryGetAttribute<T>(this MethodDefinition typeDef, out CustomAttribute? attribute) {
+            attribute = typeDef.CustomAttributes
+                .Where(a => a.AttributeType.FullName == typeof(T).FullName)
+                .FirstOrDefault();
+
+            return attribute != null;
+        }
+
+        public static bool TryGetHttpAttributeTemplate<T>(this MethodDefinition typeDef, out string template) {
+            if (!typeDef.TryGetAttribute<T>(out CustomAttribute? attribute)) {
+                template = string.Empty;
+                return false;
+            }
+
+            if (attribute!.HasConstructorArguments) {
+                template = attribute.ConstructorArguments[0].Value.ToString() ?? string.Empty;
+            } else {
+                template = string.Empty;
+            }
+
+            return true;
         }
     }
 }
