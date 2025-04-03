@@ -3,7 +3,6 @@ using CSharp2TS.CLI.Templates;
 using CSharp2TS.CLI.Utility;
 using CSharp2TS.Core.Attributes;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Routing;
 using Mono.Cecil;
 
 namespace CSharp2TS.CLI.Generators {
@@ -36,7 +35,7 @@ namespace CSharp2TS.CLI.Generators {
 
                 string name = ToCamelCase(method.Name);
                 string? httpMethod = httpMethodAttribute.HttpMethod;
-                string route = ToCamelCase(Type.Name.Replace("Controller", string.Empty)) + "/" + httpMethodAttribute.Template ?? string.Empty;
+                string route = GetRoute(httpMethodAttribute);
                 var returnType = GetTSPropertyType(method.ReturnType);
 
                 var allParams = method.Parameters.ToArray();
@@ -131,8 +130,8 @@ namespace CSharp2TS.CLI.Generators {
             return null;
         }
 
-        private string GetRoute(HttpMethodAttribute httpMethodAttribute) {
-            string url = $"/{Type.Name.Replace("Controller", string.Empty)}/";
+        private string GetRoute(HttpAttribute httpMethodAttribute) {
+            string url = $"{Type.Name.Replace("Controller", string.Empty, StringComparison.OrdinalIgnoreCase).ToLowerInvariant()}/";
 
             if (!string.IsNullOrWhiteSpace(httpMethodAttribute.Template)) {
                 url += httpMethodAttribute.Template.Replace("{", "${");
