@@ -20,7 +20,7 @@ namespace CSharp2TS.CLI.Generators {
 
         private void ParseTypes(TypeDefinition typeDef) {
             foreach (var property in typeDef.Properties) {
-                if (property.HasCustomAttribute(typeof(TSExcludeAttribute))) {
+                if (property.HasCustomAttribute<TSExcludeAttribute>()) {
                     continue;
                 }
 

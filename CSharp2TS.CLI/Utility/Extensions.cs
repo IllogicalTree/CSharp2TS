@@ -8,31 +8,31 @@ namespace CSharp2TS.CLI.Utility {
                 .Any();
         }
 
-        public static bool HasCustomAttribute(this PropertyDefinition typeReference, Type type) {
+        public static bool HasCustomAttribute<T>(this PropertyDefinition typeReference) {
             return typeReference.CustomAttributes
-                .Where(a => a.AttributeType.FullName == type.FullName)
+                .Where(a => a.AttributeType.FullName == typeof(T).FullName)
                 .Any();
         }
 
-        public static bool HasCustomAttribute(this MethodDefinition typeReference, Type type) {
+        public static bool HasCustomAttribute<T>(this MethodDefinition typeReference) {
             return typeReference.CustomAttributes
-                .Where(a => a.AttributeType.FullName == type.FullName)
+                .Where(a => a.AttributeType.FullName == typeof(T).FullName)
                 .Any();
         }
 
-        public static T? GetCustomAttributeValue<T>(this TypeDefinition typeDef, Type type, string propertyName) {
+        public static T? GetCustomAttributeValue<T>(this TypeDefinition typeDef, Type type, string propertyName, bool checkBaseType = true) {
             var attribute = typeDef.CustomAttributes
                 .Where(a => a.AttributeType.FullName == type.FullName)
                 .FirstOrDefault();
 
-            if (attribute == null) {
+            if (attribute == null && checkBaseType) {
                 attribute = typeDef.CustomAttributes
                     .Where(a => a.AttributeType.Resolve().BaseType.FullName == type.FullName)
                     .FirstOrDefault();
+            }
 
-                if (attribute == null) {
-                    return default;
-                }
+            if (attribute == null) {
+                return default;
             }
 
             return attribute.Properties

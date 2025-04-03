@@ -24,7 +24,7 @@ namespace CSharp2TS.CLI.Generators {
             var methods = Type.Methods;
 
             foreach (var method in methods) {
-                if (method == null || method.IsSpecialName || method.HasCustomAttribute(typeof(TSExcludeAttribute))) {
+                if (method == null || method.IsSpecialName || method.HasCustomAttribute<TSExcludeAttribute>()) {
                     continue;
                 }
 
