@@ -8,7 +8,6 @@
         public string? ServicesOutputFolder { get; set; }
         public string[] ServicesAssemblyPaths { get; set; } = [];
         public string ServiceGenerator { get; set; } = Consts.AxiosService;
-        public string? ApiClientPath { get; set; }
 
         public string FileNameCasingStyle { get; set; } = Consts.PascalCase;
     }

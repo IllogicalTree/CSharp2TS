@@ -1,12 +1,16 @@
 ﻿import axios from 'axios';
 
-export const apiClient = createDefaultApiClient();
+export function useApiClient() {
+  let instance = createDefaultApiClient();
 
-function createDefaultApiClient() { 
-  return axios.create({
-    baseURL: "BASE_URL",
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+  function createDefaultApiClient() { 
+    return axios.create({
+      baseURL: "BASE_URL",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  }
+
+  return instance;
 }

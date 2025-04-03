@@ -94,7 +94,7 @@ namespace CSharp2TS.CLI.Generators {
                 return false;
             }
 
-            type = (type as GenericInstanceType).GenericArguments[0];
+            type = ((GenericInstanceType)type).GenericArguments[0];
 
             return true;
         }

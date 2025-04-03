@@ -1,4 +1,5 @@
-﻿using CSharp2TS.CLI.Utility;
+﻿using CSharp2TS.CLI.Templates;
+using CSharp2TS.CLI.Utility;
 using CSharp2TS.Core.Attributes;
 using Mono.Cecil;
 
@@ -17,6 +18,7 @@ namespace CSharp2TS.CLI.Generators {
 
             if (options.GenerateServices) {
                 GenerateServices();
+                GenerateApiClient();
             }
         }
 
@@ -32,6 +34,15 @@ namespace CSharp2TS.CLI.Generators {
                     GenerateInterfaces(assembly.MainModule, options);
                     GenerateEnums(assembly.MainModule, options);
                 }
+            }
+        }
+
+        private void GenerateApiClient() {
+            string apiClientTemplate = new TSAxiosApiClientTemplate().TransformText();
+            string path = Path.Combine(options.ServicesOutputFolder!, "apiClient.ts");
+
+            using (var streamWriter = new StreamWriter(path)) {
+                streamWriter.Write(apiClientTemplate);
             }
         }
 

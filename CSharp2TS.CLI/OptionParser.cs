@@ -40,7 +40,6 @@ namespace CSharp2TS.CLI {
                 ServicesOutputFolder = TryParseSwitch(args, "--services-output-folder", "-so"),
                 ServicesAssemblyPaths = servicesAssemblyPaths,
                 ServiceGenerator = TryParseSwitch(args, "--service-generator", "-sg") ?? Consts.AxiosService,
-                ApiClientPath = TryParseSwitch(args, "--api-client-path", "-ac"),
 
                 FileNameCasingStyle = TryParseSwitch(args, "--file-casing", "-fc") ?? Consts.PascalCase,
             };

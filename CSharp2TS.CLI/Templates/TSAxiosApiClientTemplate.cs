@@ -25,10 +25,23 @@ namespace CSharp2TS.CLI.Templates
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("import axios from \'axios\';\r\n\r\nexport const apiClient = createDefaultApiClient();\r" +
-                    "\n\r\nfunction createDefaultApiClient() { \r\n  return axios.create({\r\n    baseURL: \"" +
-                    "BASE_URL\",\r\n    headers: {\r\n      \'Content-Type\': \'application/json\',\r\n    },\r\n " +
-                    " });\r\n}\r\n");
+            this.Write(@"import axios from 'axios';
+
+export function useApiClient() {
+  let instance = createDefaultApiClient();
+
+  function createDefaultApiClient() { 
+    return axios.create({
+      baseURL: ""BASE_URL"",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  }
+
+  return instance;
+}
+");
             return this.GenerationEnvironment.ToString();
         }
     }
