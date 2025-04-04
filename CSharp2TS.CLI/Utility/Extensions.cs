@@ -57,6 +57,14 @@ namespace CSharp2TS.CLI.Utility {
             return attribute != null;
         }
 
+        public static bool TryGetAttribute<T>(this TypeDefinition typeDef, out CustomAttribute? attribute) {
+            attribute = typeDef.CustomAttributes
+                .Where(a => a.AttributeType.FullName == typeof(T).FullName)
+                .FirstOrDefault();
+
+            return attribute != null;
+        }
+
         public static bool TryGetHttpAttributeTemplate<T>(this MethodDefinition typeDef, out string template) {
             if (!typeDef.TryGetAttribute<T>(out CustomAttribute? attribute)) {
                 template = string.Empty;

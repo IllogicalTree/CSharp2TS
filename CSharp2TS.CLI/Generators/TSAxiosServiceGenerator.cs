@@ -130,13 +130,21 @@ namespace CSharp2TS.CLI.Generators {
         }
 
         private string GetRoute(HttpAttribute httpMethodAttribute) {
-            string url = $"{Type.Name.Replace("Controller", string.Empty, StringComparison.OrdinalIgnoreCase).ToLowerInvariant()}/";
+            string controllerRoute;
+            string controllerName = Type.Name.Replace("Controller", string.Empty, StringComparison.OrdinalIgnoreCase).ToLowerInvariant();
 
-            if (!string.IsNullOrWhiteSpace(httpMethodAttribute.Template)) {
-                url += httpMethodAttribute.Template.Replace("{", "${");
+            if (Type.TryGetAttribute<RouteAttribute>(out CustomAttribute? attribute)) {
+                string? controllerTemplate = (string)attribute!.ConstructorArguments[0].Value;
+                controllerRoute = controllerTemplate.Replace("[controller]", controllerName, StringComparison.OrdinalIgnoreCase);
+            } else {
+                controllerRoute = controllerName;
             }
 
-            return url;
+            if (!string.IsNullOrWhiteSpace(httpMethodAttribute.Template)) {
+                controllerRoute += "/" + httpMethodAttribute.Template.Replace("{", "${");
+            }
+
+            return controllerRoute;
         }
 
         private string GetQueryString(string template, TSServiceMethodParam[] queryParameters) {

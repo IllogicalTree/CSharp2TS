@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CSharp2TS.Tests.Stubs {
     [TSService]
     [ApiController]
+    [Route("api/[controller]")]
     public class TestController : ControllerBase {
         [HttpGet]
         public string Get() {
