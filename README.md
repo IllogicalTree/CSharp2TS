@@ -18,29 +18,26 @@ Add the GitHub nuget as a feed:
 
 ## Getting Started
 
-The CSharp2TS tool can be run with a config or command line arguments.
-
-To create an empty config file run `csharp2ts create-config`
-
-To create a basic axios api client run `csharp2ts create-axios-api-client`
+The CSharp2TS tool can be run with a config file or command line arguments.
 
 ### Config File (Optional)
 
-This will create a csharp2ts.config file:
+To create an empty config file run `csharp2ts create-config` in the folder you want the config file to be created.
+
+This will create a csharp2ts.json file:
 
 ```json
 {
-    "GenerateModels": false,
-    "ModelOutputFolder": null,
-    "ModelAssemblyPaths": [],
+    "GenerateModels": false, // Set to true to generate models
+    "ModelOutputFolder": null, // Set to the path of the model output folder (string)
+    "ModelAssemblyPaths": [], // Set to an array of paths to the assemblies you want to generate models from (string[])
     
-    "GenerateServices": false,
-    "ServicesOutputFolder": null,
-    "ServicesAssemblyPaths": [],
-    "ServiceGenerator": "axios",
-    "ApiClientPath": null,
+    "GenerateServices": false, // Set to true to generate services
+    "ServicesOutputFolder": null, // Set to the path of the service output folder (string)
+    "ServicesAssemblyPaths": [], // Set to an array of paths to the assemblies you want to generate services from (string[])
+    "ServiceGenerator": "axios", // Only axios supported at the current time
     
-    "FileNameCasingStyle": "pascal"
+    "FileNameCasingStyle": "pascal" // 'pascal' or 'camel'
 }
 ```
 
@@ -54,22 +51,20 @@ Run using config: `csharp2ts -c C:\path_to_config.json`
 
 Usage: `csharp2ts [option]`
 
-| Option                               | Description                                                  |
-| ------------------------------------ | ------------------------------------------------------------ |
-| --model-output-folder, -mo <path>    | The folder where the generated model files will be saved     |
-| --model-assembly-path, -ma <path>    | The path to the model assembly                               |
-| --file-casing, -fc <path>            | The file name casing style (camel \| pascal)                 |
-| --services-output-folder, -so <path> | The folder where the services will be saved                  |
-| --services-assembly-path, -sa <path> | The path to the assembly with the controllers                |
-| --service-generator, -sg <path>      | The type of service - currently only Axios is supported      |
-| --api-client-path, -ac <path>        | The path to the api client file. The file must export an "apiClient" for use in the services |
+| Option                               | Description                                              |
+| ------------------------------------ | -------------------------------------------------------- |
+| --model-output-folder, -mo <path>    | The folder where the generated model files will be saved |
+| --model-assembly-path, -ma <path>    | The path to the model assembly                           |
+| --file-casing, -fc <path>            | The file name casing style (camel \| pascal)             |
+| --services-output-folder, -so <path> | The folder where the services will be saved              |
+| --services-assembly-path, -sa <path> | The path to the assembly with the controllers            |
+| --service-generator, -sg <path>      | The type of service - currently only Axios is supported  |
 
 **Commands**
 
 Usage: `csharp2ts [command]`
 
-| Command                 | Description                           |
-| ----------------------- | ------------------------------------- |
-| -h, -help, --help       | Show command and command line options |
-| create-config           | Create a default config file          |
-| create-axios-api-client | Create an Axios API client file       |
+| Command           | Description                           |
+| ----------------- | ------------------------------------- |
+| -h, -help, --help | Show command and command line options |
+| create-config     | Create a default config file          |

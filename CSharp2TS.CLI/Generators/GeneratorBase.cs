@@ -23,9 +23,9 @@ namespace CSharp2TS.CLI.Generators {
         public abstract string Generate();
 
         protected GeneratorBase(TypeDefinition type, Options options) {
+            imports = new Dictionary<TypeDefinition, TSImport>();
             Type = type;
             Options = options;
-            imports = new Dictionary<TypeDefinition, TSImport>();
         }
 
         protected TSPropertyGenerationInfo GetTSPropertyType(TypeReference type) {
@@ -35,13 +35,13 @@ namespace CSharp2TS.CLI.Generators {
             bool isNullable = IsNullable(ref type);
             bool isObject = false;
 
-            if (stringTypes.Select(i => i.FullName).Contains(type.FullName)) {
+            if (stringTypes.Any(i => PrimitiveTypeEquals(type, i))) {
                 tsType = "string";
-            } else if (numberTypes.Select(i => i.FullName).Contains(type.FullName)) {
+            } else if (numberTypes.Any(i => PrimitiveTypeEquals(type, i))) {
                 tsType = "number";
             } else if (type.FullName == typeof(bool).FullName) {
                 tsType = "boolean";
-            } else if (dateTypes.Select(i => i.FullName).Contains(type.FullName)) {
+            } else if (dateTypes.Any(i => PrimitiveTypeEquals(type, i))) {
                 tsType = "Date";
             } else if (type.FullName == typeof(void).FullName) {
                 tsType = "void";
@@ -63,6 +63,10 @@ namespace CSharp2TS.CLI.Generators {
             return new TSPropertyGenerationInfo(type, rawTsType, tsType, isObject);
         }
 
+        private bool PrimitiveTypeEquals(TypeReference typeReference, Type type) {
+            return typeReference.FullName == type.FullName;
+        }
+
         private bool CheckCollectionType(ref TypeReference type) {
             if (type.IsArray) {
                 type = type.GetElementType()?.Resolve() ?? type;
@@ -74,10 +78,9 @@ namespace CSharp2TS.CLI.Generators {
             }
 
             // Check if type implements IEnumerable<T>
-            // Check interfaces
             bool isCollection = type.Resolve().Interfaces
                 .Where(i => i.InterfaceType.IsGenericInstance)
-                .Where(i => i.InterfaceType.GetElementType().FullName == "System.Collections.Generic.IEnumerable`1")
+                .Where(i => i.InterfaceType.GetElementType().FullName == typeof(IEnumerable<>).FullName)
                 .Any();
 
             // If it's a collection type, extract the generic argument
@@ -116,13 +119,9 @@ namespace CSharp2TS.CLI.Generators {
             return $"{relativePath}/";
         }
 
-        protected string ToCamelCase(string value) {
-            return char.ToLowerInvariant(value[0]) + value.Substring(1);
-        }
-
         public string GetTypeFileName(string typeName) {
             if (Options.FileNameCasingStyle == Consts.CamelCase) {
-                return ToCamelCase(typeName);
+                return typeName.ToCamelCase();
             }
 
             // We assume PascalCase for C# types by default

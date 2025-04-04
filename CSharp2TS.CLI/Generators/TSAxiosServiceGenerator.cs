@@ -33,8 +33,7 @@ namespace CSharp2TS.CLI.Generators {
                     continue;
                 }
 
-                string name = ToCamelCase(method.Name);
-                string? httpMethod = httpMethodAttribute.HttpMethod;
+                string name = method.Name.ToCamelCase();
                 string route = GetRoute(httpMethodAttribute);
                 var returnType = GetTSPropertyType(method.ReturnType);
 
@@ -43,7 +42,7 @@ namespace CSharp2TS.CLI.Generators {
                 var queryParams = GetQueryParams(route, allParams);
                 TSServiceMethodParam? bodyParam = null;
 
-                if (httpMethod != Consts.HttpGet) {
+                if (httpMethodAttribute.HttpMethod != Consts.HttpGet) {
                     bodyParam = GetBodyParam(route, allParams);
                 }
 
@@ -65,7 +64,7 @@ namespace CSharp2TS.CLI.Generators {
 
                 items.Add(new TSServiceMethod(
                     name,
-                    httpMethod,
+                    httpMethodAttribute.HttpMethod,
                     route,
                     returnType.TSType,
                     routeParams,
@@ -82,7 +81,7 @@ namespace CSharp2TS.CLI.Generators {
 
             return allParams
                 .Where(i => template.Contains($"{{{i.Name}}}"))
-                .Select(i => new TSServiceMethodParam(ToCamelCase(i.Name!), GetTSPropertyType(i.ParameterType)))
+                .Select(i => new TSServiceMethodParam(i.Name!.ToCamelCase(), GetTSPropertyType(i.ParameterType)))
                 .ToArray();
         }
 
@@ -93,7 +92,7 @@ namespace CSharp2TS.CLI.Generators {
 
             return allParams
                 .Where(i => !template.Contains($"{{{i.Name}}}"))
-                .Select(i => new TSServiceMethodParam(ToCamelCase(i.Name!), GetTSPropertyType(i.ParameterType)))
+                .Select(i => new TSServiceMethodParam(i.Name!.ToCamelCase(), GetTSPropertyType(i.ParameterType)))
                 .Where(row => !row.Property.IsObject)
                 .ToArray();
         }
@@ -101,14 +100,14 @@ namespace CSharp2TS.CLI.Generators {
         private TSServiceMethodParam? GetBodyParam(string template, ParameterDefinition[] allParams) {
             if (string.IsNullOrWhiteSpace(template)) {
                 return allParams
-                    .Select(i => new TSServiceMethodParam(ToCamelCase(i.Name!), GetTSPropertyType(i.ParameterType)))
+                    .Select(i => new TSServiceMethodParam(i.Name!.ToCamelCase(), GetTSPropertyType(i.ParameterType)))
                     .Where(row => row.Property.IsObject)
                     .FirstOrDefault();
             }
 
             return allParams
                 .Where(i => !template.Contains($"{{{i.Name}}}"))
-                .Select(i => new TSServiceMethodParam(ToCamelCase(i.Name!), GetTSPropertyType(i.ParameterType)))
+                .Select(i => new TSServiceMethodParam(i.Name!.ToCamelCase(), GetTSPropertyType(i.ParameterType)))
                 .FirstOrDefault();
         }
 

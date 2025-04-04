@@ -18,7 +18,6 @@ namespace CSharp2TS.CLI.Generators {
 
             if (options.GenerateServices) {
                 GenerateServices();
-                GenerateApiClient();
             }
         }
 
@@ -37,15 +36,6 @@ namespace CSharp2TS.CLI.Generators {
             }
         }
 
-        private void GenerateApiClient() {
-            string apiClientTemplate = new TSAxiosApiClientTemplate().TransformText();
-            string path = Path.Combine(options.ServicesOutputFolder!, "apiClient.ts");
-
-            using (var streamWriter = new StreamWriter(path)) {
-                streamWriter.Write(apiClientTemplate);
-            }
-        }
-
         private void GenerateServices() {
             if (Directory.Exists(options.ServicesOutputFolder)) {
                 Directory.Delete(options.ServicesOutputFolder, true);
@@ -53,10 +43,21 @@ namespace CSharp2TS.CLI.Generators {
 
             Directory.CreateDirectory(options.ServicesOutputFolder!);
 
+            GenerateApiClient();
+
             foreach (var assemblyPath in options.ServicesAssemblyPaths) {
                 using (var assembly = AssemblyDefinition.ReadAssembly(assemblyPath)) {
                     GenerateServices(assembly.MainModule, options);
                 }
+            }
+        }
+
+        private void GenerateApiClient() {
+            string apiClientTemplate = new TSAxiosApiClientTemplate().TransformText();
+            string path = Path.Combine(options.ServicesOutputFolder!, "apiClient.ts");
+
+            using (var streamWriter = new StreamWriter(path)) {
+                streamWriter.Write(apiClientTemplate);
             }
         }
 

@@ -20,7 +20,7 @@ namespace CSharp2TS.CLI.Generators {
 
         private void ParseTypes(TypeDefinition typeDef) {
             foreach (var property in typeDef.Properties) {
-                if (property.HasCustomAttribute<TSExcludeAttribute>()) {
+                if (property.IsSpecialName || property.HasCustomAttribute<TSExcludeAttribute>()) {
                     continue;
                 }
 
@@ -30,7 +30,7 @@ namespace CSharp2TS.CLI.Generators {
                     TryAddTSImport(tsType, Options.ModelOutputFolder, Options.ModelOutputFolder);
                 }
 
-                properties.Add(new TSProperty(ToCamelCase(property.Name), tsType.TSTypeFull));
+                properties.Add(new TSProperty(property.Name.ToCamelCase(), tsType.TSTypeFull));
             }
 
             if (typeDef.BaseType != null) {

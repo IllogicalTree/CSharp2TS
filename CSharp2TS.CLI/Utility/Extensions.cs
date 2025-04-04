@@ -2,6 +2,14 @@
 
 namespace CSharp2TS.CLI.Utility {
     public static class Extensions {
+        public static string ToCamelCase(this string value) {
+            if (string.IsNullOrWhiteSpace(value)) {
+                return value;
+            }
+
+            return char.ToLowerInvariant(value[0]) + value.Substring(1);
+        }
+
         public static bool HasCustomAttribute(this TypeDefinition typeDef, Type type) {
             return typeDef.CustomAttributes
                 .Where(a => a.AttributeType.FullName == type.FullName)

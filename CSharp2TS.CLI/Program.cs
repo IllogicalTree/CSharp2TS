@@ -23,12 +23,6 @@ namespace CSharp2TS.CLI {
                     CreateDefaultConfig();
                     return;
                 }
-
-                if (args[0] == "create-axios-api-client") {
-                    //TSAxiosServiceGenerator.GenerateApiClient();
-                    Console.WriteLine("Axios API Client created successfully");
-                    return;
-                }
             }
 
             if (OptionParser.TryParseConfigFilePath(args, out string configPath)) {
@@ -85,12 +79,10 @@ namespace CSharp2TS.CLI {
             Console.WriteLine("--services-assembly-path, -sa <path> Path to the assembly containing the services");
             Console.WriteLine("--services-output-folder, -so <path> Path to the output folder for the generated services");
             Console.WriteLine("--service-generator, -sg <name>      Service generator to use (axios)");
-            Console.WriteLine("--api-client-path, -ac <path>        Path to the generated API client file");
             Console.WriteLine("--file-casing, -fc <style>           File name casing style (camel | pascal)");
             Console.WriteLine();
             Console.WriteLine("Commands:");
             Console.WriteLine("create-config                        Create a default config file");
-            Console.WriteLine("create-axios-api-client              Create an Axios API client file");
         }
     }
 }
