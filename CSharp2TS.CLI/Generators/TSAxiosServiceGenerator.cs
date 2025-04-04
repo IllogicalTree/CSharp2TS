@@ -35,7 +35,7 @@ namespace CSharp2TS.CLI.Generators {
 
                 string name = method.Name.ToCamelCase();
                 string route = GetRoute(httpMethodAttribute);
-                var returnType = GetTSPropertyType(method.ReturnType);
+                var returnType = GetReturnType(method);
 
                 var allParams = method.Parameters.ToArray();
                 var routeParams = GetRouteParams(route, allParams);
@@ -159,6 +159,18 @@ namespace CSharp2TS.CLI.Generators {
             }
 
             return $"?{string.Join('&', querySections)}";
+        }
+
+        private TSPropertyGenerationInfo GetReturnType(MethodDefinition method) {
+            if (method.TryGetAttribute<TSEndpointAttribute>(out CustomAttribute? attribute)) {
+                var customReturnType = attribute!.ConstructorArguments[0].Value as TypeDefinition;
+
+                if (customReturnType != null) {
+                    return GetTSPropertyType(customReturnType);
+                }
+            }
+
+            return GetTSPropertyType(method.ReturnType);
         }
 
         private string BuildTsFile() {

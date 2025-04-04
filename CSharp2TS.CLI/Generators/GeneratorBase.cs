@@ -1,12 +1,15 @@
 ﻿using CSharp2TS.CLI.Generators.Entities;
 using CSharp2TS.CLI.Utility;
 using CSharp2TS.Core.Attributes;
+using Microsoft.AspNetCore.Mvc;
 using Mono.Cecil;
 
 namespace CSharp2TS.CLI.Generators {
     public abstract class GeneratorBase<TAttribute> where TAttribute : TSAttributeBase {
         private readonly Type[] stringTypes = { typeof(char), typeof(string), typeof(Guid) };
         private readonly Type[] dateTypes = { typeof(DateTime), typeof(DateTimeOffset) };
+        private readonly Type[] voidTypes = { typeof(void), typeof(Task) };
+        private readonly Type[] objectTypes = { typeof(ActionResult), typeof(IActionResult) };
         private readonly Type[] numberTypes = {
             typeof(sbyte), typeof(byte), typeof(short),
             typeof(ushort), typeof(int), typeof(uint),
@@ -31,8 +34,10 @@ namespace CSharp2TS.CLI.Generators {
         protected TSPropertyGenerationInfo GetTSPropertyType(TypeReference type) {
             string tsType = string.Empty;
 
+            TryExtractFromGenericIfRequired(typeof(ActionResult<>), ref type);
+            TryExtractFromGenericIfRequired(typeof(Task<>), ref type);
             bool isCollection = CheckCollectionType(ref type);
-            bool isNullable = IsNullable(ref type);
+            bool isNullable = TryExtractFromGenericIfRequired(typeof(Nullable<>), ref type);
             bool isObject = false;
 
             if (stringTypes.Any(i => PrimitiveTypeEquals(type, i))) {
@@ -43,8 +48,10 @@ namespace CSharp2TS.CLI.Generators {
                 tsType = "boolean";
             } else if (dateTypes.Any(i => PrimitiveTypeEquals(type, i))) {
                 tsType = "Date";
-            } else if (type.FullName == typeof(void).FullName) {
+            } else if (voidTypes.Any(i => PrimitiveTypeEquals(type, i))) {
                 tsType = "void";
+            } else if (objectTypes.Any(i => PrimitiveTypeEquals(type, i))) {
+                tsType = "object";
             } else {
                 tsType = type.Name;
                 isObject = true;
@@ -92,12 +99,12 @@ namespace CSharp2TS.CLI.Generators {
             return false;
         }
 
-        private bool IsNullable(ref TypeReference type) {
-            if (type.Resolve().FullName != typeof(Nullable<>).FullName) {
+        private bool TryExtractFromGenericIfRequired(Type type, ref TypeReference typeRef) {
+            if (typeRef.Resolve().FullName != type.FullName) {
                 return false;
             }
 
-            type = ((GenericInstanceType)type).GenericArguments[0];
+            typeRef = ((GenericInstanceType)typeRef).GenericArguments[0];
 
             return true;
         }
