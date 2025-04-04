@@ -1,7 +1,8 @@
 ﻿using CSharp2TS.Core.Attributes;
+using CSharp2TS.Tests.Stubs.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CSharp2TS.Tests.Stubs {
+namespace CSharp2TS.Tests.Stubs.Controllers {
     [TSService]
     [ApiController]
     [Route("api/[controller]")]

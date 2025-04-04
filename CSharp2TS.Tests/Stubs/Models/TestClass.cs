@@ -1,6 +1,6 @@
 ﻿using CSharp2TS.Core.Attributes;
 
-namespace CSharp2TS.Tests.Stubs {
+namespace CSharp2TS.Tests.Stubs.Models {
     [TSInterface]
     public class TestClass {
         public int ThisIsANumber { get; set; }
