@@ -11,7 +11,7 @@ import { useApiClient } from './apiClient';
 import <#= item.Name #> from '<#= item.Path #>';
 <# } #>
 
-const apiClient = useApiClient();
+const { apiClient } = useApiClient();
 
 export default {
 <# foreach (var item in Items) { #>

@@ -1,9 +1,9 @@
-﻿import axios from 'axios';
+﻿import axios, { AxiosInstance } from 'axios';
 
 export function useApiClient() {
-  let instance = createDefaultApiClient();
+  let apiClient: AxiosInstance = createDefaultApiClient();
 
-  function createDefaultApiClient() { 
+  function createDefaultApiClient(): AxiosInstance { 
     return axios.create({
       baseURL: "BASE_URL",
       headers: {
@@ -12,5 +12,12 @@ export function useApiClient() {
     });
   }
 
-  return instance;
+  function setApiClient(newApiClient: AxiosInstance) {
+    apiClient = newApiClient;
+  }
+
+  return {
+    apiClient,
+    setApiClient
+  }
 }

@@ -25,12 +25,12 @@ namespace CSharp2TS.CLI.Templates
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write(@"import axios from 'axios';
+            this.Write(@"import axios, { AxiosInstance } from 'axios';
 
 export function useApiClient() {
-  let instance = createDefaultApiClient();
+  let apiClient: AxiosInstance = createDefaultApiClient();
 
-  function createDefaultApiClient() { 
+  function createDefaultApiClient(): AxiosInstance { 
     return axios.create({
       baseURL: ""BASE_URL"",
       headers: {
@@ -39,7 +39,14 @@ export function useApiClient() {
     });
   }
 
-  return instance;
+  function setApiClient(newApiClient: AxiosInstance) {
+    apiClient = newApiClient;
+  }
+
+  return {
+    apiClient,
+    setApiClient
+  }
 }
 ");
             return this.GenerationEnvironment.ToString();

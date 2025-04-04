@@ -64,7 +64,7 @@ namespace CSharp2TS.CLI.Templates
             
             #line default
             #line hidden
-            this.Write("\r\nconst apiClient = useApiClient();\r\n\r\nexport default {\r\n");
+            this.Write("\r\nconst { apiClient } = useApiClient();\r\n\r\nexport default {\r\n");
             
             #line 17 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
  foreach (var item in Items) { 
