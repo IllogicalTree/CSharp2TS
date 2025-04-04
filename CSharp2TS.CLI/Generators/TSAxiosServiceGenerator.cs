@@ -79,7 +79,7 @@ namespace CSharp2TS.CLI.Generators {
 
         private string GetApiClientImport() {
             string currentFolder = Path.Combine(Options.ServicesOutputFolder!, FolderLocation ?? string.Empty);
-            return GetRelativeImportPath(currentFolder, Options.ServicesOutputFolder!);
+            return FolderUtility.GetRelativeImportPath(currentFolder, Options.ServicesOutputFolder!);
         }
 
         private TSServiceMethodParam[] GetRouteParams(string template, ParameterDefinition[] allParams) {
