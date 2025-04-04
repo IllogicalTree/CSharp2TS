@@ -6,7 +6,7 @@
 <#@ import namespace="CSharp2TS.CLI.Generators.Entities" #>
 // Auto-generated from <#= TypeName #>.cs
 
-import { useApiClient } from './apiClient';
+import { useApiClient } from '<#= ApiClientImportPath #>apiClient';
 <# foreach (var item in Imports) { #>
 import <#= item.Name #> from '<#= item.Path #>';
 <# } #>
@@ -27,6 +27,7 @@ export default {
 
 <#+
 public string TypeName { get; set; }
+public string ApiClientImportPath { get; set; }
 public IList<TSImport> Imports { get; set; }
 public IList<TSServiceMethod> Items { get; set; }
 #>

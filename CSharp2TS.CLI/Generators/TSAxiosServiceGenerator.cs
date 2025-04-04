@@ -7,9 +7,11 @@ using Mono.Cecil;
 
 namespace CSharp2TS.CLI.Generators {
     public class TSAxiosServiceGenerator : GeneratorBase<TSServiceAttribute> {
+        private string apiClientImportPath;
         private IList<TSServiceMethod> items;
 
         public TSAxiosServiceGenerator(TypeDefinition type, Options options) : base(type, options) {
+            apiClientImportPath = "./";
             items = [];
         }
 
@@ -21,6 +23,7 @@ namespace CSharp2TS.CLI.Generators {
 
         private void ParseTypes() {
             var methods = Type.Methods;
+            apiClientImportPath = GetApiClientImport();
 
             foreach (var method in methods) {
                 if (method == null || method.IsSpecialName || method.HasCustomAttribute<TSExcludeAttribute>()) {
@@ -72,6 +75,11 @@ namespace CSharp2TS.CLI.Generators {
                     bodyParam,
                     queryString));
             }
+        }
+
+        private string GetApiClientImport() {
+            string currentFolder = Path.Combine(Options.ServicesOutputFolder!, FolderLocation ?? string.Empty);
+            return GetRelativeImportPath(currentFolder, Options.ServicesOutputFolder!);
         }
 
         private TSServiceMethodParam[] GetRouteParams(string template, ParameterDefinition[] allParams) {
@@ -184,6 +192,7 @@ namespace CSharp2TS.CLI.Generators {
         private string BuildTsFile() {
             return new TSAxiosServiceTemplate {
                 Items = items,
+                ApiClientImportPath = apiClientImportPath,
                 Imports = imports.Select(i => i.Value).ToList(),
                 TypeName = Type.Name,
             }.TransformText();

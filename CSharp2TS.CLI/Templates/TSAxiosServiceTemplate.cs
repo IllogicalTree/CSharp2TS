@@ -36,7 +36,14 @@ namespace CSharp2TS.CLI.Templates
             
             #line default
             #line hidden
-            this.Write(".cs\r\n\r\nimport { useApiClient } from \'./apiClient\';\r\n");
+            this.Write(".cs\r\n\r\nimport { useApiClient } from \'");
+            
+            #line 9 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ApiClientImportPath));
+            
+            #line default
+            #line hidden
+            this.Write("apiClient\';\r\n");
             
             #line 10 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
  foreach (var item in Imports) { 
@@ -181,6 +188,7 @@ namespace CSharp2TS.CLI.Templates
         #line 28 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
 
 public string TypeName { get; set; }
+public string ApiClientImportPath { get; set; }
 public IList<TSImport> Imports { get; set; }
 public IList<TSServiceMethod> Items { get; set; }
 
