@@ -85,11 +85,12 @@ namespace CSharp2TS.CLI.Generators {
                 return false;
             }
 
-            // Check if type implements IEnumerable<T>
-            bool isCollection = type.Resolve().Interfaces
-                .Where(i => i.InterfaceType.IsGenericInstance)
-                .Where(i => i.InterfaceType.GetElementType().FullName == typeof(IEnumerable<>).FullName)
-                .Any();
+            // Check if type is IEnumerable, or implements IEnumerable<T>
+            bool isCollection = type.GetElementType().FullName == typeof(IEnumerable<>).FullName ||
+                type.Resolve().Interfaces
+                    .Where(i => i.InterfaceType.IsGenericInstance)
+                    .Where(i => i.InterfaceType.GetElementType().FullName == typeof(IEnumerable<>).FullName)
+                    .Any();
 
             // If it's a collection type, extract the generic argument
             if (isCollection && type is GenericInstanceType genericInstance && genericInstance.GenericArguments.Count > 0) {
