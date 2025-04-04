@@ -55,6 +55,7 @@ interface TestClass {
   thisIsAnObjectArray: Object[];
   thisIsAStringList: string[];
   nestedObject: TestClass;
+  objectEnumerable: TestClass[];
   objectInAnotherFolder: TestClassWithFolder;
   enumInAnotherFolder: TestEnumWithFolder | null;
 }
