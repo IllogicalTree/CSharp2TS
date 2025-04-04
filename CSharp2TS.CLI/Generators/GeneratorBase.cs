@@ -32,10 +32,11 @@ namespace CSharp2TS.CLI.Generators {
         }
 
         protected TSPropertyGenerationInfo GetTSPropertyType(TypeReference type) {
-            string tsType = string.Empty;
+            string tsType;
 
             TryExtractFromGenericIfRequired(typeof(ActionResult<>), ref type);
             TryExtractFromGenericIfRequired(typeof(Task<>), ref type);
+
             bool isCollection = CheckCollectionType(ref type);
             bool isNullable = TryExtractFromGenericIfRequired(typeof(Nullable<>), ref type);
             bool isObject = false;
@@ -140,13 +141,15 @@ namespace CSharp2TS.CLI.Generators {
                 return;
             }
 
-            var customFolder = tsType.Type.Resolve().GetCustomAttributeValue<string?>(typeof(TSAttributeBase), nameof(TSAttributeBase.Folder));
+            var targetCustomFolder = tsType.Type.Resolve()
+                .GetCustomAttributeValue<string?>(typeof(TSAttributeBase), nameof(TSAttributeBase.Folder));
+
             string currentFolder = Path.Combine(currentFolderRoot, FolderLocation ?? string.Empty);
-            string targetFolder = Path.Combine(targetFolderRoot, customFolder ?? string.Empty);
+            string targetFolder = Path.Combine(targetFolderRoot, targetCustomFolder ?? string.Empty);
 
             string relativePath = GetRelativeImportPath(currentFolder, targetFolder);
-
             string importPath = $"{relativePath}{GetTypeFileName(tsType.TSType)}";
+
             imports.Add(tsType.Type.Resolve(), new TSImport(tsType.TSType, importPath));
         }
     }
