@@ -1,4 +1,5 @@
 ﻿using Mono.Cecil;
+using Mono.Collections.Generic;
 
 namespace CSharp2TS.CLI.Utility {
     public static class Extensions {
@@ -10,28 +11,14 @@ namespace CSharp2TS.CLI.Utility {
             return char.ToLowerInvariant(value[0]) + value.Substring(1);
         }
 
-        public static bool HasCustomAttribute(this TypeDefinition typeDef, Type type) {
-            return typeDef.CustomAttributes
+        public static bool Has(this Collection<CustomAttribute> customAttributes, Type type) {
+            return customAttributes
                 .Where(a => a.AttributeType.FullName == type.FullName)
                 .Any();
         }
 
-        public static bool HasCustomAttribute<T>(this PropertyDefinition typeReference) {
-            return typeReference.CustomAttributes
-                .Where(a => a.AttributeType.FullName == typeof(T).FullName)
-                .Any();
-        }
-
-        public static bool HasCustomAttribute<T>(this MethodDefinition typeReference) {
-            return typeReference.CustomAttributes
-                .Where(a => a.AttributeType.FullName == typeof(T).FullName)
-                .Any();
-        }
-
-        public static bool HasCustomAttribute<T>(this ParameterDefinition typeReference) {
-            return typeReference.CustomAttributes
-                .Where(a => a.AttributeType.FullName == typeof(T).FullName)
-                .Any();
+        public static bool Has<T>(this Collection<CustomAttribute> customAttributes) {
+            return customAttributes.Has(typeof(T));
         }
 
         public static T? GetCustomAttributeValue<T>(this TypeDefinition typeDef, Type type, string propertyName, bool checkBaseType = true) {

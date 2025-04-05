@@ -26,7 +26,7 @@ namespace CSharp2TS.CLI.Generators {
             apiClientImportPath = GetApiClientImport();
 
             foreach (var method in methods) {
-                if (method == null || method.IsSpecialName || method.HasCustomAttribute<TSExcludeAttribute>()) {
+                if (method == null || method.IsSpecialName || method.CustomAttributes.Has<TSExcludeAttribute>()) {
                     continue;
                 }
 
@@ -82,7 +82,7 @@ namespace CSharp2TS.CLI.Generators {
 
             foreach (ParameterDefinition param in parameterDefinitions) {
                 var tsProperty = GetTSPropertyType(param.ParameterType);
-                bool isBodyParam = tsProperty.IsObject || param.HasCustomAttribute<FromBodyAttribute>();
+                bool isBodyParam = tsProperty.IsObject || param.CustomAttributes.Has<FromBodyAttribute>();
 
                 converted.Add(new TSServiceMethodParam(param.Name.ToCamelCase(), tsProperty, isBodyParam));
             }
