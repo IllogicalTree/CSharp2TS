@@ -8,8 +8,7 @@ namespace CSharp2TS.CLI.Generators {
     public abstract class GeneratorBase<TAttribute> where TAttribute : TSAttributeBase {
         private readonly Type[] stringTypes = { typeof(char), typeof(string), typeof(Guid) };
         private readonly Type[] dateTypes = { typeof(DateTime), typeof(DateTimeOffset) };
-        private readonly Type[] voidTypes = { typeof(void), typeof(Task) };
-        private readonly Type[] objectTypes = { typeof(ActionResult), typeof(IActionResult) };
+        private readonly Type[] voidTypes = { typeof(void), typeof(Task), typeof(ActionResult), typeof(IActionResult) };
         private readonly Type[] numberTypes = {
             typeof(sbyte), typeof(byte), typeof(short),
             typeof(ushort), typeof(int), typeof(uint),
@@ -51,8 +50,6 @@ namespace CSharp2TS.CLI.Generators {
                 tsType = "Date";
             } else if (voidTypes.Any(i => PrimitiveTypeEquals(type, i))) {
                 tsType = "void";
-            } else if (objectTypes.Any(i => PrimitiveTypeEquals(type, i))) {
-                tsType = "object";
             } else {
                 tsType = type.Name;
                 isObject = true;

@@ -3,7 +3,7 @@ using CSharp2TS.CLI;
 using CSharp2TS.CLI.Generators;
 
 namespace CSharp2TS.Tests {
-    public class GenerationTests {
+    public class ModelGenerationTests {
         private Options options;
         private Generator generator;
 
@@ -15,12 +15,8 @@ namespace CSharp2TS.Tests {
             options = new Options {
                 ModelOutputFolder = outputFolder,
                 ModelAssemblyPaths = [assemblyPath],
-                ServiceGenerator = Consts.AxiosService,
                 FileNameCasingStyle = Consts.PascalCase,
-                ServicesAssemblyPaths = [assemblyPath],
-                ServicesOutputFolder = Path.Combine(outputFolder, "Services"),
                 GenerateModels = true,
-                GenerateServices = true,
             };
 
             Directory.CreateDirectory(outputFolder);
@@ -30,13 +26,13 @@ namespace CSharp2TS.Tests {
         }
 
         [Test]
-        [TestCase("TestClass.ts", "Expected\\TestClassResult.ts")]
+        [TestCase("TestClass.ts", "Expected\\TestClass.ts")]
         public void Generation_TestClass(string generatedFile, string expectedFile) {
             TestFilesMatch(generatedFile, expectedFile);
         }
 
         [Test]
-        [TestCase("TestEnum.ts", "Expected\\TestEnumResult.ts")]
+        [TestCase("TestEnum.ts", "Expected\\TestEnum.ts")]
         public void Generation_TestEnum(string generatedFile, string expectedFile) {
             TestFilesMatch(generatedFile, expectedFile);
         }
