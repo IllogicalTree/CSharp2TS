@@ -30,152 +30,58 @@ namespace CSharp2TS.Tests {
         }
 
         [Test]
-        public void Generation_TestClass() {
-            // Arrange
-            string file = Path.Combine(options.ModelOutputFolder!, "TestClass.ts");
-
-            if (!File.Exists(file)) {
-                Assert.Fail("File does not exist.");
-            }
-
-            string contents = File.ReadAllText(Path.Combine(options.ModelOutputFolder!, "TestClass.ts"));
-
-            // Assert
-            string expected = @"// Auto-generated from TestClass.cs
-
-import Object from './Object';
-import TestClassWithFolder from './Models/TestClassWithFolder';
-import TestEnumWithFolder from './Enums/TestEnumWithFolder';
-
-interface TestClass {
-  thisIsANumber: number;
-  thisIsMaybeAString: string;
-  thisIsAGuid: string;
-  thisIsMaybeAGuid: string | null;
-  thisIsAnObjectArray: Object[];
-  thisIsAStringList: string[];
-  nestedObject: TestClass;
-  objectEnumerable: TestClass[];
-  objectInAnotherFolder: TestClassWithFolder;
-  enumInAnotherFolder: TestEnumWithFolder | null;
-}
-
-export default TestClass;
-";
-
-            Assert.That(contents, Is.EqualTo(expected));
+        [TestCase("TestClass.ts", "Expected\\TestClassResult.ts")]
+        public void Generation_TestClass(string generatedFile, string expectedFile) {
+            TestFilesMatch(generatedFile, expectedFile);
         }
 
         [Test]
-        public void Generation_TestInheritance() {
-            // Arrange
-            string file = Path.Combine(options.ModelOutputFolder!, "TestInheritanceChild.ts");
-
-            if (!File.Exists(file)) {
-                Assert.Fail("File does not exist.");
-            }
-
-            string contents = File.ReadAllText(Path.Combine(options.ModelOutputFolder!, "TestInheritanceChild.ts"));
-
-            // Assert
-            string expected = @"// Auto-generated from TestInheritanceChild.cs
-
-interface TestInheritanceChild {
-  childClassProperty: number;
-  parentClassProperty: number;
-}
-
-export default TestInheritanceChild;
-";
-
-            Assert.That(contents, Is.EqualTo(expected));
+        [TestCase("TestEnum.ts", "Expected\\TestEnumResult.ts")]
+        public void Generation_TestEnum(string generatedFile, string expectedFile) {
+            TestFilesMatch(generatedFile, expectedFile);
         }
 
         [Test]
-        public void Generation_TestEnum() {
-            // Arrange
-            string file = Path.Combine(options.ModelOutputFolder!, "TestEnum.ts");
-
-            if (!File.Exists(file)) {
-                Assert.Fail("File does not exist.");
-            }
-
-            string contents = File.ReadAllText(Path.Combine(options.ModelOutputFolder!, "TestEnum.ts"));
-
-            // Assert
-            string expected = @"// Auto-generated from TestEnum.cs
-
-enum TestEnum {
-  Value1 = 1,
-  Value2 = 2,
-  Value3 = 3,
-}
-
-export default TestEnum;
-";
-
-            Assert.That(contents, Is.EqualTo(expected));
-        }
-
-        [Test]
-        public void Generation_TestClassFolder() {
-            // Arrange
-            string file = Path.Combine(options.ModelOutputFolder!, "Models", "TestClassWithFolder.ts");
-
-            string contents = File.ReadAllText(Path.Combine(options.ModelOutputFolder!, "Models", "TestClassWithFolder.ts"));
-
-            // Assert
-            string expected = @"// Auto-generated from TestClassWithFolder.cs
-
-import TestClass from '../TestClass';
-
-interface TestClassWithFolder {
-  thisIsANumber: number;
-  testClass: TestClass;
-}
-
-export default TestClassWithFolder;
-";
-
-            Assert.That(contents, Is.EqualTo(expected));
-
-            // Assert
-            Assert.That(File.Exists(file), Is.True);
+        [TestCase("ParentClass.ts", "Expected\\ParentClass.ts")]
+        [TestCase("ChildClass.ts", "Expected\\ChildClass.ts")]
+        public void Generation_TestInheritance(string generatedFile, string expectedFile) {
+            TestFilesMatch(generatedFile, expectedFile);
         }
 
         [Test]
         public void Generation_TestClassSubFolder() {
             // Arrange
-            string file = Path.Combine(options.ModelOutputFolder!, "Models", "Sub", "TestClassWithSubFolder.ts");
+            string file = Path.Combine(options.ModelOutputFolder!, "SubFolder1", "SubFolder2", "TestClassInFolder.ts");
 
-            string contents = File.ReadAllText(Path.Combine(options.ModelOutputFolder!, "Models", "Sub", "TestClassWithSubFolder.ts"));
-
-            // Assert
-            string expected = @"// Auto-generated from TestClassWithSubFolder.cs
-
-import TestClass from '../../TestClass';
-
-interface TestClassWithSubFolder {
-  thisIsANumber: number;
-  testClass: TestClass;
-}
-
-export default TestClassWithSubFolder;
-";
-
-            Assert.That(contents, Is.EqualTo(expected));
-
-            // Assert
-            Assert.That(File.Exists(file), Is.True);
+            TestFilesMatch(file, "Expected\\TestClassInFolder.ts");
         }
 
         [Test]
-        public void Generation_TestEnumFolder() {
+        public void Generation_TestEnumSubFolder() {
             // Arrange
-            string file = Path.Combine(options.ModelOutputFolder!, "Enums", "TestEnumWithFolder.ts");
+            string file = Path.Combine(options.ModelOutputFolder!, "Enums", "TestEnumInFolder.ts");
+
+            TestFilesMatch(file, "Expected\\TestEnumInFolder.ts");
+        }
+
+        private void TestFilesMatch(string generatedFile, string expectedFile) {
+            // Arrange
+            generatedFile = Path.Combine(options.ModelOutputFolder!, generatedFile);
+
+            if (!File.Exists(generatedFile)) {
+                Assert.Fail("Generated file does not exist.");
+            }
+
+            if (!File.Exists(expectedFile)) {
+                Assert.Fail("Expected file does not exist.");
+            }
+
+            // Act
+            string generated = File.ReadAllText(generatedFile);
+            string expected = File.ReadAllText(expectedFile);
 
             // Assert
-            Assert.That(File.Exists(file), Is.True);
+            Assert.That(generated, Is.EqualTo(expected));
         }
     }
 }

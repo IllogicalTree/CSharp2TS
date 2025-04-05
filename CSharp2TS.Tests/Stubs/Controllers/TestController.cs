@@ -23,15 +23,15 @@ namespace CSharp2TS.Tests.Stubs.Controllers {
         }
 
         [HttpPost]
-        public void Create(TestClassWithFolder model) {
+        public void Create(TestClassInFolder model) {
         }
 
         [HttpPost("test/{id}")]
-        public void CreateWithId(Guid id, TestClassWithFolder model) {
+        public void CreateWithId(Guid id, TestClassInFolder model) {
         }
 
         [HttpPut("test/{id}")]
-        public void UpdateWithId(Guid id, TestClassWithFolder model) {
+        public void UpdateWithId(Guid id, TestClassInFolder model) {
         }
 
         [HttpDelete("{id}")]

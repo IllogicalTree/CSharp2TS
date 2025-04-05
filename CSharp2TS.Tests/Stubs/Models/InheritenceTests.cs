@@ -2,7 +2,12 @@
 
 namespace CSharp2TS.Tests.Stubs.Models {
     [TSInterface]
-    public class TestInheritanceChild : TestInheritance {
+    public class ParentClass {
+        public int ParentClassProperty { get; set; }
+    }
+
+    [TSInterface]
+    public class ChildClass : ParentClass {
         public int ChildClassProperty { get; set; }
     }
 }

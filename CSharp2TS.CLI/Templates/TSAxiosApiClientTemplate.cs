@@ -32,7 +32,7 @@ export function useApiClient() {
 
   function createDefaultApiClient(): AxiosInstance { 
     return axios.create({
-      baseURL: ""BASE_URL"",
+      baseURL: ""/"",
       headers: {
         'Content-Type': 'application/json',
       },

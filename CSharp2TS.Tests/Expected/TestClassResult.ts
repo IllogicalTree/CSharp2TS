@@ -1,0 +1,70 @@
+// Auto-generated from TestClass.cs
+
+import TestClass2 from './TestClass2';
+import TestClassInFolder from './SubFolder1/SubFolder2/TestClassInFolder';
+import TestEnum from './TestEnum';
+import TestEnumInFolder from './Enums/TestEnumInFolder';
+
+interface TestClass {
+  intProperty: number;
+  nullableIntProperty: number | null;
+  longProperty: number;
+  nullableLongProperty: number | null;
+  floatProperty: number;
+  nullableFloatProperty: number | null;
+  doubleProperty: number;
+  nullableDoubleProperty: number | null;
+  decimalProperty: number;
+  nullableDecimalProperty: number | null;
+  boolProperty: boolean;
+  nullableBoolProperty: boolean | null;
+  charProperty: string;
+  nullableCharProperty: string | null;
+  byteProperty: number;
+  nullableByteProperty: number | null;
+  sByteProperty: number;
+  nullableSByteProperty: number | null;
+  shortProperty: number;
+  nullableShortProperty: number | null;
+  uShortProperty: number;
+  nullableUShortProperty: number | null;
+  uIntProperty: number;
+  nullableUIntProperty: number | null;
+  uLongProperty: number;
+  nullableULongProperty: number | null;
+  stringProperty: string;
+  nullableStringProperty: string;
+  guidProperty: string;
+  nullableGuidProperty: string | null;
+  dateTimeProperty: Date;
+  nullableDateTimeProperty: Date | null;
+  dateTimeOffsetProperty: Date;
+  nullableDateTimeOffsetProperty: Date | null;
+  thisClass: TestClass;
+  class2: TestClass2;
+  classInFolder: TestClassInFolder;
+  enum: TestEnum;
+  enumInFolder: TestEnumInFolder;
+  intEnumerable: number[];
+  intCollection: number[];
+  intIList: number[];
+  intList: number[];
+  intArray: number[];
+  intDictionary: number[];
+  intIDictionary: number[];
+  intHashSet: number[];
+  intISet: number[];
+  intQueue: number[];
+  intStack: number[];
+  intLinkedList: number[];
+  intSortedSet: number[];
+  intSortedList: number[];
+  intSortedDictionary: number[];
+  intReadOnlyCollection: number[];
+  intReadOnlyList: number[];
+  intReadOnlyDictionary: number[];
+  intCollection2: number[];
+  intConcurrentBag: number[];
+}
+
+export default TestClass;

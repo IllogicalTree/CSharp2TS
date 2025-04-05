@@ -2,7 +2,7 @@
 
 namespace CSharp2TS.Tests.Stubs.Models {
     [TSEnum(Folder = "Enums")]
-    public enum TestEnumWithFolder {
+    public enum TestEnumInFolder {
         Value1 = 1,
         Value2 = 2,
         Value3 = 3,
