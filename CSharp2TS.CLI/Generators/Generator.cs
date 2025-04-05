@@ -87,7 +87,7 @@ namespace CSharp2TS.CLI.Generators {
 
         private IEnumerable<TypeDefinition> GetTypesByAttribute(ModuleDefinition module, Type attributeType) {
             foreach (var type in module.GetTypes()) {
-                if (type.CustomAttributes.Has(attributeType)) {
+                if (type.HasAttribute(attributeType)) {
                     yield return type;
                 }
             }

@@ -1,5 +1,4 @@
 ﻿using Mono.Cecil;
-using Mono.Collections.Generic;
 
 namespace CSharp2TS.CLI.Utility {
     public static class Extensions {
@@ -11,14 +10,14 @@ namespace CSharp2TS.CLI.Utility {
             return char.ToLowerInvariant(value[0]) + value.Substring(1);
         }
 
-        public static bool Has(this Collection<CustomAttribute> customAttributes, Type type) {
-            return customAttributes
+        public static bool HasAttribute(this ICustomAttributeProvider entity, Type type) {
+            return entity.CustomAttributes
                 .Where(a => a.AttributeType.FullName == type.FullName)
                 .Any();
         }
 
-        public static bool Has<T>(this Collection<CustomAttribute> customAttributes) {
-            return customAttributes.Has(typeof(T));
+        public static bool HasAttribute<T>(this ICustomAttributeProvider entity) {
+            return entity.HasAttribute(typeof(T));
         }
 
         public static T? GetCustomAttributeValue<T>(this TypeDefinition typeDef, Type type, string propertyName, bool checkBaseType = true) {
@@ -42,16 +41,8 @@ namespace CSharp2TS.CLI.Utility {
                 .FirstOrDefault();
         }
 
-        public static bool TryGetAttribute<T>(this MethodDefinition typeDef, out CustomAttribute? attribute) {
-            attribute = typeDef.CustomAttributes
-                .Where(a => a.AttributeType.FullName == typeof(T).FullName)
-                .FirstOrDefault();
-
-            return attribute != null;
-        }
-
-        public static bool TryGetAttribute<T>(this TypeDefinition typeDef, out CustomAttribute? attribute) {
-            attribute = typeDef.CustomAttributes
+        public static bool TryGetAttribute<T>(this ICustomAttributeProvider entity, out CustomAttribute? attribute) {
+            attribute = entity.CustomAttributes
                 .Where(a => a.AttributeType.FullName == typeof(T).FullName)
                 .FirstOrDefault();
 
