@@ -40,7 +40,7 @@ namespace CSharp2TS.CLI.Generators {
                 string route = GetRoute(httpMethodAttribute);
                 var returnType = GetReturnType(method);
 
-                var allParams = method.Parameters.ToArray();
+                var allParams = ParseParams(method.Parameters.ToArray());
                 var routeParams = GetRouteParams(route, allParams);
                 var queryParams = GetQueryParams(route, allParams);
                 TSServiceMethodParam? bodyParam = null;
@@ -77,45 +77,55 @@ namespace CSharp2TS.CLI.Generators {
             }
         }
 
+        private TSServiceMethodParam[] ParseParams(ParameterDefinition[] parameterDefinitions) {
+            List<TSServiceMethodParam> converted = [];
+
+            foreach (ParameterDefinition param in parameterDefinitions) {
+                var tsProperty = GetTSPropertyType(param.ParameterType);
+                bool isBodyParam = tsProperty.IsObject || param.HasCustomAttribute<FromBodyAttribute>();
+
+                converted.Add(new TSServiceMethodParam(param.Name.ToCamelCase(), tsProperty, isBodyParam));
+            }
+
+            return converted.ToArray();
+        }
+
         private string GetApiClientImport() {
             string currentFolder = Path.Combine(Options.ServicesOutputFolder!, FolderLocation ?? string.Empty);
             return FolderUtility.GetRelativeImportPath(currentFolder, Options.ServicesOutputFolder!);
         }
 
-        private TSServiceMethodParam[] GetRouteParams(string template, ParameterDefinition[] allParams) {
+        private TSServiceMethodParam[] GetRouteParams(string template, TSServiceMethodParam[] allParams) {
             if (string.IsNullOrWhiteSpace(template)) {
                 return [];
             }
 
             return allParams
                 .Where(i => template.Contains($"{{{i.Name}}}"))
-                .Select(i => new TSServiceMethodParam(i.Name!.ToCamelCase(), GetTSPropertyType(i.ParameterType)))
+                .Where(row => !row.IsBodyParam)
                 .ToArray();
         }
 
-        private TSServiceMethodParam[] GetQueryParams(string template, ParameterDefinition[] allParams) {
+        private TSServiceMethodParam[] GetQueryParams(string template, TSServiceMethodParam[] allParams) {
             if (string.IsNullOrWhiteSpace(template)) {
                 return [];
             }
 
             return allParams
                 .Where(i => !template.Contains($"{{{i.Name}}}"))
-                .Select(i => new TSServiceMethodParam(i.Name!.ToCamelCase(), GetTSPropertyType(i.ParameterType)))
-                .Where(row => !row.Property.IsObject)
+                .Where(row => !row.IsBodyParam)
                 .ToArray();
         }
 
-        private TSServiceMethodParam? GetBodyParam(string template, ParameterDefinition[] allParams) {
+        private TSServiceMethodParam? GetBodyParam(string template, TSServiceMethodParam[] allParams) {
             if (string.IsNullOrWhiteSpace(template)) {
                 return allParams
-                    .Select(i => new TSServiceMethodParam(i.Name!.ToCamelCase(), GetTSPropertyType(i.ParameterType)))
-                    .Where(row => row.Property.IsObject)
+                    .Where(row => row.IsBodyParam)
                     .FirstOrDefault();
             }
 
             return allParams
                 .Where(i => !template.Contains($"{{{i.Name}}}"))
-                .Select(i => new TSServiceMethodParam(i.Name!.ToCamelCase(), GetTSPropertyType(i.ParameterType)))
                 .FirstOrDefault();
         }
 

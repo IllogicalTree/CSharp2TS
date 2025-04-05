@@ -26,6 +26,11 @@ export default {
     return response.data; 
   },
 
+  async createFromBody(model: string): Promise<string> {
+    var response = await apiClient.post<string>(`api/TestController`, model);
+    return response.data; 
+  },
+
   async update(id: number, testClass: TestClass): Promise<TestClass> {
     var response = await apiClient.put<TestClass>(`api/TestController/${id}`, testClass);
     return response.data; 

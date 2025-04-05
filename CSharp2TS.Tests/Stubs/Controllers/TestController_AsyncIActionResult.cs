@@ -34,6 +34,12 @@ namespace CSharp2TS.Tests.Stubs.Controllers {
             return await Task.FromResult(Ok(testClass));
         }
 
+        [HttpPost]
+        [TSEndpoint(typeof(string))]
+        public async Task<IActionResult> CreateFromBody([FromBody] string model) {
+            return await Task.FromResult(Ok(model));
+        }
+
         [HttpPut("{id}")]
         [TSEndpoint(typeof(TestClass))]
         public async Task<IActionResult> Update(int id, TestClass testClass) {

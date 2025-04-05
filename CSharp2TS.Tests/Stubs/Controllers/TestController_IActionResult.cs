@@ -34,6 +34,12 @@ namespace CSharp2TS.Tests.Stubs.Controllers {
             return Ok(testClass);
         }
 
+        [HttpPost]
+        [TSEndpoint(typeof(string))]
+        public IActionResult CreateFromBody([FromBody] string model) {
+            return Ok(model);
+        }
+
         [HttpPut("{id}")]
         [TSEndpoint(typeof(TestClass))]
         public IActionResult Update(int id, TestClass testClass) {

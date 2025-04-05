@@ -28,6 +28,12 @@ namespace CSharp2TS.CLI.Utility {
                 .Any();
         }
 
+        public static bool HasCustomAttribute<T>(this ParameterDefinition typeReference) {
+            return typeReference.CustomAttributes
+                .Where(a => a.AttributeType.FullName == typeof(T).FullName)
+                .Any();
+        }
+
         public static T? GetCustomAttributeValue<T>(this TypeDefinition typeDef, Type type, string propertyName, bool checkBaseType = true) {
             var attribute = typeDef.CustomAttributes
                 .Where(a => a.AttributeType.FullName == type.FullName)

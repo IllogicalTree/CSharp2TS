@@ -30,6 +30,11 @@ namespace CSharp2TS.Tests.Stubs.Controllers {
             return testClass;
         }
 
+        [HttpPost]
+        public ActionResult<string> CreateFromBody([FromBody] string model) {
+            return model;
+        }
+
         [HttpPut("{id}")]
         public ActionResult<TestClass> Update(int id, TestClass testClass) {
             return testClass;
