@@ -31,6 +31,7 @@ namespace CSharp2TS.Tests {
         [Test]
         [TestCase("TestController_ActionResult.ts", "Expected\\TestController.ts")]
         [TestCase("TestController_IActionResult.ts", "Expected\\TestController.ts")]
+        [TestCase("TestController_AsyncActionResult.ts", "Expected\\TestController.ts")]
         public void Generation_TestController(string generatedFile, string expectedFile) {
             TestFilesMatch(generatedFile, expectedFile);
         }

@@ -33,8 +33,8 @@ namespace CSharp2TS.CLI.Generators {
         protected TSPropertyGenerationInfo GetTSPropertyType(TypeReference type) {
             string tsType;
 
-            TryExtractFromGenericIfRequired(typeof(ActionResult<>), ref type);
             TryExtractFromGenericIfRequired(typeof(Task<>), ref type);
+            TryExtractFromGenericIfRequired(typeof(ActionResult<>), ref type);
 
             bool isCollection = CheckCollectionType(ref type);
             bool isNullable = TryExtractFromGenericIfRequired(typeof(Nullable<>), ref type);
