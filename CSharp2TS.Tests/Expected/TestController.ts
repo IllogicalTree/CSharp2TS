@@ -37,8 +37,7 @@ export default {
   },
 
   async delete(id: number): Promise<void> {
-    var response = await apiClient.delete(`api/TestController/${id}`);
-    return response.data; 
+    await apiClient.delete(`api/TestController/${id}`);
   },
 
 };

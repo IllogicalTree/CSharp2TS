@@ -179,7 +179,7 @@ namespace CSharp2TS.CLI.Generators {
 
         private TSPropertyGenerationInfo GetReturnType(MethodDefinition method) {
             if (method.TryGetAttribute<TSEndpointAttribute>(out CustomAttribute? attribute)) {
-                var customReturnType = attribute!.ConstructorArguments[0].Value as TypeDefinition;
+                var customReturnType = attribute!.ConstructorArguments[0].Value as TypeReference;
 
                 if (customReturnType != null) {
                     return GetTSPropertyType(customReturnType);

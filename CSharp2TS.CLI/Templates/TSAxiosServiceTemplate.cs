@@ -120,6 +120,12 @@ namespace CSharp2TS.CLI.Templates
             
             #line default
             #line hidden
+            
+            #line 19 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+ if (item.ReturnType != "void") { 
+            
+            #line default
+            #line hidden
             this.Write("<");
             
             #line 19 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
@@ -127,7 +133,14 @@ namespace CSharp2TS.CLI.Templates
             
             #line default
             #line hidden
-            this.Write(">(`");
+            this.Write(">");
+            
+            #line 19 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("(`");
             
             #line 19 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.Route));
