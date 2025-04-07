@@ -12,6 +12,14 @@
     <RepositoryUrl>https://github.com/ormesam/CSharp2TS</RepositoryUrl>
     <PackageOutputPath>../nupkg</PackageOutputPath>
     <PackageVersion>0.0.1-alpha</PackageVersion>
+    <PackageReadmeFile>PACKAGE.md</PackageReadmeFile>
   </PropertyGroup>
+    
+  <ItemGroup>
+    <None Include="PACKAGE.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
     
 </Project>
