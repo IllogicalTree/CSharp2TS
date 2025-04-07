@@ -61,7 +61,7 @@ dotnet tool install -g [WORK IN PROGRESS]
 
 ### Example Usage
 
-The tool can be run via a config file
+The tool can be run via a config file. The config file can be created from the command line, check out the [docs](CSharp2TS.CLI/PACKAGE.md) for more information.
 
 ```
 csharp2ts -c C:\path_to_config.json
