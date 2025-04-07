@@ -16,7 +16,11 @@ Run using config: `csharp2ts -c C:\path_to_config.json`
 
 To run from the command line, specify at least the output and assembly arguments for the models or services
 
-Usage: `csharp2ts [option]`
+Usage: `csharp2ts [option] [option value]`
+
+Example
+
+`csharp2ts --model-output-folder C:\models_output --model-assembly-path C:\models_assembly --file-casing camel`
 
 | Option                               | Description                                              |
 | ------------------------------------ | -------------------------------------------------------- |
