@@ -2,7 +2,7 @@ CSharp2TS.Core is a lightweight package that contains the attributes required fo
 
 ## Getting Started
 
-Add the following attributes to your project to include or exclude them in the CSharp2TS.CLI tool's TypeScript generation.
+Add the following attributes to your project to include or exclude items in the CSharp2TS.CLI tool's TypeScript generation.
 
 **TSInterface** can be added to a class to generate a TypeScript interface.
 
