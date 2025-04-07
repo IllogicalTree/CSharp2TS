@@ -36,7 +36,13 @@ namespace CSharp2TS.CLI.Generators {
             TryExtractFromGenericIfRequired(typeof(Task<>), ref type);
             TryExtractFromGenericIfRequired(typeof(ActionResult<>), ref type);
 
-            bool isCollection = CheckCollectionType(ref type);
+            bool isDictionary = TryExtractFromDictionary(ref type);
+            bool isCollection = false;
+
+            if (!isDictionary) {
+                isCollection = TryExtractFromCollection(ref type);
+            }
+
             bool isNullable = TryExtractFromGenericIfRequired(typeof(Nullable<>), ref type);
             bool isObject = false;
 
@@ -57,7 +63,9 @@ namespace CSharp2TS.CLI.Generators {
 
             string rawTsType = tsType;
 
-            if (isCollection) {
+            if (isDictionary) {
+                tsType = $"{{ [key: string]: {tsType} }}";
+            } else if (isCollection) {
                 tsType += "[]";
             }
 
@@ -72,7 +80,27 @@ namespace CSharp2TS.CLI.Generators {
             return typeReference.FullName == type.FullName;
         }
 
-        private bool CheckCollectionType(ref TypeReference type) {
+        private bool TryExtractFromDictionary(ref TypeReference type) {
+            if (!type.IsGenericInstance) {
+                return false;
+            }
+
+            bool isDictionary = type.GetElementType().FullName == typeof(IDictionary<,>).FullName ||
+                type.Resolve().Interfaces
+                    .Where(i => i.InterfaceType.IsGenericInstance)
+                    .Where(i => i.InterfaceType.GetElementType().FullName == typeof(IDictionary<,>).FullName)
+                    .Any();
+
+            // If it's a dictionary type, extract the generic arguments
+            if (isDictionary && type is GenericInstanceType genericInstance && genericInstance.GenericArguments.Count > 1) {
+                type = genericInstance.GenericArguments[1];
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool TryExtractFromCollection(ref TypeReference type) {
             if (type.IsArray) {
                 type = type.GetElementType()?.Resolve() ?? type;
                 return true;
