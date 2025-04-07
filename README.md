@@ -1,70 +1,76 @@
 # CSharp2TS
 [![Build & Deploy](https://github.com/ormesam/CSharp2TS/actions/workflows/deploy-package.yml/badge.svg)](https://github.com/ormesam/CSharp2TS/actions/workflows/deploy-package.yml)
-## Install
 
-**Core**
+CSharp2TS is a tool to generate TypeScript files for classes, enums and API endpoints. It consists of 2 parts:
 
-WIP
+- **CSharp2TS.Core** - A very lightweight nuget package containing the attributes to mark classes, enums and controllers for generation.
+- **CSharp2TS.CLI**    - A dotnet tool to convert the marked files to TypeScript interfaces, enums and api services
 
-**CLI Tool**
 
-Add the GitHub nuget as a feed:
 
-1. Create a GitHub API token with read access for packages: https://docs.github.com/en/packages/learn-github-packages/introduction-to-github-packages#authenticating-to-github-packages
+## CSharp2TS.Core
 
-2. `dotnet nuget add source --username YOUR_GITHUB_USERNAME --password YOUR_GITHUB_TOKEN --store-password-in-clear-text --name github-ormesam "https://nuget.pkg.github.com/ormesam/index.json"`
+CSharp2TS.Core is a very lightweight package containing the attributes to mark classes, enums and controllers for generation. For more information see the [CSharp2TS.Core Docs](CSharp2TS.Core/PACKAGE.md).
 
-3. Install tool: `dotnet tool install -g csharp2ts.cli`
+### Installation
 
-## Getting Started
+CSharp2TS.Core is available on NuGet.
 
-The CSharp2TS tool can be run with a config file or command line arguments.
+```
+dotnet add package [WORK IN PROGRESS]
+```
 
-### Config File (Optional)
+### Example Usage
 
-To create an empty config file run `csharp2ts create-config` in the folder you want the config file to be created.
-
-This will create a csharp2ts.json file:
-
-```json
-{
-    "GenerateModels": false, // Set to true to generate models
-    "ModelOutputFolder": null, // Set to the path of the model output folder (string)
-    "ModelAssemblyPaths": [], // Set to an array of paths to the assemblies you want to generate models from (string[])
-    
-    "GenerateServices": false, // Set to true to generate services
-    "ServicesOutputFolder": null, // Set to the path of the service output folder (string)
-    "ServicesAssemblyPaths": [], // Set to an array of paths to the assemblies you want to generate services from (string[])
-    "ServiceGenerator": "axios", // Only axios supported at the current time
-    
-    "FileNameCasingStyle": "pascal" // 'pascal' or 'camel'
+```c#
+[TSInterface]
+public class TestModel {
+    ...
 }
 ```
 
-## Usage
+```c#
+[TSEnum]
+public enum TestEnum {
+    ...
+}
+```
 
-**Run using config**
+```c#
+[TSService]
+[ApiController]
+[Route("api/[controller]")]
+public class TestController : ControllerBase {
+    ...
+}
+```
 
-Run using config: `csharp2ts -c C:\path_to_config.json`
+For more examples check out the [docs](CSharp2TS.Core/PACKAGE.md).
 
-**Run using command line**
+## CSharp2TS.CLI
 
-Usage: `csharp2ts [option]`
+CSharp2TS.CLI is a dotnet tool to generate TypeScript files from .NET assemblies which have classes, enums and controllers marked with the attributes in the Core package. It an be run via command line arguments or a config file. For more information see the [CSharp2TS.CLI Docs](CSharp2TS.CLI/PACKAGE.md).
 
-| Option                               | Description                                              |
-| ------------------------------------ | -------------------------------------------------------- |
-| --model-output-folder, -mo <path>    | The folder where the generated model files will be saved |
-| --model-assembly-path, -ma <path>    | The path to the model assembly                           |
-| --file-casing, -fc <path>            | The file name casing style (camel \| pascal)             |
-| --services-output-folder, -so <path> | The folder where the services will be saved              |
-| --services-assembly-path, -sa <path> | The path to the assembly with the controllers            |
-| --service-generator, -sg <path>      | The type of service - currently only Axios is supported  |
+### Installation
 
-**Commands**
+CSharp2TS.Core is available as a dotnet tool. To install globally run:
 
-Usage: `csharp2ts [command]`
+```
+dotnet tool install -g [WORK IN PROGRESS]
+```
 
-| Command           | Description                           |
-| ----------------- | ------------------------------------- |
-| -h, -help, --help | Show command and command line options |
-| create-config     | Create a default config file          |
+### Example Usage
+
+The tool can be run via a config file
+
+```
+csharp2ts -c C:\path_to_config.json
+```
+
+Or via command line arguments
+
+```
+csharp2ts --model-output-folder C:\models_output --model-assembly-path C:\models_assembly --file-casing camel
+```
+
+For more possible arguments, and help commands, check out the [docs](CSharp2TS.CLI/PACKAGE.md).
