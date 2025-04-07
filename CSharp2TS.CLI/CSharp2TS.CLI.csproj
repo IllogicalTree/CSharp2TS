@@ -14,6 +14,7 @@
     <Title>$(AssemblyName)</Title>
     <Authors>Sam Orme</Authors>
     <PackageVersion>0.0.1-alpha</PackageVersion>
+    <PackageReadmeFile>PACKAGE.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,6 +28,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="PACKAGE.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
     <None Update="Templates\TSAxiosApiClientTemplate.tt">
       <LastGenOutput>TSAxiosApiClientTemplate.cs</LastGenOutput>
       <Generator>TextTemplatingFilePreprocessor</Generator>
