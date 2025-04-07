@@ -59,7 +59,7 @@ interface TestClass {
   intLinkedList: number[];
   intSortedSet: number[];
   intSortedList: { [key: string]: number };
-  intSortedDictionary: { [key: string]: string };
+  intSortedDictionary: { [key: string]: number };
   intReadOnlyCollection: number[];
   intReadOnlyList: number[];
   intReadOnlyDictionary: number[];
