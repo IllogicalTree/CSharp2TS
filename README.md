@@ -6,8 +6,6 @@ CSharp2TS is a tool to generate TypeScript files for classes, enums and API endp
 - **CSharp2TS.Core** - A very lightweight nuget package containing the attributes to mark classes, enums and controllers for generation.
 - **CSharp2TS.CLI**    - A dotnet tool to convert the marked files to TypeScript interfaces, enums and api services
 
-
-
 ## CSharp2TS.Core
 
 CSharp2TS.Core is a very lightweight package containing the attributes to mark classes, enums and controllers for generation. For more information see the [CSharp2TS.Core Docs](CSharp2TS.Core/PACKAGE.md).
@@ -74,3 +72,11 @@ csharp2ts --model-output-folder C:\models_output --model-assembly-path C:\models
 ```
 
 For more possible arguments, and help commands, check out the [docs](CSharp2TS.CLI/PACKAGE.md).
+
+## Under The Hood
+
+CSharp2TS uses the [Mono.Cecil](https://github.com/jbevain/cecil) project to interrogate assemblies without loading them into the AppDomain
+
+**TODO**
+
+- Handle file types
