@@ -1,5 +1,5 @@
 # CSharp2TS
-[![Build & Deploy](https://github.com/ormesam/CSharp2TS/actions/workflows/deploy-package.yml/badge.svg)](https://github.com/ormesam/CSharp2TS/actions/workflows/deploy-package.yml)
+[![Build](https://github.com/ormesam/CSharp2TS/actions/workflows/build.yml/badge.svg)](https://github.com/ormesam/CSharp2TS/actions/workflows/build.yml)
 
 CSharp2TS is a tool to generate TypeScript files for classes, enums and API endpoints. It consists of 2 parts:
 
