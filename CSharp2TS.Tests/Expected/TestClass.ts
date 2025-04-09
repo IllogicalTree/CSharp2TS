@@ -44,7 +44,10 @@ interface TestClass {
   class2: TestClass2;
   classInFolder: TestClassInFolder;
   enum: TestEnum;
+  nullableEnum: TestEnum | null;
   enumInFolder: TestEnumInFolder;
+  formFile: File;
+  iFormFile: File;
   intEnumerable: number[];
   intCollection: number[];
   intIList: number[];
@@ -65,6 +68,8 @@ interface TestClass {
   intReadOnlyDictionary: number[];
   intCollection2: number[];
   intConcurrentBag: number[];
+  formFileCollection: File[];
+  iFormFileCollection: File[];
 }
 
 export default TestClass;

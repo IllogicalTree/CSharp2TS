@@ -41,7 +41,7 @@ namespace CSharp2TS.CLI.Generators {
         private string BuildTsFile() {
             return new TSInterfaceTemplate {
                 TypeName = Type.Name,
-                Imports = imports.Select(i => i.Value).ToList(),
+                Imports = Imports.Select(i => i.Value).ToList(),
                 Properties = properties,
             }.TransformText();
         }

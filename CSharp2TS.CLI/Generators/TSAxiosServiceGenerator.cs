@@ -203,7 +203,7 @@ namespace CSharp2TS.CLI.Generators {
             return new TSAxiosServiceTemplate {
                 Items = items,
                 ApiClientImportPath = apiClientImportPath,
-                Imports = imports.Select(i => i.Value).ToList(),
+                Imports = Imports.Select(i => i.Value).ToList(),
                 TypeName = Type.Name,
             }.TransformText();
         }

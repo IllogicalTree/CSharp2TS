@@ -1,22 +1,26 @@
 ﻿using CSharp2TS.CLI.Generators.Entities;
 using CSharp2TS.CLI.Utility;
 using CSharp2TS.Core.Attributes;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.AspNetCore.Mvc;
 using Mono.Cecil;
 
 namespace CSharp2TS.CLI.Generators {
     public abstract class GeneratorBase<TAttribute> where TAttribute : TSAttributeBase {
-        private readonly Type[] stringTypes = { typeof(char), typeof(string), typeof(Guid) };
-        private readonly Type[] dateTypes = { typeof(DateTime), typeof(DateTimeOffset) };
-        private readonly Type[] voidTypes = { typeof(void), typeof(Task), typeof(ActionResult), typeof(IActionResult) };
-        private readonly Type[] numberTypes = {
+        private static readonly Type[] stringTypes = [typeof(char), typeof(string), typeof(Guid)];
+        private static readonly Type[] dateTypes = [typeof(DateTime), typeof(DateTimeOffset)];
+        private static readonly Type[] voidTypes = [typeof(void), typeof(Task), typeof(ActionResult), typeof(IActionResult)];
+        private static readonly Type[] fileCollectionTypes = [typeof(FormFileCollection), typeof(IFormFileCollection)];
+        private static readonly Type[] fileTypes = [typeof(FormFile), typeof(IFormFile), .. fileCollectionTypes];
+        private static readonly Type[] numberTypes = [
             typeof(sbyte), typeof(byte), typeof(short),
             typeof(ushort), typeof(int), typeof(uint),
             typeof(long), typeof(ulong), typeof(float),
             typeof(double), typeof(decimal)
-        };
+        ];
 
-        protected IDictionary<TypeDefinition, TSImport> imports { get; }
+        protected IDictionary<TypeDefinition, TSImport> Imports { get; }
 
         public TypeDefinition Type { get; }
         public Options Options { get; }
@@ -25,7 +29,7 @@ namespace CSharp2TS.CLI.Generators {
         public abstract string Generate();
 
         protected GeneratorBase(TypeDefinition type, Options options) {
-            imports = new Dictionary<TypeDefinition, TSImport>();
+            Imports = new Dictionary<TypeDefinition, TSImport>();
             Type = type;
             Options = options;
         }
@@ -46,16 +50,22 @@ namespace CSharp2TS.CLI.Generators {
             bool isNullable = TryExtractFromGenericIfRequired(typeof(Nullable<>), ref type);
             bool isObject = false;
 
-            if (stringTypes.Any(i => PrimitiveTypeEquals(type, i))) {
+            if (stringTypes.Any(i => SimpleTypeCheck(type, i))) {
                 tsType = "string";
-            } else if (numberTypes.Any(i => PrimitiveTypeEquals(type, i))) {
+            } else if (numberTypes.Any(i => SimpleTypeCheck(type, i))) {
                 tsType = "number";
             } else if (type.FullName == typeof(bool).FullName) {
                 tsType = "boolean";
-            } else if (dateTypes.Any(i => PrimitiveTypeEquals(type, i))) {
+            } else if (dateTypes.Any(i => SimpleTypeCheck(type, i))) {
                 tsType = "Date";
-            } else if (voidTypes.Any(i => PrimitiveTypeEquals(type, i))) {
+            } else if (voidTypes.Any(i => SimpleTypeCheck(type, i))) {
                 tsType = "void";
+            } else if (fileTypes.Any(i => SimpleTypeCheck(type, i))) {
+                tsType = "File";
+
+                if (fileCollectionTypes.Any(i => SimpleTypeCheck(type, i))) {
+                    isCollection = true;
+                }
             } else {
                 tsType = type.Name;
                 isObject = true;
@@ -76,7 +86,7 @@ namespace CSharp2TS.CLI.Generators {
             return new TSPropertyGenerationInfo(type, rawTsType, tsType, isObject);
         }
 
-        private bool PrimitiveTypeEquals(TypeReference typeReference, Type type) {
+        private bool SimpleTypeCheck(TypeReference typeReference, Type type) {
             return typeReference.FullName == type.FullName;
         }
 
@@ -146,7 +156,7 @@ namespace CSharp2TS.CLI.Generators {
         }
 
         protected void TryAddTSImport(TSPropertyGenerationInfo tsType, string? currentFolderRoot, string? targetFolderRoot) {
-            if (currentFolderRoot == null || targetFolderRoot == null || imports.ContainsKey(tsType.Type.Resolve()) || !tsType.IsObject) {
+            if (currentFolderRoot == null || targetFolderRoot == null || Imports.ContainsKey(tsType.Type.Resolve()) || !tsType.IsObject) {
                 return;
             }
 
@@ -159,7 +169,7 @@ namespace CSharp2TS.CLI.Generators {
             string relativePath = FolderUtility.GetRelativeImportPath(currentFolder, targetFolder);
             string importPath = $"{relativePath}{GetTypeFileName(tsType.TSType)}";
 
-            imports.Add(tsType.Type.Resolve(), new TSImport(tsType.TSType, importPath));
+            Imports.Add(tsType.Type.Resolve(), new TSImport(tsType.TSType, importPath));
         }
     }
 }

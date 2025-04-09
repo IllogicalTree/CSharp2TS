@@ -2,6 +2,8 @@
 using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
 using CSharp2TS.Core.Attributes;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Internal;
 
 namespace CSharp2TS.Tests.Stubs.Models {
     [TSInterface]
@@ -41,11 +43,15 @@ namespace CSharp2TS.Tests.Stubs.Models {
         public DateTime? NullableDateTimeProperty { get; set; }
         public DateTimeOffset DateTimeOffsetProperty { get; set; }
         public DateTimeOffset? NullableDateTimeOffsetProperty { get; set; }
+
         public TestClass ThisClass { get; set; }
         public TestClass2 Class2 { get; set; }
         public TestClassInFolder ClassInFolder { get; set; }
         public TestEnum Enum { get; set; }
+        public TestEnum? NullableEnum { get; set; }
         public TestEnumInFolder EnumInFolder { get; set; }
+        public FormFile FormFile { get; set; }
+        public IFormFile IFormFile { get; set; }
 
         // Enumerable types
         public IEnumerable<int> IntEnumerable { get; set; }
@@ -68,6 +74,8 @@ namespace CSharp2TS.Tests.Stubs.Models {
         public IReadOnlyDictionary<int, int> IntReadOnlyDictionary { get; set; }
         public Collection<int> IntCollection2 { get; set; }
         public ConcurrentBag<int> IntConcurrentBag { get; set; }
+        public FormFileCollection FormFileCollection { get; set; }
+        public IFormFileCollection IFormFileCollection { get; set; }
 
 
         // NullableEnumerable types
