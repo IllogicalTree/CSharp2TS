@@ -79,26 +79,26 @@ namespace CSharp2TS.Tests.Stubs.Models {
 
 
         // NullableEnumerable types
-        //public IEnumerable<int?> NullableIntEnumerable { get; set; }
-        //public ICollection<int?> NullableIntCollection { get; set; }
-        //public IList<int?> NullableIntIList { get; set; }
-        //public List<int?> NullableIntList { get; set; }
-        //public int?[] NullableIntArray { get; set; }
-        //public Dictionary<int?, int?> NullableIntDictionary { get; set; }
-        //public IDictionary<int?, int?> NullableIntIDictionary { get; set; }
-        //public HashSet<int?> NullableIntHashSet { get; set; }
-        //public ISet<int?> NullableIntISet { get; set; }
-        //public Queue<int?> NullableIntQueue { get; set; }
-        //public Stack<int?> NullableIntStack { get; set; }
-        //public LinkedList<int?> NullableIntLinkedList { get; set; }
-        //public SortedSet<int?> NullableIntSortedSet { get; set; }
-        //public SortedList<int?, int?> NullableIntSortedList { get; set; }
-        //public SortedDictionary<int?, int?> NullableIntSortedDictionary { get; set; }
-        //public IReadOnlyCollection<int?> NullableIntReadOnlyCollection { get; set; }
-        //public IReadOnlyList<int?> NullableIntReadOnlyList { get; set; }
-        //public IReadOnlyDictionary<int?, int?> NullableIntReadOnlyDictionary { get; set; }
-        //public Collection<int?> NullableIntCollection2 { get; set; }
-        //public ConcurrentBag<int?> NullableIntConcurrentBag { get; set; }
+        public IEnumerable<int?> NullableIntEnumerable { get; set; }
+        public ICollection<int?> NullableIntCollection { get; set; }
+        public IList<int?> NullableIntIList { get; set; }
+        public List<int?> NullableIntList { get; set; }
+        public int?[] NullableIntArray { get; set; }
+        public Dictionary<int, int?> NullableIntDictionary { get; set; }
+        public IDictionary<int, int?> NullableIntIDictionary { get; set; }
+        public HashSet<int?> NullableIntHashSet { get; set; }
+        public ISet<int?> NullableIntISet { get; set; }
+        public Queue<int?> NullableIntQueue { get; set; }
+        public Stack<int?> NullableIntStack { get; set; }
+        public LinkedList<int?> NullableIntLinkedList { get; set; }
+        public SortedSet<int?> NullableIntSortedSet { get; set; }
+        public SortedList<int, int?> NullableIntSortedList { get; set; }
+        public SortedDictionary<int, int?> NullableIntSortedDictionary { get; set; }
+        public IReadOnlyCollection<int?> NullableIntReadOnlyCollection { get; set; }
+        public IReadOnlyList<int?> NullableIntReadOnlyList { get; set; }
+        public IReadOnlyDictionary<int?, int?> NullableIntReadOnlyDictionary { get; set; }
+        public Collection<int?> NullableIntCollection2 { get; set; }
+        public ConcurrentBag<int?> NullableIntConcurrentBag { get; set; }
     }
 }
 

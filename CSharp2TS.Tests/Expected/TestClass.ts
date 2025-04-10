@@ -70,6 +70,26 @@ interface TestClass {
   intConcurrentBag: number[];
   formFileCollection: File[];
   iFormFileCollection: File[];
+  nullableIntEnumerable: (number | null)[];
+  nullableIntCollection: (number | null)[];
+  nullableIntIList: (number | null)[];
+  nullableIntList: (number | null)[];
+  nullableIntArray: (number | null)[];
+  nullableIntDictionary: { [key: string]: (number | null) };
+  nullableIntIDictionary: { [key: string]: (number | null) };
+  nullableIntHashSet: (number | null)[];
+  nullableIntISet: (number | null)[];
+  nullableIntQueue: (number | null)[];
+  nullableIntStack: (number | null)[];
+  nullableIntLinkedList: (number | null)[];
+  nullableIntSortedSet: (number | null)[];
+  nullableIntSortedList: { [key: string]: (number | null) };
+  nullableIntSortedDictionary: { [key: string]: (number | null) };
+  nullableIntReadOnlyCollection: (number | null)[];
+  nullableIntReadOnlyList: (number | null)[];
+  nullableIntReadOnlyDictionary: (number | null)[];
+  nullableIntCollection2: (number | null)[];
+  nullableIntConcurrentBag: (number | null)[];
 }
 
 export default TestClass;

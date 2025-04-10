@@ -73,14 +73,20 @@ namespace CSharp2TS.CLI.Generators {
 
             string rawTsType = tsType;
 
-            if (isDictionary) {
-                tsType = $"{{ [key: string]: {tsType} }}";
-            } else if (isCollection) {
-                tsType += "[]";
-            }
-
             if (isNullable) {
                 tsType += " | null";
+
+                if (isCollection || isDictionary) {
+                    tsType = $"({tsType})";
+                }
+            }
+
+            if (isDictionary) {
+                tsType = $"{{ [key: string]: {tsType} }}";
+            }
+
+            if (isCollection) {
+                tsType += "[]";
             }
 
             return new TSPropertyGenerationInfo(type, rawTsType, tsType, isObject);
@@ -112,7 +118,7 @@ namespace CSharp2TS.CLI.Generators {
 
         private bool TryExtractFromCollection(ref TypeReference type) {
             if (type.IsArray) {
-                type = type.GetElementType()?.Resolve() ?? type;
+                type = ((ArrayType)type).ElementType;
                 return true;
             }
 
