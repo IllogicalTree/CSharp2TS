@@ -11,9 +11,13 @@ export function useApiClient() {
       },
     });
   }
-
+  
   function setApiClient(newApiClient: AxiosInstance) {
     apiClient = newApiClient;
+  }
+
+  function setBaseUrl(baseUrl: string) {
+    apiClient.defaults.baseURL = baseUrl;
   }
 
   return {
