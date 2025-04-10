@@ -76,7 +76,3 @@ For more possible arguments, and help commands, check out the [docs](CSharp2TS.C
 ## Under The Hood
 
 CSharp2TS uses the [Mono.Cecil](https://github.com/jbevain/cecil) project to interrogate assemblies without loading them into the AppDomain
-
-**TODO**
-
-- Handle file types
