@@ -20,7 +20,7 @@ namespace CSharp2TS.CLI.Generators {
 
         private void ParseTypes(TypeDefinition typeDef) {
             foreach (var property in typeDef.Properties) {
-                if (property.IsSpecialName || property.HasAttribute<TSExcludeAttribute>()) {
+                if (property.IsSpecialName || property.HasAttribute<TSExcludeAttribute>() || IsRecordEqualityContract(property)) {
                     continue;
                 }
 
@@ -36,6 +36,10 @@ namespace CSharp2TS.CLI.Generators {
             if (typeDef.BaseType != null) {
                 ParseTypes(typeDef.BaseType.Resolve());
             }
+        }
+
+        private bool IsRecordEqualityContract(PropertyDefinition property) {
+            return property.PropertyType.FullName == typeof(Type).FullName && property.FullName.EndsWith("::EqualityContract()");
         }
 
         private string BuildTsFile() {
