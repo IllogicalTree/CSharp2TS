@@ -29,7 +29,7 @@ namespace CSharp2TS.CLI.Generators {
             Directory.CreateDirectory(options.ModelOutputFolder!);
 
             foreach (var assemblyPath in options.ModelAssemblyPaths) {
-                using (var assembly = AssemblyDefinition.ReadAssembly(assemblyPath)) {
+                using (var assembly = LoadAssembly(assemblyPath)) {
                     GenerateInterfaces(assembly.MainModule, options);
                     GenerateEnums(assembly.MainModule, options);
                 }
@@ -46,10 +46,19 @@ namespace CSharp2TS.CLI.Generators {
             GenerateApiClient();
 
             foreach (var assemblyPath in options.ServicesAssemblyPaths) {
-                using (var assembly = AssemblyDefinition.ReadAssembly(assemblyPath)) {
+                using (var assembly = LoadAssembly(assemblyPath)) {
                     GenerateServices(assembly.MainModule, options);
                 }
             }
+        }
+
+        private AssemblyDefinition LoadAssembly(string assemblyPath) {
+            var resolver = new DefaultAssemblyResolver();
+            resolver.AddSearchDirectory(Path.GetDirectoryName(assemblyPath)!);
+
+            return AssemblyDefinition.ReadAssembly(assemblyPath, new ReaderParameters {
+                AssemblyResolver = resolver,
+            });
         }
 
         private void GenerateApiClient() {
