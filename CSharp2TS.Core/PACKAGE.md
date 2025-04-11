@@ -1,4 +1,4 @@
-CSharp2TS.Core is a lightweight package that contains the attributes required for the CSharp2TS dotnet tool to generate TypeScript models and API services.
+CSharp2TS.Core is a lightweight package that contains the attributes required for the **CSharp2TS.CLI** dotnet tool to generate TypeScript models and API services.
 
 ## Getting Started
 

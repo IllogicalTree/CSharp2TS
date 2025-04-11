@@ -15,7 +15,18 @@
     <Authors>Sam Orme</Authors>
     <PackageVersion>0.0.1-alpha</PackageVersion>
     <PackageReadmeFile>PACKAGE.md</PackageReadmeFile>
+    <Copyright>Sam Orme</Copyright>
+    <PackageTags>csharp2ts;typescript-generator</PackageTags>
+    <PackageReleaseNotes>Initial pre-release</PackageReleaseNotes>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE.txt">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.3.0" />
