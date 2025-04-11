@@ -20,7 +20,7 @@ namespace CSharp2TS.CLI.Generators {
             typeof(double), typeof(decimal)
         ];
 
-        protected IDictionary<TypeDefinition, TSImport> Imports { get; }
+        protected IDictionary<string, TSImport> Imports { get; }
 
         public TypeDefinition Type { get; }
         public Options Options { get; }
@@ -29,7 +29,7 @@ namespace CSharp2TS.CLI.Generators {
         public abstract string Generate();
 
         protected GeneratorBase(TypeDefinition type, Options options) {
-            Imports = new Dictionary<TypeDefinition, TSImport>();
+            Imports = new Dictionary<string, TSImport>();
             Type = type;
             Options = options;
         }
@@ -162,7 +162,7 @@ namespace CSharp2TS.CLI.Generators {
         }
 
         protected void TryAddTSImport(TSPropertyGenerationInfo tsType, string? currentFolderRoot, string? targetFolderRoot) {
-            if (currentFolderRoot == null || targetFolderRoot == null || Imports.ContainsKey(tsType.Type.Resolve()) || !tsType.IsObject) {
+            if (currentFolderRoot == null || targetFolderRoot == null || Imports.ContainsKey(tsType.Type.FullName) || !tsType.IsObject) {
                 return;
             }
 
@@ -175,7 +175,7 @@ namespace CSharp2TS.CLI.Generators {
             string relativePath = FolderUtility.GetRelativeImportPath(currentFolder, targetFolder);
             string importPath = $"{relativePath}{GetTypeFileName(tsType.TSType)}";
 
-            Imports.Add(tsType.Type.Resolve(), new TSImport(tsType.TSType, importPath));
+            Imports.Add(tsType.Type.FullName, new TSImport(tsType.TSType, importPath));
         }
     }
 }
