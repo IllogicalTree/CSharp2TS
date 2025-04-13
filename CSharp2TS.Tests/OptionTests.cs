@@ -124,6 +124,7 @@ namespace CSharp2TS.Tests {
         public void OptionParser_Config_Exists() {
             // Arrange
             string fileName = "config.json";
+            string fullPath = Path.GetDirectoryName(Path.GetFullPath(fileName))!;
 
             // Act
             var options = OptionParser.ParseFromFile(fileName);
@@ -131,12 +132,12 @@ namespace CSharp2TS.Tests {
             // Assert
             Assert.That(File.Exists(fileName), Is.True);
             Assert.That(options, Is.Not.Null);
-            Assert.That(options.ModelOutputFolder, Is.EqualTo("model-output"));
-            Assert.That(options.ModelAssemblyPaths[0], Is.EqualTo("model-assembly-1"));
-            Assert.That(options.ModelAssemblyPaths[1], Is.EqualTo("model-assembly-2"));
-            Assert.That(options.ServicesOutputFolder, Is.EqualTo("service-output"));
-            Assert.That(options.ServicesAssemblyPaths[0], Is.EqualTo("service-assembly-1"));
-            Assert.That(options.ServicesAssemblyPaths[1], Is.EqualTo("service-assembly-2"));
+            Assert.That(options.ModelOutputFolder, Is.EqualTo(Path.Combine(fullPath, "model-output")));
+            Assert.That(options.ModelAssemblyPaths[0], Is.EqualTo(Path.Combine(fullPath, "model-assembly-1")));
+            Assert.That(options.ModelAssemblyPaths[1], Is.EqualTo(Path.Combine(fullPath, "model-assembly-2")));
+            Assert.That(options.ServicesOutputFolder, Is.EqualTo(Path.GetFullPath(Path.Combine(fullPath, "../service-output"))));
+            Assert.That(options.ServicesAssemblyPaths[0], Is.EqualTo(Path.Combine(fullPath, "service-assembly-1")));
+            Assert.That(options.ServicesAssemblyPaths[1], Is.EqualTo(Path.Combine(fullPath, "service-assembly-2")));
             Assert.That(options.FileNameCasingStyle, Is.EqualTo("camel"));
             Assert.That(options.ServiceGenerator, Is.EqualTo("axios"));
         }

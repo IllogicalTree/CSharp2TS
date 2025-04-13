@@ -55,18 +55,6 @@ namespace CSharp2TS.CLI {
             return options;
         }
 
-        public static Options? ParseFromFile(string optionsPath) {
-            if (!File.Exists(optionsPath)) {
-                throw new FileNotFoundException($"Config file does not exist at path: {optionsPath}");
-            }
-
-            using (var stream = File.OpenRead(optionsPath)) {
-                return JsonSerializer.Deserialize<Options>(stream, new JsonSerializerOptions {
-                    PropertyNameCaseInsensitive = true,
-                });
-            }
-        }
-
         private static string? TryParseSwitch(string[] args, params string[] switches) {
             for (int i = 0; i < switches.Length; i++) {
                 int idx = Array.IndexOf(args, switches[i]);
@@ -77,6 +65,52 @@ namespace CSharp2TS.CLI {
             }
 
             return null;
+        }
+
+        public static Options? ParseFromFile(string optionsPath) {
+            if (!File.Exists(optionsPath)) {
+                throw new FileNotFoundException($"Config file does not exist at path: {optionsPath}");
+            }
+
+            Options? options;
+
+            using (var stream = File.OpenRead(optionsPath)) {
+                options = JsonSerializer.Deserialize<Options>(stream, new JsonSerializerOptions {
+                    PropertyNameCaseInsensitive = true,
+                });
+            }
+
+            if (options == null) {
+                return null;
+            }
+
+            string optionsDirectory = Path.GetDirectoryName(Path.GetFullPath(optionsPath))!;
+
+            options.ModelOutputFolder = ResolveRelativePath(optionsDirectory, options.ModelOutputFolder);
+            options.ServicesOutputFolder = ResolveRelativePath(optionsDirectory, options.ServicesOutputFolder);
+
+            ResolveRelativePath(optionsDirectory, options.ModelAssemblyPaths);
+            ResolveRelativePath(optionsDirectory, options.ServicesAssemblyPaths);
+
+            return options;
+        }
+
+        private static void ResolveRelativePath(string optionsDirectory, string[] paths) {
+            for (int i = 0; i < paths.Length; i++) {
+                paths[i] = ResolveRelativePath(optionsDirectory, paths[i])!;
+            }
+        }
+
+        private static string? ResolveRelativePath(string root, string? relativePath) {
+            if (string.IsNullOrWhiteSpace(relativePath)) {
+                return null;
+            }
+
+            if (Path.IsPathRooted(relativePath)) {
+                return relativePath;
+            }
+
+            return Path.GetFullPath(Path.Combine(root, relativePath));
         }
 
         public static string? Validate(Options? options) {

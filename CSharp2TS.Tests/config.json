@@ -4,7 +4,7 @@
     "modelAssemblyPaths": [ "model-assembly-1", "model-assembly-2" ],
     "fileNameCasingStyle": "camel",
     "generateServices": true,
-    "servicesOutputFolder": "service-output",
+    "servicesOutputFolder": "../service-output",
     "servicesAssemblyPaths": [ "service-assembly-1", "service-assembly-2" ],
     "serviceGenerator": "axios"
 }
