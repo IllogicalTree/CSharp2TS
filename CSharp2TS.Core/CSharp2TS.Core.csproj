@@ -17,6 +17,7 @@
     <PackageTags>csharp2ts;typescript-generator</PackageTags>
     <PackageReleaseNotes>Initial pre-release</PackageReleaseNotes>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <Description>CSharp2TS.Core is a lightweight package that contains the attributes required for the **CSharp2TS.CLI** dotnet tool to generate TypeScript models and API services.</Description>
   </PropertyGroup>
     
   <ItemGroup>
