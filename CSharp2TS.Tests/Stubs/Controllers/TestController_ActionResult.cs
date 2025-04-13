@@ -20,6 +20,11 @@ namespace CSharp2TS.Tests.Stubs.Controllers {
             return new TestClass();
         }
 
+        [HttpGet("{id}")]
+        public ActionResult<TestClass> Get(int id, int externalId) {
+            return new TestClass();
+        }
+
         [HttpGet("filtered")]
         public ActionResult<IEnumerable<TestClass>> GetFiltered([FromQuery] string filter, [FromQuery] int limit = 10) {
             return Ok(new List<TestClass>());

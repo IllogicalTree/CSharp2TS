@@ -20,6 +20,11 @@ namespace CSharp2TS.Tests.Stubs.Controllers {
             return await Task.FromResult(new TestClass());
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<TestClass>> Get(int id, int externalId) {
+            return await Task.FromResult(new TestClass());
+        }
+
         [HttpGet("filtered")]
         public async Task<ActionResult<IEnumerable<TestClass>>> GetFiltered([FromQuery] string filter, [FromQuery] int limit = 10) {
             return await Task.FromResult(Ok(new List<TestClass>()));

@@ -16,6 +16,11 @@ export default {
     return response.data; 
   },
 
+  async get3(id: number, externalId: number): Promise<TestClass> {
+    var response = await apiClient.get<TestClass>(`api/TestController/${id}?externalId=${externalId}`);
+    return response.data; 
+  },
+
   async getFiltered(filter: string, limit: number): Promise<TestClass> {
     var response = await apiClient.get<TestClass>(`api/TestController/filtered?filter=${filter}&limit=${limit}`);
     return response.data; 
