@@ -152,7 +152,7 @@ namespace CSharp2TS.CLI.Generators {
             return true;
         }
 
-        public string GetTypeFileName(string typeName) {
+        public virtual string GetTypeFileName(string typeName) {
             if (Options.FileNameCasingStyle == Consts.CamelCase) {
                 return typeName.ToCamelCase();
             }

@@ -29,11 +29,11 @@ namespace CSharp2TS.Tests {
         }
 
         [Test]
-        [TestCase("TestController_ActionResult.ts", "Expected\\TestController.ts")]
-        [TestCase("TestController_IActionResult.ts", "Expected\\TestController.ts")]
-        [TestCase("TestController_AsyncActionResult.ts", "Expected\\TestController.ts")]
-        [TestCase("TestController_AsyncIActionResult.ts", "Expected\\TestController.ts")]
-        public void Generation_TestController(string generatedFile, string expectedFile) {
+        [TestCase("ActionResult_TestService.ts", "Expected\\TestService.ts")]
+        [TestCase("IActionResult_TestService.ts", "Expected\\TestService.ts")]
+        [TestCase("AsyncActionResult_TestService.ts", "Expected\\TestService.ts")]
+        [TestCase("AsyncIActionResult_TestService.ts", "Expected\\TestService.ts")]
+        public void Generation_TestService(string generatedFile, string expectedFile) {
             TestFilesMatch(generatedFile, expectedFile);
         }
 

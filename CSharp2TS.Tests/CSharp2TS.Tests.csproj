@@ -41,7 +41,7 @@
     <None Update="Expected\TestClassInFolder.ts">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Expected\TestController.ts">
+    <None Update="Expected\TestService.ts">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Expected\TestEnumInFolder.ts">

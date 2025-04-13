@@ -6,8 +6,8 @@ namespace CSharp2TS.Tests.Stubs.Controllers {
     [TSService]
     [ApiController]
     [Route("api/TestController")]
-    public class TestController_AsyncIActionResult : ControllerBase {
-        public TestController_AsyncIActionResult() {
+    public class AsyncIActionResult_TestController : ControllerBase {
+        public AsyncIActionResult_TestController() {
         }
 
         [HttpGet]
