@@ -18,7 +18,7 @@ namespace CSharp2TS.Tests.Stubs.Controllers {
 
         [HttpGet("{id}")]
         [TSEndpoint(typeof(TestClass))]
-        public async Task<IActionResult> GetById(int id) {
+        public async Task<IActionResult> Get(int id) {
             return await Task.FromResult(Ok(new TestClass()));
         }
 

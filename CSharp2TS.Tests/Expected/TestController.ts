@@ -11,7 +11,7 @@ export default {
     return response.data; 
   },
 
-  async getById(id: number): Promise<TestClass> {
+  async get2(id: number): Promise<TestClass> {
     var response = await apiClient.get<TestClass>(`api/TestController/${id}`);
     return response.data; 
   },

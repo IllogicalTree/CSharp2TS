@@ -16,7 +16,7 @@ namespace CSharp2TS.Tests.Stubs.Controllers {
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<TestClass>> GetById(int id) {
+        public async Task<ActionResult<TestClass>> Get(int id) {
             return await Task.FromResult(new TestClass());
         }
 

@@ -36,7 +36,7 @@ namespace CSharp2TS.CLI.Generators {
                     continue;
                 }
 
-                string name = method.Name.ToCamelCase();
+                string name = GetMethodName(method.Name.ToCamelCase(), null);
                 string route = GetRoute(httpMethodAttribute);
                 var returnType = GetReturnType(method);
 
@@ -75,6 +75,14 @@ namespace CSharp2TS.CLI.Generators {
                     bodyParam,
                     queryString));
             }
+        }
+
+        private string GetMethodName(string name, int? count) {
+            if (items.Any(i => i.MethodName.Equals(name + count, StringComparison.OrdinalIgnoreCase))) {
+                return GetMethodName(name, count == null ? 2 : count + 1);
+            }
+
+            return name + count;
         }
 
         private TSServiceMethodParam[] ParseParams(ParameterDefinition[] parameterDefinitions) {

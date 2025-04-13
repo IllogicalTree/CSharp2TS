@@ -18,7 +18,7 @@ namespace CSharp2TS.Tests.Stubs.Controllers {
 
         [HttpGet("{id}")]
         [TSEndpoint(typeof(TestClass))]
-        public IActionResult GetById(int id) {
+        public IActionResult Get(int id) {
             return Ok(new TestClass());
         }
 

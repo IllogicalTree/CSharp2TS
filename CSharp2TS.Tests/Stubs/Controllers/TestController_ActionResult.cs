@@ -16,7 +16,7 @@ namespace CSharp2TS.Tests.Stubs.Controllers {
         }
 
         [HttpGet("{id}")]
-        public ActionResult<TestClass> GetById(int id) {
+        public ActionResult<TestClass> Get(int id) {
             return new TestClass();
         }
 
