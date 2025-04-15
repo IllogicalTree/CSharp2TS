@@ -1,6 +1,6 @@
-﻿using System.Reflection;
-using CSharp2TS.CLI;
+﻿using CSharp2TS.CLI;
 using CSharp2TS.CLI.Generators;
+using System.Reflection;
 
 namespace CSharp2TS.Tests {
     public class ServiceGenerationTests {
@@ -26,6 +26,14 @@ namespace CSharp2TS.Tests {
 
             generator = new Generator(options);
             generator.Run();
+        }
+
+        [Test]
+        [TestCase("CustomRouteService.ts", "Expected\\CustomRouteService.ts")]
+        [TestCase("NoRouteService.ts", "Expected\\NoRouteService.ts")]
+        [TestCase("TemplatedRouteService.ts", "Expected\\TemplatedRouteService.ts")]
+        public void Generation_TestRoute(string generatedFile, string expectedFile) {
+            TestFilesMatch(generatedFile, expectedFile);
         }
 
         [Test]

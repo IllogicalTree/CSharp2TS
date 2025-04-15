@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CSharp2TS.Tests.Stubs.Controllers {
     [TSService]
     [ApiController]
-    [Route("api/TestController")]
+    [Route("api/Test")]
     public class IActionResult_TestController : ControllerBase {
         public IActionResult_TestController() {
         }
