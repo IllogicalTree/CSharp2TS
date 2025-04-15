@@ -72,7 +72,7 @@ namespace CSharp2TS.CLI.Generators {
                     name,
                     httpMethodAttribute.HttpMethod,
                     route,
-                    returnType.TSType,
+                    returnType.TSTypeFull,
                     routeParams,
                     queryParams,
                     bodyParam,
@@ -210,8 +210,7 @@ namespace CSharp2TS.CLI.Generators {
             return GetTSPropertyType(method.ReturnType);
         }
 
-        public override string GetFileName(string typeName)
-        {
+        public override string GetFileName(string typeName) {
             return base.GetFileName(StripController(typeName)) + newAppendedFileName;
         }
 

@@ -16,18 +16,6 @@ namespace CSharp2TS.Tests.Stubs.Controllers {
             return await Task.FromResult(Ok("Test API is working"));
         }
 
-        [HttpGet]
-        [TSEndpoint(typeof(string[]))]
-        public async Task<IActionResult> GetArray() {
-            return await Task.FromResult(Ok(new string[] { "Test API is working" }));
-        }
-
-        [HttpGet]
-        [TSEndpoint(typeof(List<string>))]
-        public async Task<IActionResult> GetList() {
-            return await Task.FromResult(Ok(new List<string> { "Test API is working" }));
-        }
-
         [HttpGet("{id}")]
         [TSEndpoint(typeof(TestClass))]
         public async Task<IActionResult> Get(int id) {

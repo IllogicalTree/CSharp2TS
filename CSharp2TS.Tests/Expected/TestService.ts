@@ -11,16 +11,6 @@ export default {
     return response.data; 
   },
 
-  async getArray(): Promise<string[]> {
-    var response = await apiClient.get<string[]>(`api/Test`);
-    return response.data; 
-  },
-
-  async getList(): Promise<string[]> {
-    var response = await apiClient.get<string[]>(`api/Test`);
-    return response.data; 
-  },
-
   async get2(id: number): Promise<TestClass> {
     var response = await apiClient.get<TestClass>(`api/Test/${id}`);
     return response.data; 
@@ -31,8 +21,8 @@ export default {
     return response.data; 
   },
 
-  async getFiltered(filter: string, limit: number): Promise<TestClass> {
-    var response = await apiClient.get<TestClass>(`api/Test/filtered?filter=${filter}&limit=${limit}`);
+  async getFiltered(filter: string, limit: number): Promise<TestClass[]> {
+    var response = await apiClient.get<TestClass[]>(`api/Test/filtered?filter=${filter}&limit=${limit}`);
     return response.data; 
   },
 

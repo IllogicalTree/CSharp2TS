@@ -15,16 +15,6 @@ namespace CSharp2TS.Tests.Stubs.Controllers {
             return "Test API is working";
         }
 
-        [HttpGet]
-        public ActionResult<string[]> GetArray() {
-            return new string[] { "Test API is working" };
-        }
-
-        [HttpGet]
-        public ActionResult<List<string>> GetList() {
-            return new List<string> { "Test API is working" };
-        }
-
         [HttpGet("{id}")]
         public ActionResult<TestClass> Get(int id) {
             return new TestClass();
