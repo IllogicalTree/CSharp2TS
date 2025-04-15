@@ -16,6 +16,18 @@ namespace CSharp2TS.Tests.Stubs.Controllers {
             return Ok("Test API is working");
         }
 
+        [HttpGet]
+        [TSEndpoint(typeof(string[]))]
+        public IActionResult GetArray() {
+            return Ok(new string[] { "Test API is working" });
+        }
+
+        [HttpGet]
+        [TSEndpoint(typeof(List<string>))]
+        public IActionResult GetList() {
+            return Ok(new List<string> { "Test API is working" });
+        }
+
         [HttpGet("{id}")]
         [TSEndpoint(typeof(TestClass))]
         public IActionResult Get(int id) {
