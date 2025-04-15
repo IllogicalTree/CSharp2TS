@@ -49,7 +49,8 @@ export function useApiClient() {
 
   return {
     apiClient,
-    setApiClient
+    setApiClient,
+    setBaseUrl
   }
 }
 ");
