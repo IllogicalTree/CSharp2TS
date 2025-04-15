@@ -160,7 +160,7 @@ namespace CSharp2TS.CLI.Generators {
 
         private string GetRoute(HttpAttribute httpMethodAttribute) {
             string controllerRoute;
-            string controllerName = ParsedFileName(Type.Name).ToLowerInvariant();
+            string controllerName = StripController(Type.Name).ToLowerInvariant();
 
             if (Type.TryGetAttribute<RouteAttribute>(out CustomAttribute? attribute)) {
                 string? controllerTemplate = (string)attribute!.ConstructorArguments[0].Value;
@@ -210,16 +210,17 @@ namespace CSharp2TS.CLI.Generators {
             return GetTSPropertyType(method.ReturnType);
         }
 
-        public override string GetTypeFileName(string typeName) {
-            return base.GetTypeFileName(ParsedFileName(typeName));
+        public override string GetFileName(string typeName)
+        {
+            return base.GetFileName(StripController(typeName)) + newAppendedFileName;
         }
 
-        private string ParsedFileName(string typeName) {
-            if (typeName.EndsWith(oldAppendedFileName, StringComparison.OrdinalIgnoreCase)) {
-                typeName = typeName[..^oldAppendedFileName.Length] + newAppendedFileName;
+        private string StripController(string str) {
+            if (str.EndsWith(oldAppendedFileName, StringComparison.OrdinalIgnoreCase)) {
+                str = str[..^oldAppendedFileName.Length];
             }
 
-            return typeName;
+            return str;
         }
 
         private string BuildTsFile() {

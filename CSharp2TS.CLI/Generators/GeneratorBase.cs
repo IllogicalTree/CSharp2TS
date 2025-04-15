@@ -152,13 +152,17 @@ namespace CSharp2TS.CLI.Generators {
             return true;
         }
 
-        public virtual string GetTypeFileName(string typeName) {
+        protected string GetTypeFileName(string typeName) {
             if (Options.FileNameCasingStyle == Consts.CamelCase) {
                 return typeName.ToCamelCase();
             }
 
             // We assume PascalCase for C# types by default
             return typeName;
+        }
+
+        public virtual string GetFileName(string typeName) {
+            return GetTypeFileName(typeName);
         }
 
         protected void TryAddTSImport(TSPropertyGenerationInfo tsType, string? currentFolderRoot, string? targetFolderRoot) {
