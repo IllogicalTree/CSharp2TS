@@ -2,6 +2,8 @@
 
 import TestClass2 from './TestClass2';
 import TestClassInFolder from './SubFolder1/SubFolder2/TestClassInFolder';
+import GenericClass1 from './GenericClass1';
+import GenericClass2 from './GenericClass2';
 import TestEnum from './TestEnum';
 import TestEnumInFolder from './Enums/TestEnumInFolder';
 
@@ -43,6 +45,8 @@ interface TestClass {
   thisClass: TestClass;
   class2: TestClass2;
   classInFolder: TestClassInFolder;
+  genericClass1: GenericClass1<TestClass>;
+  genericClass2: GenericClass2<TestClass, TestEnum>;
   enum: TestEnum;
   nullableEnum: TestEnum | null;
   enumInFolder: TestEnumInFolder;

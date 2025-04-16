@@ -1,9 +1,9 @@
 ﻿#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
-using System.Collections.Concurrent;
-using System.Collections.ObjectModel;
 using CSharp2TS.Core.Attributes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
+using System.Collections.Concurrent;
+using System.Collections.ObjectModel;
 
 namespace CSharp2TS.Tests.Stubs.Models {
     [TSInterface]
@@ -47,6 +47,8 @@ namespace CSharp2TS.Tests.Stubs.Models {
         public TestClass ThisClass { get; set; }
         public TestClass2 Class2 { get; set; }
         public TestClassInFolder ClassInFolder { get; set; }
+        public GenericClass1<TestClass> GenericClass1 { get; set; }
+        public GenericClass2<TestClass, TestEnum> GenericClass2 { get; set; }
         public TestEnum Enum { get; set; }
         public TestEnum? NullableEnum { get; set; }
         public TestEnumInFolder EnumInFolder { get; set; }

@@ -40,6 +40,7 @@ namespace CSharp2TS.CLI.Generators {
 
         protected TSPropertyGenerationInfo GetTSPropertyType(TypeReference type) {
             string tsType;
+            List<TSPropertyGenerationInfo> genericArguments = new();
 
             TryExtractFromGenericIfRequired(typeof(Task<>), ref type);
             TryExtractFromGenericIfRequired(typeof(ActionResult<>), ref type);
@@ -53,6 +54,14 @@ namespace CSharp2TS.CLI.Generators {
 
             bool isNullable = TryExtractFromGenericIfRequired(typeof(Nullable<>), ref type);
             bool isObject = false;
+
+            if (type.IsGenericInstance) {
+                var generic = (GenericInstanceType)type;
+
+                foreach (var arg in generic.GenericArguments) {
+                    genericArguments.Add(GetTSPropertyType(arg));
+                }
+            }
 
             if (stringTypes.Any(i => SimpleTypeCheck(type, i))) {
                 tsType = "string";
@@ -71,11 +80,15 @@ namespace CSharp2TS.CLI.Generators {
                     isCollection = true;
                 }
             } else {
-                tsType = GetCleanedTypeName(type);
                 isObject = true;
+                tsType = GetCleanedTypeName(type);
             }
 
             string rawTsType = tsType;
+
+            if (type.IsGenericInstance) {
+                tsType += "<" + string.Join(", ", genericArguments.Select(i => i.TSType)) + ">";
+            }
 
             if (isNullable) {
                 tsType += " | null";
@@ -185,7 +198,7 @@ namespace CSharp2TS.CLI.Generators {
         }
 
         protected string GetCleanedTypeName(TypeReference type) {
-            if (type.HasGenericParameters) {
+            if (type.HasGenericParameters || (type is GenericInstanceType genericType && genericType.GenericArguments.Count > 0)) {
                 return type.Name.Split('`')[0];
             }
 

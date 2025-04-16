@@ -13,54 +13,59 @@ namespace CSharp2TS.Tests.Stubs.Controllers {
         [HttpGet]
         [TSEndpoint(typeof(string))]
         public IActionResult Get() {
-            return Ok("Test API is working");
+            throw new NotImplementedException();
         }
 
         [HttpGet("{id}")]
         [TSEndpoint(typeof(TestClass))]
         public IActionResult Get(int id) {
-            return Ok(new TestClass());
+            throw new NotImplementedException();
         }
 
         [HttpGet("{id}")]
         [TSEndpoint(typeof(TestClass))]
         public ActionResult<TestClass> Get(int id, int externalId) {
-            return Ok(new TestClass());
+            throw new NotImplementedException();
+        }
+
+        [HttpGet]
+        public ActionResult<GenericClass1<TestClass2>> Generic() {
+            throw new NotImplementedException();
         }
 
         [HttpGet("filtered")]
         [TSEndpoint(typeof(List<TestClass>))]
         public IActionResult GetFiltered([FromQuery] string filter, [FromQuery] int limit = 10) {
-            return Ok(new List<TestClass>());
+            throw new NotImplementedException();
         }
 
         [HttpPost]
         [TSEndpoint(typeof(TestClass))]
         public IActionResult Create([FromBody] TestClass testClass) {
-            return Ok(testClass);
+            throw new NotImplementedException();
         }
 
         [HttpPost]
         [TSEndpoint(typeof(string))]
         public IActionResult CreateFromBody([FromBody] string model) {
-            return Ok(model);
+            throw new NotImplementedException();
         }
 
         [HttpPut("{id}")]
         [TSEndpoint(typeof(TestClass))]
         public IActionResult Update(int id, TestClass testClass) {
-            return Ok(testClass);
+            throw new NotImplementedException();
         }
 
         [HttpPatch("{id}")]
         [TSEndpoint(typeof(TestClass))]
         public IActionResult PartialUpdate(int id, TestClass model) {
-            return Ok(new TestClass());
+            throw new NotImplementedException();
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id) {
-            return NoContent();
+            throw new NotImplementedException();
         }
     }
 }

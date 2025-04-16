@@ -12,47 +12,52 @@ namespace CSharp2TS.Tests.Stubs.Controllers {
 
         [HttpGet]
         public ActionResult<string> Get() {
-            return "Test API is working";
+            throw new NotImplementedException();
         }
 
         [HttpGet("{id}")]
         public ActionResult<TestClass> Get(int id) {
-            return new TestClass();
+            throw new NotImplementedException();
         }
 
         [HttpGet("{id}")]
         public ActionResult<TestClass> Get(int id, int externalId) {
-            return new TestClass();
+            throw new NotImplementedException();
+        }
+
+        [HttpGet]
+        public ActionResult<GenericClass1<TestClass2>> Generic() {
+            throw new NotImplementedException();
         }
 
         [HttpGet("filtered")]
         public ActionResult<IEnumerable<TestClass>> GetFiltered([FromQuery] string filter, [FromQuery] int limit = 10) {
-            return Ok(new List<TestClass>());
+            throw new NotImplementedException();
         }
 
         [HttpPost]
         public ActionResult<TestClass> Create([FromBody] TestClass testClass) {
-            return testClass;
+            throw new NotImplementedException();
         }
 
         [HttpPost]
         public ActionResult<string> CreateFromBody([FromBody] string model) {
-            return model;
+            throw new NotImplementedException();
         }
 
         [HttpPut("{id}")]
         public ActionResult<TestClass> Update(int id, TestClass testClass) {
-            return testClass;
+            throw new NotImplementedException();
         }
 
         [HttpPatch("{id}")]
         public ActionResult<TestClass> PartialUpdate(int id, TestClass model) {
-            return new TestClass();
+            throw new NotImplementedException();
         }
 
         [HttpDelete("{id}")]
         public ActionResult Delete(int id) {
-            return NoContent();
+            throw new NotImplementedException();
         }
     }
 }

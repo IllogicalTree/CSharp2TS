@@ -13,54 +13,68 @@ namespace CSharp2TS.Tests.Stubs.Controllers {
         [HttpGet]
         [TSEndpoint(typeof(string))]
         public async Task<IActionResult> Get() {
-            return await Task.FromResult(Ok("Test API is working"));
+            await Task.CompletedTask;
+            throw new NotImplementedException();
         }
 
         [HttpGet("{id}")]
         [TSEndpoint(typeof(TestClass))]
         public async Task<IActionResult> Get(int id) {
-            return await Task.FromResult(Ok(new TestClass()));
+            await Task.CompletedTask;
+            throw new NotImplementedException();
         }
 
         [HttpGet("{id}")]
         [TSEndpoint(typeof(TestClass))]
         public async Task<IActionResult> Get(int id, int externalId) {
-            return await Task.FromResult(Ok(new TestClass()));
+            await Task.CompletedTask;
+            throw new NotImplementedException();
+        }
+
+        [HttpGet]
+        public ActionResult<GenericClass1<TestClass2>> Generic() {
+            throw new NotImplementedException();
         }
 
         [HttpGet("filtered")]
         [TSEndpoint(typeof(List<TestClass>))]
         public async Task<IActionResult> GetFiltered([FromQuery] string filter, [FromQuery] int limit = 10) {
-            return await Task.FromResult(Ok(new List<TestClass>()));
+            await Task.CompletedTask;
+            throw new NotImplementedException();
         }
 
         [HttpPost]
         [TSEndpoint(typeof(TestClass))]
         public async Task<IActionResult> Create([FromBody] TestClass testClass) {
-            return await Task.FromResult(Ok(testClass));
+            await Task.CompletedTask;
+            throw new NotImplementedException();
         }
 
         [HttpPost]
         [TSEndpoint(typeof(string))]
         public async Task<IActionResult> CreateFromBody([FromBody] string model) {
-            return await Task.FromResult(Ok(model));
+            await Task.CompletedTask;
+            throw new NotImplementedException();
         }
 
         [HttpPut("{id}")]
         [TSEndpoint(typeof(TestClass))]
         public async Task<IActionResult> Update(int id, TestClass testClass) {
-            return await Task.FromResult(Ok(testClass));
+            await Task.CompletedTask;
+            throw new NotImplementedException();
         }
 
         [HttpPatch("{id}")]
         [TSEndpoint(typeof(TestClass))]
         public async Task<IActionResult> PartialUpdate(int id, TestClass model) {
-            return await Task.FromResult(Ok(new TestClass()));
+            await Task.CompletedTask;
+            throw new NotImplementedException();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id) {
-            return await Task.FromResult(NoContent());
+            await Task.CompletedTask;
+            throw new NotImplementedException();
         }
     }
 }

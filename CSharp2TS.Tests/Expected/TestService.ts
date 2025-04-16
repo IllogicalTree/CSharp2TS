@@ -2,6 +2,8 @@
 
 import { useApiClient } from './apiClient';
 import TestClass from '../TestClass';
+import GenericClass1 from '../GenericClass1';
+import TestClass2 from '../TestClass2';
 
 const { apiClient } = useApiClient();
 
@@ -18,6 +20,11 @@ export default {
 
   async get3(id: number, externalId: number): Promise<TestClass> {
     var response = await apiClient.get<TestClass>(`api/Test/${id}?externalId=${externalId}`);
+    return response.data; 
+  },
+
+  async generic(): Promise<GenericClass1<TestClass2>> {
+    var response = await apiClient.get<GenericClass1<TestClass2>>(`api/Test`);
     return response.data; 
   },
 
