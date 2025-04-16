@@ -58,7 +58,7 @@ CSharp2TS.CLI is a dotnet tool to generate TypeScript files from .NET assemblies
 CSharp2TS.Core is available as a dotnet tool. To install globally run:
 
 ```
-dotnet tool install -g [WORK IN PROGRESS]
+dotnet tool install -g CSharp2TS.CLI --prerelease
 ```
 
 ### Example Usage
