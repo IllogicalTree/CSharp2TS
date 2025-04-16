@@ -45,6 +45,8 @@ interface TestClass {
   thisClass: TestClass;
   class2: TestClass2;
   classInFolder: TestClassInFolder;
+  genericArray: GenericClass1<number[]>;
+  nullableGeneric: GenericClass1<number | null>;
   genericClass1: GenericClass1<TestClass>;
   genericClass2: GenericClass2<TestClass, TestEnum>;
   enum: TestEnum;

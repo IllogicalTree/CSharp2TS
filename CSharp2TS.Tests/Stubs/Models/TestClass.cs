@@ -47,6 +47,8 @@ namespace CSharp2TS.Tests.Stubs.Models {
         public TestClass ThisClass { get; set; }
         public TestClass2 Class2 { get; set; }
         public TestClassInFolder ClassInFolder { get; set; }
+        public GenericClass1<int[]> GenericArray { get; set; }
+        public GenericClass1<int?> NullableGeneric { get; set; }
         public GenericClass1<TestClass> GenericClass1 { get; set; }
         public GenericClass2<TestClass, TestEnum> GenericClass2 { get; set; }
         public TestEnum Enum { get; set; }
