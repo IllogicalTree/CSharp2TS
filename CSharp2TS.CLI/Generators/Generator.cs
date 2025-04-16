@@ -104,13 +104,13 @@ namespace CSharp2TS.CLI.Generators {
 
         private void GenerateFile<TAttribute>(string outputFolder, GeneratorBase<TAttribute> generator) where TAttribute : TSAttributeBase {
             string output = generator.Generate();
-            string folder = Path.Combine(outputFolder, generator.FolderLocation ?? string.Empty);
+            string folder = Path.Combine(outputFolder, generator.GetFolderLocation());
 
             if (!Directory.Exists(folder)) {
                 Directory.CreateDirectory(folder);
             }
 
-            string file = Path.Combine(folder, $"{generator.GetFileName(generator.Type.Name)}.ts");
+            string file = Path.Combine(folder, $"{generator.GetFileName()}.ts");
 
             if (File.Exists(file)) {
                 throw new InvalidOperationException($"File {file} already exists.");

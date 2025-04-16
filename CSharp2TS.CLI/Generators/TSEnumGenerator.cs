@@ -29,6 +29,10 @@ namespace CSharp2TS.CLI.Generators {
             }
         }
 
+        public override string GetFileName() {
+            return ApplyCasing(Type.Name);
+        }
+
         private string BuildTsFile() {
             return new TSEnumTemplate {
                 Items = items,

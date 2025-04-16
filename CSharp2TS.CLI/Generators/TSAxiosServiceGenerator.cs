@@ -102,7 +102,7 @@ namespace CSharp2TS.CLI.Generators {
         }
 
         private string GetApiClientImport() {
-            string currentFolder = Path.Combine(Options.ServicesOutputFolder!, FolderLocation ?? string.Empty);
+            string currentFolder = Path.Combine(Options.ServicesOutputFolder!, GetFolderLocation());
             return FolderUtility.GetRelativeImportPath(currentFolder, Options.ServicesOutputFolder!);
         }
 
@@ -210,8 +210,8 @@ namespace CSharp2TS.CLI.Generators {
             return GetTSPropertyType(method.ReturnType);
         }
 
-        public override string GetFileName(string typeName) {
-            return base.GetFileName(StripController(typeName)) + newAppendedFileName;
+        public override string GetFileName() {
+            return ApplyCasing(StripController(Type.Name) + newAppendedFileName);
         }
 
         private string StripController(string str) {

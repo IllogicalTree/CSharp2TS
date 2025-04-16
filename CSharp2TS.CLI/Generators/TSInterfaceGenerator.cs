@@ -42,6 +42,10 @@ namespace CSharp2TS.CLI.Generators {
             return property.PropertyType.FullName == typeof(Type).FullName && property.FullName.EndsWith("::EqualityContract()");
         }
 
+        public override string GetFileName() {
+            return ApplyCasing(Type.Name);
+        }
+
         private string BuildTsFile() {
             return new TSInterfaceTemplate {
                 TypeName = Type.Name,

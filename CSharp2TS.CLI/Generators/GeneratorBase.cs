@@ -24,14 +24,18 @@ namespace CSharp2TS.CLI.Generators {
 
         public TypeDefinition Type { get; }
         public Options Options { get; }
-        public string? FolderLocation => Type.GetCustomAttributeValue<string?>(typeof(TSAttributeBase), nameof(TSAttributeBase.Folder));
 
         public abstract string Generate();
+        public abstract string GetFileName();
 
         protected GeneratorBase(TypeDefinition type, Options options) {
             Imports = new Dictionary<string, TSImport>();
             Type = type;
             Options = options;
+        }
+
+        public string GetFolderLocation() {
+            return Type.GetCustomFolderLocation() ?? string.Empty;
         }
 
         protected TSPropertyGenerationInfo GetTSPropertyType(TypeReference type) {
@@ -101,11 +105,7 @@ namespace CSharp2TS.CLI.Generators {
                 return false;
             }
 
-            bool isDictionary = type.GetElementType().FullName == typeof(IDictionary<,>).FullName ||
-                type.Resolve().Interfaces
-                    .Where(i => i.InterfaceType.IsGenericInstance)
-                    .Where(i => i.InterfaceType.GetElementType().FullName == typeof(IDictionary<,>).FullName)
-                    .Any();
+            bool isDictionary = HasInterface(type, typeof(IDictionary<,>));
 
             // If it's a dictionary type, extract the generic arguments
             if (isDictionary && type is GenericInstanceType genericInstance && genericInstance.GenericArguments.Count > 1) {
@@ -126,12 +126,7 @@ namespace CSharp2TS.CLI.Generators {
                 return false;
             }
 
-            // Check if type is IEnumerable, or implements IEnumerable<T>
-            bool isCollection = type.GetElementType().FullName == typeof(IEnumerable<>).FullName ||
-                type.Resolve().Interfaces
-                    .Where(i => i.InterfaceType.IsGenericInstance)
-                    .Where(i => i.InterfaceType.GetElementType().FullName == typeof(IEnumerable<>).FullName)
-                    .Any();
+            bool isCollection = HasInterface(type, typeof(IEnumerable<>));
 
             // If it's a collection type, extract the generic argument
             if (isCollection && type is GenericInstanceType genericInstance && genericInstance.GenericArguments.Count > 0) {
@@ -140,6 +135,14 @@ namespace CSharp2TS.CLI.Generators {
             }
 
             return false;
+        }
+
+        private bool HasInterface(TypeReference type, Type implementsType) {
+            return type.GetElementType().FullName == implementsType.FullName ||
+                type.Resolve().Interfaces
+                    .Where(i => i.InterfaceType.IsGenericInstance)
+                    .Where(i => SimpleTypeCheck(i.InterfaceType.GetElementType(), implementsType))
+                    .Any();
         }
 
         private bool TryExtractFromGenericIfRequired(Type type, ref TypeReference typeRef) {
@@ -152,17 +155,13 @@ namespace CSharp2TS.CLI.Generators {
             return true;
         }
 
-        protected string GetTypeFileName(string typeName) {
+        protected string ApplyCasing(string str) {
             if (Options.FileNameCasingStyle == Consts.CamelCase) {
-                return typeName.ToCamelCase();
+                return str.ToCamelCase();
             }
 
             // We assume PascalCase for C# types by default
-            return typeName;
-        }
-
-        public virtual string GetFileName(string typeName) {
-            return GetTypeFileName(typeName);
+            return str;
         }
 
         protected void TryAddTSImport(TSPropertyGenerationInfo tsType, string? currentFolderRoot, string? targetFolderRoot) {
@@ -170,14 +169,13 @@ namespace CSharp2TS.CLI.Generators {
                 return;
             }
 
-            var targetCustomFolder = tsType.Type.Resolve()
-                .GetCustomAttributeValue<string?>(typeof(TSAttributeBase), nameof(TSAttributeBase.Folder));
+            var targetCustomFolder = tsType.Type.Resolve().GetCustomFolderLocation();
 
-            string currentFolder = Path.Combine(currentFolderRoot, FolderLocation ?? string.Empty);
+            string currentFolder = Path.Combine(currentFolderRoot, GetFolderLocation());
             string targetFolder = Path.Combine(targetFolderRoot, targetCustomFolder ?? string.Empty);
 
             string relativePath = FolderUtility.GetRelativeImportPath(currentFolder, targetFolder);
-            string importPath = $"{relativePath}{GetTypeFileName(tsType.TSType)}";
+            string importPath = $"{relativePath}{ApplyCasing(tsType.TSType)}";
 
             Imports.Add(tsType.Type.FullName, new TSImport(tsType.TSType, importPath));
         }
