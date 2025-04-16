@@ -84,6 +84,26 @@ namespace CSharp2TS.CLI.Templates
             
             #line default
             #line hidden
+            
+            #line 15 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSInterfaceTemplate.tt"
+ if (HasGenericParameters) {
+            
+            #line default
+            #line hidden
+            this.Write("<");
+            
+            #line 15 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSInterfaceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(string.Join(", ", GenericParameters)));
+            
+            #line default
+            #line hidden
+            this.Write(">");
+            
+            #line 15 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSInterfaceTemplate.tt"
+ } 
+            
+            #line default
+            #line hidden
             this.Write(" {\r\n");
             
             #line 16 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSInterfaceTemplate.tt"
@@ -128,6 +148,8 @@ namespace CSharp2TS.CLI.Templates
 public string TypeName { get; set; }
 public IList<TSImport> Imports { get; set; }
 public IList<TSProperty> Properties { get; set; }
+public IList<string> GenericParameters { get; set; }
+public bool HasGenericParameters => GenericParameters.Count > 0;
 
         
         #line default

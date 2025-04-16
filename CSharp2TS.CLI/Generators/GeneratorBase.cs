@@ -71,7 +71,7 @@ namespace CSharp2TS.CLI.Generators {
                     isCollection = true;
                 }
             } else {
-                tsType = type.Name;
+                tsType = GetCleanedTypeName(type);
                 isObject = true;
             }
 
@@ -146,6 +146,10 @@ namespace CSharp2TS.CLI.Generators {
         }
 
         private bool TryExtractFromGenericIfRequired(Type type, ref TypeReference typeRef) {
+            if (typeRef.IsGenericParameter) {
+                return false;
+            }
+
             if (typeRef.Resolve().FullName != type.FullName) {
                 return false;
             }
@@ -165,7 +169,7 @@ namespace CSharp2TS.CLI.Generators {
         }
 
         protected void TryAddTSImport(TSPropertyGenerationInfo tsType, string? currentFolderRoot, string? targetFolderRoot) {
-            if (currentFolderRoot == null || targetFolderRoot == null || Imports.ContainsKey(tsType.Type.FullName) || !tsType.IsObject) {
+            if (currentFolderRoot == null || targetFolderRoot == null || Imports.ContainsKey(tsType.Type.FullName) || !tsType.IsObject || tsType.Type.IsGenericParameter) {
                 return;
             }
 
@@ -178,6 +182,14 @@ namespace CSharp2TS.CLI.Generators {
             string importPath = $"{relativePath}{ApplyCasing(tsType.TSType)}";
 
             Imports.Add(tsType.Type.FullName, new TSImport(tsType.TSType, importPath));
+        }
+
+        protected string GetCleanedTypeName(TypeReference type) {
+            if (type.HasGenericParameters) {
+                return type.Name.Split('`')[0];
+            }
+
+            return type.Name;
         }
     }
 }

@@ -7,9 +7,11 @@ using Mono.Cecil;
 namespace CSharp2TS.CLI.Generators {
     public class TSInterfaceGenerator : GeneratorBase<TSInterfaceAttribute> {
         private IList<TSProperty> properties;
+        private IList<string> genericParameters;
 
         public TSInterfaceGenerator(TypeDefinition type, Options options) : base(type, options) {
             properties = [];
+            genericParameters = [];
         }
 
         public override string Generate() {
@@ -19,6 +21,10 @@ namespace CSharp2TS.CLI.Generators {
         }
 
         private void ParseTypes(TypeDefinition typeDef) {
+            if (typeDef == Type && typeDef.HasGenericParameters) {
+                ParseGenericParams();
+            }
+
             foreach (var property in typeDef.Properties) {
                 if (property.IsSpecialName || property.HasAttribute<TSExcludeAttribute>() || IsRecordEqualityContract(property)) {
                     continue;
@@ -38,19 +44,26 @@ namespace CSharp2TS.CLI.Generators {
             }
         }
 
+        private void ParseGenericParams() {
+            foreach (var genericParam in Type.GenericParameters) {
+                genericParameters.Add(genericParam.Name);
+            }
+        }
+
         private bool IsRecordEqualityContract(PropertyDefinition property) {
             return property.PropertyType.FullName == typeof(Type).FullName && property.FullName.EndsWith("::EqualityContract()");
         }
 
         public override string GetFileName() {
-            return ApplyCasing(Type.Name);
+            return ApplyCasing(GetCleanedTypeName(Type));
         }
 
         private string BuildTsFile() {
             return new TSInterfaceTemplate {
-                TypeName = Type.Name,
+                TypeName = GetCleanedTypeName(Type),
                 Imports = Imports.Select(i => i.Value).ToList(),
                 Properties = properties,
+                GenericParameters = genericParameters,
             }.TransformText();
         }
     }

@@ -1,6 +1,6 @@
-﻿using System.Reflection;
-using CSharp2TS.CLI;
+﻿using CSharp2TS.CLI;
 using CSharp2TS.CLI.Generators;
+using System.Reflection;
 
 namespace CSharp2TS.Tests {
     public class ModelGenerationTests {
@@ -27,6 +27,9 @@ namespace CSharp2TS.Tests {
 
         [Test]
         [TestCase("TestClass.ts", "Expected\\TestClass.ts")]
+        [TestCase("ParentClass.ts", "Expected\\ParentClass.ts")]
+        [TestCase("ChildClass.ts", "Expected\\ChildClass.ts")]
+        [TestCase("GenericClass.ts", "Expected\\GenericClass.ts")]
         public void Generation_TestClass(string generatedFile, string expectedFile) {
             TestFilesMatch(generatedFile, expectedFile);
         }
@@ -40,13 +43,6 @@ namespace CSharp2TS.Tests {
         [Test]
         [TestCase("TestEnum.ts", "Expected\\TestEnum.ts")]
         public void Generation_TestEnum(string generatedFile, string expectedFile) {
-            TestFilesMatch(generatedFile, expectedFile);
-        }
-
-        [Test]
-        [TestCase("ParentClass.ts", "Expected\\ParentClass.ts")]
-        [TestCase("ChildClass.ts", "Expected\\ChildClass.ts")]
-        public void Generation_TestInheritance(string generatedFile, string expectedFile) {
             TestFilesMatch(generatedFile, expectedFile);
         }
 
