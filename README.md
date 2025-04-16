@@ -17,7 +17,7 @@ CSharp2TS.Core is a very lightweight package containing the attributes to mark c
 CSharp2TS.Core is available on NuGet.
 
 ```
-dotnet add package [WORK IN PROGRESS]
+dotnet add package CSharp2TS.Core --prerelease
 ```
 
 ### Example Usage
