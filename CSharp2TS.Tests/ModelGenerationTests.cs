@@ -29,7 +29,8 @@ namespace CSharp2TS.Tests {
         [TestCase("TestClass.ts", "Expected\\TestClass.ts")]
         [TestCase("ParentClass.ts", "Expected\\ParentClass.ts")]
         [TestCase("ChildClass.ts", "Expected\\ChildClass.ts")]
-        [TestCase("GenericClass.ts", "Expected\\GenericClass.ts")]
+        [TestCase("GenericClass1.ts", "Expected\\GenericClass1.ts")]
+        [TestCase("GenericClass2.ts", "Expected\\GenericClass2.ts")]
         public void Generation_TestClass(string generatedFile, string expectedFile) {
             TestFilesMatch(generatedFile, expectedFile);
         }
