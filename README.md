@@ -8,6 +8,8 @@ CSharp2TS is a tool to generate TypeScript files for classes, enums and API endp
 
 ## CSharp2TS.Core
 
+![NuGet Version](https://img.shields.io/nuget/v/csharp2ts.core)
+
 CSharp2TS.Core is a very lightweight package containing the attributes to mark classes, enums and controllers for generation. For more information see the [CSharp2TS.Core Docs](CSharp2TS.Core/PACKAGE.md).
 
 ### Installation
@@ -46,6 +48,8 @@ public class TestController : ControllerBase {
 For more examples check out the [docs](CSharp2TS.Core/PACKAGE.md).
 
 ## CSharp2TS.CLI
+
+![NuGet Version](https://img.shields.io/nuget/v/csharp2ts.cli)
 
 CSharp2TS.CLI is a dotnet tool to generate TypeScript files from .NET assemblies which have classes, enums and controllers marked with the attributes in the Core package. It an be run via command line arguments or a config file. For more information see the [CSharp2TS.CLI Docs](CSharp2TS.CLI/PACKAGE.md).
 
