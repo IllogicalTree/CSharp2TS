@@ -54,20 +54,6 @@ namespace CSharp2TS.CLI.Generators {
 
                 string queryString = GetQueryString(route, queryParams);
 
-                TryAddTSImport(returnType, Options.ServicesOutputFolder, Options.ModelOutputFolder);
-
-                foreach (var param in routeParams) {
-                    TryAddTSImport(param.Property, Options.ServicesOutputFolder, Options.ModelOutputFolder);
-                }
-
-                foreach (var param in queryParams) {
-                    TryAddTSImport(param.Property, Options.ServicesOutputFolder, Options.ModelOutputFolder);
-                }
-
-                if (bodyParam != null) {
-                    TryAddTSImport(bodyParam.Property, Options.ServicesOutputFolder, Options.ModelOutputFolder);
-                }
-
                 items.Add(new TSServiceMethod(
                     name,
                     httpMethodAttribute.HttpMethod,
@@ -92,7 +78,7 @@ namespace CSharp2TS.CLI.Generators {
             List<TSServiceMethodParam> converted = [];
 
             foreach (ParameterDefinition param in parameterDefinitions) {
-                var tsProperty = GetTSPropertyType(param.ParameterType);
+                var tsProperty = GetTSPropertyType(param.ParameterType, Options.ServicesOutputFolder!);
                 bool isBodyParam = tsProperty.IsObject || param.HasAttribute<FromBodyAttribute>();
 
                 converted.Add(new TSServiceMethodParam(param.Name.ToCamelCase(), tsProperty, isBodyParam));
@@ -203,11 +189,11 @@ namespace CSharp2TS.CLI.Generators {
                 var customReturnType = attribute!.ConstructorArguments[0].Value as TypeReference;
 
                 if (customReturnType != null) {
-                    return GetTSPropertyType(customReturnType);
+                    return GetTSPropertyType(customReturnType, Options.ServicesOutputFolder!);
                 }
             }
 
-            return GetTSPropertyType(method.ReturnType);
+            return GetTSPropertyType(method.ReturnType, Options.ServicesOutputFolder!);
         }
 
         public override string GetFileName() {

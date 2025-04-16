@@ -2,8 +2,8 @@
 
 import { useApiClient } from './apiClient';
 import TestClass from '../TestClass';
-import GenericClass1 from '../GenericClass1';
 import TestClass2 from '../TestClass2';
+import GenericClass1 from '../GenericClass1';
 
 const { apiClient } = useApiClient();
 

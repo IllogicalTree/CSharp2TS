@@ -30,11 +30,7 @@ namespace CSharp2TS.CLI.Generators {
                     continue;
                 }
 
-                var tsType = GetTSPropertyType(property.PropertyType);
-
-                if (tsType.Type != Type) {
-                    TryAddTSImport(tsType, Options.ModelOutputFolder, Options.ModelOutputFolder);
-                }
+                var tsType = GetTSPropertyType(property.PropertyType, Options.ModelOutputFolder!);
 
                 properties.Add(new TSProperty(property.Name.ToCamelCase(), tsType.TSTypeFull));
             }

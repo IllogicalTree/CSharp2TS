@@ -38,7 +38,7 @@ namespace CSharp2TS.CLI.Generators {
             return Type.GetCustomFolderLocation() ?? string.Empty;
         }
 
-        protected TSPropertyGenerationInfo GetTSPropertyType(TypeReference type) {
+        protected TSPropertyGenerationInfo GetTSPropertyType(TypeReference type, string currentFolder) {
             string tsType;
             List<TSPropertyGenerationInfo> genericArguments = new();
 
@@ -59,7 +59,7 @@ namespace CSharp2TS.CLI.Generators {
                 var generic = (GenericInstanceType)type;
 
                 foreach (var arg in generic.GenericArguments) {
-                    genericArguments.Add(GetTSPropertyType(arg));
+                    genericArguments.Add(GetTSPropertyType(arg, currentFolder));
                 }
             }
 
@@ -106,7 +106,13 @@ namespace CSharp2TS.CLI.Generators {
                 tsType += "[]";
             }
 
-            return new TSPropertyGenerationInfo(type, rawTsType, tsType, isObject);
+            var generationInfo = new TSPropertyGenerationInfo(type, rawTsType, tsType, isObject);
+
+            if (isObject && Type != generationInfo.Type) {
+                TryAddTSImport(generationInfo, currentFolder, Options.ModelOutputFolder);
+            }
+
+            return generationInfo;
         }
 
         private bool SimpleTypeCheck(TypeReference typeReference, Type type) {

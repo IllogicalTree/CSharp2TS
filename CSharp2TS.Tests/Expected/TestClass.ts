@@ -3,8 +3,8 @@
 import TestClass2 from './TestClass2';
 import TestClassInFolder from './SubFolder1/SubFolder2/TestClassInFolder';
 import GenericClass1 from './GenericClass1';
-import GenericClass2 from './GenericClass2';
 import TestEnum from './TestEnum';
+import GenericClass2 from './GenericClass2';
 import TestEnumInFolder from './Enums/TestEnumInFolder';
 
 interface TestClass {
