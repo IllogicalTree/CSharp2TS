@@ -20,6 +20,7 @@ namespace CSharp2TS.Tests {
                 ServicesAssemblyPaths = [assemblyPath],
                 ServicesOutputFolder = serviceOutputFolder,
                 GenerateServices = true,
+                UseNullableStrings = false,
             };
 
             Directory.CreateDirectory(serviceOutputFolder);

@@ -38,7 +38,7 @@ namespace CSharp2TS.CLI.Generators {
             return Type.GetCustomFolderLocation() ?? string.Empty;
         }
 
-        protected TSPropertyGenerationInfo GetTSPropertyType(TypeReference type, string currentFolder) {
+        protected TSPropertyGenerationInfo GetTSPropertyType(TypeReference type, string currentFolder, bool isNullableProperty = false) {
             string tsType;
             List<TSPropertyGenerationInfo> genericArguments = new();
 
@@ -52,7 +52,7 @@ namespace CSharp2TS.CLI.Generators {
                 isCollection = TryExtractFromCollection(ref type);
             }
 
-            bool isNullable = TryExtractFromGenericIfRequired(typeof(Nullable<>), ref type);
+            bool isNullable = isNullableProperty || TryExtractFromGenericIfRequired(typeof(Nullable<>), ref type);
             bool isObject = false;
 
             if (type.IsGenericInstance) {
@@ -65,6 +65,10 @@ namespace CSharp2TS.CLI.Generators {
 
             if (stringTypes.Any(i => SimpleTypeCheck(type, i))) {
                 tsType = "string";
+
+                if (!isNullable && SimpleTypeCheck(type, typeof(string)) && Options.UseNullableStrings) {
+                    isNullable = true;
+                }
             } else if (numberTypes.Any(i => SimpleTypeCheck(type, i))) {
                 tsType = "number";
             } else if (type.FullName == typeof(bool).FullName) {

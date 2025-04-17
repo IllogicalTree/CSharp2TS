@@ -35,7 +35,7 @@ interface TestClass {
   uLongProperty: number;
   nullableULongProperty: number | null;
   stringProperty: string;
-  nullableStringProperty: string;
+  nullableStringProperty: string | null;
   guidProperty: string;
   nullableGuidProperty: string | null;
   dateTimeProperty: Date;

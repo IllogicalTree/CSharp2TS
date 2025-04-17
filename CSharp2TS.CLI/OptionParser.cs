@@ -42,6 +42,7 @@ namespace CSharp2TS.CLI {
                 ServiceGenerator = TryParseSwitch(args, "--service-generator", "-sg") ?? Consts.AxiosService,
 
                 FileNameCasingStyle = TryParseSwitch(args, "--file-casing", "-fc") ?? Consts.PascalCase,
+                UseNullableStrings = SwitchExists(args, "--nullable-strings"),
             };
 
             if (!string.IsNullOrWhiteSpace(options.ModelOutputFolder)) {
@@ -65,6 +66,10 @@ namespace CSharp2TS.CLI {
             }
 
             return null;
+        }
+
+        private static bool SwitchExists(string[] args, string @switch) {
+            return Array.IndexOf(args, @switch) != -1;
         }
 
         public static Options? ParseFromFile(string optionsPath) {

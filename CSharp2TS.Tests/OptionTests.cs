@@ -121,6 +121,18 @@ namespace CSharp2TS.Tests {
         }
 
         [Test]
+        [TestCase("--nullable-strings")]
+        public void OptionParser_Args_NullableStrings(string option) {
+            // Act
+            var result = OptionParser.ParseFromArgs([option])!;
+            var noValueResult = OptionParser.ParseFromArgs([string.Empty])!;
+
+            // Assert
+            Assert.That(result.UseNullableStrings, Is.True);
+            Assert.That(noValueResult.UseNullableStrings, Is.False);
+        }
+
+        [Test]
         public void OptionParser_Config_Exists() {
             // Arrange
             string fileName = "config.json";
@@ -140,6 +152,7 @@ namespace CSharp2TS.Tests {
             Assert.That(options.ServicesAssemblyPaths[1], Is.EqualTo(Path.Combine(fullPath, "service-assembly-2")));
             Assert.That(options.FileNameCasingStyle, Is.EqualTo("camel"));
             Assert.That(options.ServiceGenerator, Is.EqualTo("axios"));
+            Assert.That(options.UseNullableStrings, Is.True);
         }
 
         [Test]

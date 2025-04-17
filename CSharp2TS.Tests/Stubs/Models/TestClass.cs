@@ -36,6 +36,7 @@ namespace CSharp2TS.Tests.Stubs.Models {
         public ulong ULongProperty { get; set; }
         public ulong? NullableULongProperty { get; set; }
         public string StringProperty { get; set; }
+        [TSNullable]
         public string? NullableStringProperty { get; set; }
         public Guid GuidProperty { get; set; }
         public Guid? NullableGuidProperty { get; set; }

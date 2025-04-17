@@ -10,5 +10,6 @@
         public string ServiceGenerator { get; set; } = Consts.AxiosService;
 
         public string FileNameCasingStyle { get; set; } = Consts.PascalCase;
+        public bool UseNullableStrings { get; set; } = false;
     }
 }

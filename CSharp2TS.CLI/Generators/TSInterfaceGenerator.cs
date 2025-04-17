@@ -30,7 +30,7 @@ namespace CSharp2TS.CLI.Generators {
                     continue;
                 }
 
-                var tsType = GetTSPropertyType(property.PropertyType, Options.ModelOutputFolder!);
+                var tsType = GetTSPropertyType(property.PropertyType, Options.ModelOutputFolder!, property.HasAttribute<TSNullableAttribute>());
 
                 properties.Add(new TSProperty(property.Name.ToCamelCase(), tsType.TSTypeFull));
             }

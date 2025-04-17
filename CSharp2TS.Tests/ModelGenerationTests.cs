@@ -17,6 +17,7 @@ namespace CSharp2TS.Tests {
                 ModelAssemblyPaths = [assemblyPath],
                 FileNameCasingStyle = Consts.PascalCase,
                 GenerateModels = true,
+                UseNullableStrings = false,
             };
 
             Directory.CreateDirectory(outputFolder);
