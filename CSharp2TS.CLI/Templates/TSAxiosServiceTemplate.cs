@@ -106,7 +106,7 @@ namespace CSharp2TS.CLI.Templates
             
             #line default
             #line hidden
-            this.Write("var response = ");
+            this.Write("const response = ");
             
             #line 19 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
  } 

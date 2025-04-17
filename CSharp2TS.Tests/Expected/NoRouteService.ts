@@ -6,7 +6,7 @@ const { apiClient } = useApiClient();
 
 export default {
   async get(): Promise<string> {
-    var response = await apiClient.get<string>(`noroute`);
+    const response = await apiClient.get<string>(`noroute`);
     return response.data; 
   },
 

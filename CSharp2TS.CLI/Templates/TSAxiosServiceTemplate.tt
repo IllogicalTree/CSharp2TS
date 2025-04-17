@@ -16,7 +16,7 @@ const { apiClient } = useApiClient();
 export default {
 <# foreach (var item in Items) { #>
   async <#= item.MethodName #>(<#= string.Join(", ", item.AllParams.Select(i => $"{i.Name}: {i.Property.TSTypeFull}")) #>): Promise<<#= item.ReturnType #>> {
-    <# if (item.ReturnType != "void") { #>var response = <# } #>await apiClient.<#= item.HttpMethod #><# if (item.ReturnType != "void") { #><<#= item.ReturnType #>><# } #>(`<#= item.Route #><#= item.QueryString #>`<# if (item.BodyParam != null) { #>, <#= item.BodyParam.Name #><# } #>);
+    <# if (item.ReturnType != "void") { #>const response = <# } #>await apiClient.<#= item.HttpMethod #><# if (item.ReturnType != "void") { #><<#= item.ReturnType #>><# } #>(`<#= item.Route #><#= item.QueryString #>`<# if (item.BodyParam != null) { #>, <#= item.BodyParam.Name #><# } #>);
 <# if (item.ReturnType != "void") { #>
     return response.data; 
 <# } #>
