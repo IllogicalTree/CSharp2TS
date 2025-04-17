@@ -1,5 +1,5 @@
-﻿using System.Text.Json;
-using CSharp2TS.CLI.Generators;
+﻿using CSharp2TS.CLI.Generators;
+using System.Text.Json;
 
 namespace CSharp2TS.CLI {
     public class Program {
@@ -80,6 +80,7 @@ namespace CSharp2TS.CLI {
             Console.WriteLine("--services-output-folder, -so <path> Path to the output folder for the generated services");
             Console.WriteLine("--service-generator, -sg <name>      Service generator to use (axios)");
             Console.WriteLine("--file-casing, -fc <style>           File name casing style (camel | pascal)");
+            Console.WriteLine("--nullable-strings                   Mark string properties as nullable in the generated code");
             Console.WriteLine();
             Console.WriteLine("Commands:");
             Console.WriteLine("create-config                        Create a default config file");

@@ -66,3 +66,11 @@ public IActionResult Get() {
 }
 ```
 
+
+
+**TSNullable** can be added to properties to mark the type as nullable in the TypeScript generation.
+
+```c#
+[TSNullable]
+public string NullableString { get; set; } // Produces nullableString: string | null
+```
