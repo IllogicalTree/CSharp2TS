@@ -24,7 +24,6 @@ export default {
 
 <# } #>
 };
-
 <#+
 public string TypeName { get; set; }
 public string ApiClientImportPath { get; set; }

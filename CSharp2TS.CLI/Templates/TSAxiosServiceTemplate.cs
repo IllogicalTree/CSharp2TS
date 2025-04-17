@@ -194,11 +194,11 @@ namespace CSharp2TS.CLI.Templates
             
             #line default
             #line hidden
-            this.Write("};\r\n\r\n");
+            this.Write("};\r\n");
             return this.GenerationEnvironment.ToString();
         }
         
-        #line 28 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+        #line 27 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
 
 public string TypeName { get; set; }
 public string ApiClientImportPath { get; set; }
