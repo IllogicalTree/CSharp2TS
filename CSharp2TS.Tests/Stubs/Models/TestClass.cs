@@ -10,6 +10,7 @@ namespace CSharp2TS.Tests.Stubs.Models {
     public class TestClass {
         // Primitives
         public int IntProperty { get; set; }
+        [TSNullable]
         public int? NullableIntProperty { get; set; }
         public long LongProperty { get; set; }
         public long? NullableLongProperty { get; set; }
@@ -60,6 +61,8 @@ namespace CSharp2TS.Tests.Stubs.Models {
 
         // Enumerable types
         public IEnumerable<int> IntEnumerable { get; set; }
+        [TSNullable]
+        public IEnumerable<int> TSNullableIntEnumerable { get; set; }
         public ICollection<int> IntCollection { get; set; }
         public IList<int> IntIList { get; set; }
         public List<int> IntList { get; set; }
@@ -85,6 +88,8 @@ namespace CSharp2TS.Tests.Stubs.Models {
 
         // NullableEnumerable types
         public IEnumerable<int?> NullableIntEnumerable { get; set; }
+        [TSNullable]
+        public IEnumerable<int?> TSNullableNullableIntEnumerable { get; set; }
         public ICollection<int?> NullableIntCollection { get; set; }
         public IList<int?> NullableIntIList { get; set; }
         public List<int?> NullableIntList { get; set; }

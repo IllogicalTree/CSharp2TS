@@ -52,7 +52,7 @@ namespace CSharp2TS.CLI.Generators {
                 isCollection = TryExtractFromCollection(ref type);
             }
 
-            bool isNullable = isNullableProperty || TryExtractFromGenericIfRequired(typeof(Nullable<>), ref type);
+            bool isNullable = TryExtractFromGenericIfRequired(typeof(Nullable<>), ref type);
             bool isObject = false;
 
             if (type.IsGenericInstance) {
@@ -108,6 +108,10 @@ namespace CSharp2TS.CLI.Generators {
 
             if (type.IsGenericInstance) {
                 tsType += "<" + string.Join(", ", genericArguments.Select(i => i.TSTypeFull)) + ">";
+            }
+
+            if (isNullableProperty && !tsType.EndsWith(" | null")) {
+                tsType += " | null";
             }
 
             var generationInfo = new TSPropertyGenerationInfo(type, rawTsType, tsType, isObject);

@@ -55,6 +55,7 @@ interface TestClass {
   formFile: File;
   iFormFile: File;
   intEnumerable: number[];
+  tSNullableIntEnumerable: number[] | null;
   intCollection: number[];
   intIList: number[];
   intList: number[];
@@ -77,6 +78,7 @@ interface TestClass {
   formFileCollection: File[];
   iFormFileCollection: File[];
   nullableIntEnumerable: (number | null)[];
+  tSNullableNullableIntEnumerable: (number | null)[] | null;
   nullableIntCollection: (number | null)[];
   nullableIntIList: (number | null)[];
   nullableIntList: (number | null)[];
