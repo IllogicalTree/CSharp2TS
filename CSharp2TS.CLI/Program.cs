@@ -4,8 +4,6 @@ using System.Text.Json;
 namespace CSharp2TS.CLI {
     public class Program {
         private static void Main(string[] args) {
-            args = ["-c", "C:\\Working\\SalusSuite\\master\\AdminPortal\\csharp2ts.json"];
-
             if (args.Length == 0) {
                 ShowIntro();
                 return;
