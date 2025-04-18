@@ -27,31 +27,21 @@ namespace CSharp2TS.CLI.Templates
         {
             this.Write(@"import axios, { AxiosInstance } from 'axios';
 
-export function useApiClient() {
-  let apiClient: AxiosInstance = createDefaultApiClient();
-
-  function createDefaultApiClient(): AxiosInstance { 
-    return axios.create({
-      baseURL: ""/"",
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-  }
+export const apiClient = {
+  instance:  axios.create({
+    baseURL: ""/"",
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }),
   
-  function setApiClient(newApiClient: AxiosInstance) {
-    apiClient = newApiClient;
-  }
+  setApiClient(newApiClient: AxiosInstance) {
+    this.instance = newApiClient;
+  },
 
-  function setBaseUrl(baseUrl: string) {
-    apiClient.defaults.baseURL = baseUrl;
-  }
-
-  return {
-    apiClient,
-    setApiClient,
-    setBaseUrl
-  }
+  setBaseUrl(baseUrl: string) {
+    this.instance.defaults.baseURL = baseUrl;
+  },
 }
 ");
             return this.GenerationEnvironment.ToString();
