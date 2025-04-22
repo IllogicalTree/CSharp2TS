@@ -65,9 +65,7 @@ namespace CSharp2TS.CLI.Generators {
             string apiClientTemplate = new TSAxiosApiClientTemplate().TransformText();
             string path = Path.Combine(options.ServicesOutputFolder!, "apiClient.ts");
 
-            using (var streamWriter = new StreamWriter(path)) {
-                streamWriter.Write(apiClientTemplate);
-            }
+            File.WriteAllText(path, apiClientTemplate);
         }
 
         private void GenerateInterfaces(ModuleDefinition module, Options options) {
