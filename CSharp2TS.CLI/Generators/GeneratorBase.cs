@@ -38,9 +38,9 @@ namespace CSharp2TS.CLI.Generators {
             return Type.GetCustomFolderLocation() ?? string.Empty;
         }
 
-        protected TSPropertyGenerationInfo GetTSPropertyType(TypeReference type, string currentFolder, bool isNullableProperty = false) {
+        protected TSType GetTSPropertyType(TypeReference type, string currentFolder, bool isNullableProperty = false) {
             string tsType;
-            List<TSPropertyGenerationInfo> genericArguments = new();
+            List<TSType> genericArguments = new();
 
             TryExtractFromGenericIfRequired(typeof(Task<>), ref type);
             TryExtractFromGenericIfRequired(typeof(ActionResult<>), ref type);
@@ -107,14 +107,14 @@ namespace CSharp2TS.CLI.Generators {
             }
 
             if (type.IsGenericInstance) {
-                tsType += "<" + string.Join(", ", genericArguments.Select(i => i.TSTypeFull)) + ">";
+                tsType += "<" + string.Join(", ", genericArguments.Select(i => i.TSTypeFullName)) + ">";
             }
 
             if (isNullableProperty && !tsType.EndsWith(" | null")) {
                 tsType += " | null";
             }
 
-            var generationInfo = new TSPropertyGenerationInfo(type, rawTsType, tsType, isObject);
+            var generationInfo = new TSType(type, rawTsType, tsType, isObject);
 
             if (isObject && Type != generationInfo.Type) {
                 TryAddTSImport(generationInfo, currentFolder, Options.ModelOutputFolder);
@@ -195,8 +195,8 @@ namespace CSharp2TS.CLI.Generators {
             return str;
         }
 
-        protected void TryAddTSImport(TSPropertyGenerationInfo tsType, string? currentFolderRoot, string? targetFolderRoot) {
-            if (currentFolderRoot == null || targetFolderRoot == null || Imports.ContainsKey(tsType.TSType) || !tsType.IsObject || tsType.Type.IsGenericParameter) {
+        protected void TryAddTSImport(TSType tsType, string? currentFolderRoot, string? targetFolderRoot) {
+            if (currentFolderRoot == null || targetFolderRoot == null || Imports.ContainsKey(tsType.TSTypeShortName) || !tsType.IsObject || tsType.Type.IsGenericParameter) {
                 return;
             }
 
@@ -206,9 +206,9 @@ namespace CSharp2TS.CLI.Generators {
             string targetFolder = Path.Combine(targetFolderRoot, targetCustomFolder ?? string.Empty);
 
             string relativePath = FolderUtility.GetRelativeImportPath(currentFolder, targetFolder);
-            string importPath = $"{relativePath}{ApplyCasing(tsType.TSType)}";
+            string importPath = $"{relativePath}{ApplyCasing(tsType.TSTypeShortName)}";
 
-            Imports.Add(tsType.TSType, new TSImport(tsType.TSType, importPath));
+            Imports.Add(tsType.TSTypeShortName, new TSImport(tsType.TSTypeShortName, importPath));
         }
 
         protected string GetCleanedTypeName(TypeReference type) {

@@ -58,7 +58,7 @@ namespace CSharp2TS.CLI.Generators {
                     name,
                     httpMethodAttribute.HttpMethod,
                     route,
-                    returnType.TSTypeFull,
+                    returnType.TSTypeFullName,
                     routeParams,
                     queryParams,
                     bodyParam,
@@ -189,7 +189,7 @@ namespace CSharp2TS.CLI.Generators {
             return $"?{string.Join('&', querySections)}";
         }
 
-        private TSPropertyGenerationInfo GetReturnType(MethodDefinition method) {
+        private TSType GetReturnType(MethodDefinition method) {
             if (method.TryGetAttribute<TSEndpointAttribute>(out CustomAttribute? attribute)) {
                 var customReturnType = attribute!.ConstructorArguments[0].Value as TypeReference;
 
