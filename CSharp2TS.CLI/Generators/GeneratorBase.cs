@@ -13,6 +13,7 @@ namespace CSharp2TS.CLI.Generators {
         private static readonly Type[] voidTypes = [typeof(void), typeof(Task), typeof(ActionResult), typeof(IActionResult)];
         private static readonly Type[] fileCollectionTypes = [typeof(FormFileCollection), typeof(IFormFileCollection)];
         private static readonly Type[] fileTypes = [typeof(FormFile), typeof(IFormFile), .. fileCollectionTypes];
+        private static readonly Type[] fileReturnTypes = [typeof(FileContentResult)];
         private static readonly Type[] numberTypes = [
             typeof(sbyte), typeof(byte), typeof(short),
             typeof(ushort), typeof(int), typeof(uint),
@@ -54,6 +55,7 @@ namespace CSharp2TS.CLI.Generators {
 
             bool isNullable = TryExtractFromGenericIfRequired(typeof(Nullable<>), ref type);
             bool isObject = false;
+            bool requiresImport = false;
 
             if (type.IsGenericInstance) {
                 var generic = (GenericInstanceType)type;
@@ -78,13 +80,18 @@ namespace CSharp2TS.CLI.Generators {
             } else if (voidTypes.Any(i => SimpleTypeCheck(type, i))) {
                 tsType = "void";
             } else if (fileTypes.Any(i => SimpleTypeCheck(type, i))) {
+                isObject = true;
                 tsType = "File";
 
                 if (fileCollectionTypes.Any(i => SimpleTypeCheck(type, i))) {
                     isCollection = true;
                 }
+            } else if (fileReturnTypes.Any(i => SimpleTypeCheck(type, i))) {
+                isObject = true;
+                tsType = "Blob";
             } else {
                 isObject = true;
+                requiresImport = true;
                 tsType = GetCleanedTypeName(type);
             }
 
@@ -116,7 +123,7 @@ namespace CSharp2TS.CLI.Generators {
 
             var generationInfo = new TSType(type, rawTsType, tsType, isObject);
 
-            if (isObject && Type != generationInfo.Type) {
+            if (requiresImport && Type != generationInfo.Type) {
                 TryAddTSImport(generationInfo, currentFolder, Options.ModelOutputFolder);
             }
 
