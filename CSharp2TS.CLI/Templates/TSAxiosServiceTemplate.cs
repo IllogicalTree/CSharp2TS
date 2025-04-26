@@ -186,6 +186,19 @@ namespace CSharp2TS.CLI.Templates
             
             #line default
             #line hidden
+            
+            #line 17 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+ if (item.BodyParam?.Property.TSTypeShortName == "File") { 
+            
+            #line default
+            #line hidden
+            this.Write(", { headers: { \'Content-Type\': \'multipart/form-data\' } }");
+            
+            #line 17 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+ } 
+            
+            #line default
+            #line hidden
             this.Write(");\r\n");
             
             #line 18 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
