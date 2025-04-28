@@ -20,5 +20,7 @@
                 return allParams;
             }
         }
+
+        public bool IsBodyRawFile => BodyParam != null && BodyParam.IsFile && !BodyParam.IsFormData;
     }
 }

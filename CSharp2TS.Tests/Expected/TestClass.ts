@@ -52,8 +52,8 @@ interface TestClass {
   enum: TestEnum;
   nullableEnum: TestEnum | null;
   enumInFolder: TestEnumInFolder;
-  formFile: File;
-  iFormFile: File;
+  formFile: Blob;
+  iFormFile: Blob;
   intEnumerable: number[];
   tSNullableIntEnumerable: number[] | null;
   intCollection: number[];
@@ -75,8 +75,8 @@ interface TestClass {
   intReadOnlyDictionary: number[];
   intCollection2: number[];
   intConcurrentBag: number[];
-  formFileCollection: File[];
-  iFormFileCollection: File[];
+  formFileCollection: Blob[];
+  iFormFileCollection: Blob[];
   nullableIntEnumerable: (number | null)[];
   tSNullableNullableIntEnumerable: (number | null)[] | null;
   nullableIntCollection: (number | null)[];

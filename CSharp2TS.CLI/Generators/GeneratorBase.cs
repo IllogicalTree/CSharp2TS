@@ -12,8 +12,9 @@ namespace CSharp2TS.CLI.Generators {
         private static readonly Type[] dateTypes = [typeof(DateTime), typeof(DateTimeOffset)];
         private static readonly Type[] voidTypes = [typeof(void), typeof(Task), typeof(ActionResult), typeof(IActionResult)];
         private static readonly Type[] fileCollectionTypes = [typeof(FormFileCollection), typeof(IFormFileCollection)];
-        private static readonly Type[] fileTypes = [typeof(FormFile), typeof(IFormFile), .. fileCollectionTypes];
-        private static readonly Type[] fileReturnTypes = [typeof(FileContentResult)];
+        private static readonly Type[] fileReturnTypes = [typeof(FileContentResult), typeof(FileStreamResult), typeof(FileResult)];
+        private static readonly Type[] fileTypes = [typeof(FormFile), typeof(IFormFile), .. fileCollectionTypes, .. fileReturnTypes];
+        private static readonly Type[] formDataTypes = [typeof(IFormCollection)];
         private static readonly Type[] numberTypes = [
             typeof(sbyte), typeof(byte), typeof(short),
             typeof(ushort), typeof(int), typeof(uint),
@@ -81,14 +82,14 @@ namespace CSharp2TS.CLI.Generators {
                 tsType = "void";
             } else if (fileTypes.Any(i => SimpleTypeCheck(type, i))) {
                 isObject = true;
-                tsType = "File";
+                tsType = "Blob";
 
                 if (fileCollectionTypes.Any(i => SimpleTypeCheck(type, i))) {
                     isCollection = true;
                 }
-            } else if (fileReturnTypes.Any(i => SimpleTypeCheck(type, i))) {
+            } else if (formDataTypes.Any(i => SimpleTypeCheck(type, i))) {
                 isObject = true;
-                tsType = "Blob";
+                tsType = "FormData";
             } else {
                 isObject = true;
                 requiresImport = true;

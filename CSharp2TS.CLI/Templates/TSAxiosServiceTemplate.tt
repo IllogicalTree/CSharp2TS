@@ -13,8 +13,18 @@ import <#= item.Name #> from '<#= item.Path #>';
 
 export default {
 <# foreach (var item in Items) { #>
-  async <#= item.MethodName #>(<#= string.Join(", ", item.AllParams.Select(i => $"{i.Name}: {i.Property.TSTypeFullName}")) #>): Promise<<#= item.ReturnType #>> {
-    <# if (item.ReturnType != "void") { #>const response = <# } #>await apiClient.instance.<#= item.HttpMethod #><# if (item.ReturnType != "void") { #><<#= item.ReturnType #>><# } #>(`<#= item.Route #><#= item.QueryString #>`<# if (item.BodyParam != null) { #>, <#= item.BodyParam.Name #><# } #><# if (item.ReturnType == "Blob") { #>, { responseType: 'blob' }<# } #><# if (item.BodyParam?.Property.TSTypeShortName == "File") { #>, { headers: { 'Content-Type': 'multipart/form-data' } }<# } #>);
+  async <#= item.MethodName #>(<#= string.Join(", ", item.AllParams.Select(i => $"{i.Name}: {(i.IsFormData ? "FormData" : i.Property.TSTypeFullName)}")) #>): Promise<<#= item.ReturnType #>> {
+  <# if (item.IsBodyRawFile) {#>
+  const formData = new FormData();
+    formData.append('<#= item.BodyParam.Name #>', <#= item.BodyParam.Name #>);
+
+  <#}#>
+  <# if (item.ReturnType != "void") { #>const response = <# } #>await apiClient.instance.<#= item.HttpMethod #><# if (item.ReturnType != "void") { #><<#= item.ReturnType #>><# } #>(`<#= item.Route #><#= item.QueryString #>`<#
+    if (item.IsBodyRawFile) { #>, formData<# } #><#
+    else if (item.BodyParam != null) { #>, <#= item.BodyParam.Name #><# } #><#
+    if (item.ReturnType == "Blob") { #>,
+      { responseType: 'blob' }<# } #><# if (item.BodyParam?.Property.TSTypeShortName == "Blob") { #>,
+      { headers: { 'Content-Type': 'multipart/form-data' } }<# } #>);
 <# if (item.ReturnType != "void") { #>
     return response.data; 
 <# } #>

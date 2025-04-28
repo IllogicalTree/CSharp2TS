@@ -45,7 +45,7 @@ namespace CSharp2TS.CLI.Generators {
 
                 var allParams = ParseParams(method.Parameters.ToArray());
                 var routeParams = GetRouteParams(route, allParams);
-                var queryParams = GetQueryParams(route, allParams);
+                var queryParams = GetQueryParams(allParams);
                 TSServiceMethodParam? bodyParam = null;
 
                 if (httpMethodAttribute.HttpMethod != Consts.HttpGet) {
@@ -80,8 +80,10 @@ namespace CSharp2TS.CLI.Generators {
             foreach (ParameterDefinition param in parameterDefinitions) {
                 var tsProperty = GetTSPropertyType(param.ParameterType, Options.ServicesOutputFolder!);
                 bool isBodyParam = param.HasAttribute<FromBodyAttribute>() || (!tsProperty.Type.Resolve().IsEnum && tsProperty.IsObject);
+                bool isFile = tsProperty.TSTypeShortName == "Blob";
+                bool isFromForm = param.HasAttribute<FromFormAttribute>();
 
-                converted.Add(new TSServiceMethodParam(param.Name.ToCamelCase(), tsProperty, isBodyParam));
+                converted.Add(new TSServiceMethodParam(param.Name.ToCamelCase(), tsProperty, isBodyParam, isFromForm, isFile));
             }
 
             return converted;
@@ -109,11 +111,7 @@ namespace CSharp2TS.CLI.Generators {
             return routeParams;
         }
 
-        private TSServiceMethodParam[] GetQueryParams(string template, List<TSServiceMethodParam> allParams) {
-            if (string.IsNullOrWhiteSpace(template)) {
-                return [];
-            }
-
+        private TSServiceMethodParam[] GetQueryParams(List<TSServiceMethodParam> allParams) {
             var queryParams = allParams
                 .Where(row => !row.IsBodyParam)
                 .ToArray();
