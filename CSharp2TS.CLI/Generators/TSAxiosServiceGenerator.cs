@@ -80,7 +80,7 @@ namespace CSharp2TS.CLI.Generators {
             foreach (ParameterDefinition param in parameterDefinitions) {
                 var tsProperty = GetTSPropertyType(param.ParameterType, Options.ServicesOutputFolder!);
                 bool isBodyParam = param.HasAttribute<FromBodyAttribute>() || (!tsProperty.Type.Resolve().IsEnum && tsProperty.IsObject);
-                bool isFile = tsProperty.TSTypeShortName == "Blob";
+                bool isFile = tsProperty.TSTypeShortName == "File";
                 bool isFromForm = param.HasAttribute<FromFormAttribute>();
 
                 converted.Add(new TSServiceMethodParam(param.Name.ToCamelCase(), tsProperty, isBodyParam, isFromForm, isFile));

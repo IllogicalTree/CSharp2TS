@@ -82,7 +82,7 @@ namespace CSharp2TS.CLI.Generators {
                 tsType = "void";
             } else if (fileTypes.Any(i => SimpleTypeCheck(type, i))) {
                 isObject = true;
-                tsType = "Blob";
+                tsType = "File";
 
                 if (fileCollectionTypes.Any(i => SimpleTypeCheck(type, i))) {
                     isCollection = true;

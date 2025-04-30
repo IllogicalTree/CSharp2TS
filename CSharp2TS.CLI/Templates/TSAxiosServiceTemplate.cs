@@ -219,7 +219,7 @@ namespace CSharp2TS.CLI.Templates
             
             #line 24 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
 
-    if (item.ReturnType == "Blob") { 
+    if (item.ReturnType == "File") { 
             
             #line default
             #line hidden
@@ -232,7 +232,7 @@ namespace CSharp2TS.CLI.Templates
             #line hidden
             
             #line 26 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
- if (item.BodyParam?.Property.TSTypeShortName == "Blob") { 
+ if (item.BodyParam?.Property.TSTypeShortName == "File") { 
             
             #line default
             #line hidden
