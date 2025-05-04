@@ -1,4 +1,4 @@
-﻿namespace CSharp2TS.Core.Enums {
+﻿namespace CSharp2TS.CLI.Generators.Entities {
     public enum TSType {
         String,
         Number,

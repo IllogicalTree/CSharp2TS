@@ -13,7 +13,6 @@ namespace CSharp2TS.CLI.Templates
     using System.Text;
     using System.Collections.Generic;
     using CSharp2TS.CLI.Generators.Entities;
-    using CSharp2TS.Core.Enums;
     using System;
     
     /// <summary>
@@ -32,200 +31,200 @@ namespace CSharp2TS.CLI.Templates
         {
             this.Write("// Auto-generated from ");
             
-            #line 8 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+            #line 7 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(TypeName));
             
             #line default
             #line hidden
             this.Write(".cs\r\n\r\nimport { apiClient } from \'");
             
-            #line 10 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+            #line 9 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ApiClientImportPath));
             
             #line default
             #line hidden
             this.Write("apiClient\';\r\n");
             
-            #line 11 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+            #line 10 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
  foreach (var item in Imports) { 
             
             #line default
             #line hidden
             this.Write("import ");
             
-            #line 12 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+            #line 11 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.Name));
             
             #line default
             #line hidden
             this.Write(" from \'");
             
-            #line 12 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+            #line 11 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.Path));
             
             #line default
             #line hidden
             this.Write("\';\r\n");
             
-            #line 13 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+            #line 12 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
  } 
             
             #line default
             #line hidden
             this.Write("\r\nexport default {\r\n");
             
-            #line 16 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+            #line 15 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
  foreach (var item in Items) { 
             
             #line default
             #line hidden
             this.Write("  async ");
             
-            #line 17 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+            #line 16 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.MethodName));
             
             #line default
             #line hidden
             this.Write("(");
             
-            #line 17 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+            #line 16 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(string.Join(", ", item.AllParams.Select(i => $"{i.Name}: {i.Property}"))));
             
             #line default
             #line hidden
             this.Write("): Promise<");
             
-            #line 17 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+            #line 16 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.ReturnType));
             
             #line default
             #line hidden
             this.Write("> {\r\n");
             
-            #line 18 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+            #line 17 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
  if (item.IsBodyRawFile) {
             
             #line default
             #line hidden
             this.Write("    const formData = new FormData();\r\n");
             
-            #line 20 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+            #line 19 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
  if (!item.BodyParam.Property.IsCollection) {
             
             #line default
             #line hidden
             this.Write("    formData.append(\'");
             
-            #line 21 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+            #line 20 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.BodyParam.Name));
             
             #line default
             #line hidden
             this.Write("\', ");
             
-            #line 21 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+            #line 20 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.BodyParam.Name));
             
             #line default
             #line hidden
             this.Write(");\r\n\r\n");
             
-            #line 23 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+            #line 22 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
 } else {
             
             #line default
             #line hidden
             this.Write("    for (let i = 0; i < ");
             
-            #line 24 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+            #line 23 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.BodyParam.Name));
             
             #line default
             #line hidden
             this.Write(".length; i++) {\r\n        const f = ");
             
-            #line 25 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+            #line 24 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.BodyParam.Name));
             
             #line default
             #line hidden
             this.Write("[i];\r\n        formData.append(\'");
             
-            #line 26 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+            #line 25 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.BodyParam.Name));
             
             #line default
             #line hidden
             this.Write("[\' + i + \']\', f);\r\n    }\r\n\r\n");
             
-            #line 29 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+            #line 28 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
 }
             
             #line default
             #line hidden
             
-            #line 30 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+            #line 29 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
 }
             
             #line default
             #line hidden
             this.Write("    ");
             
-            #line 31 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+            #line 30 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
  if (item.ReturnType.TSType != TSType.Void) { 
             
             #line default
             #line hidden
             this.Write("const response = ");
             
-            #line 31 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+            #line 30 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
  } 
             
             #line default
             #line hidden
             this.Write("await apiClient.instance.");
             
-            #line 31 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+            #line 30 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.HttpMethod));
             
             #line default
             #line hidden
             
-            #line 31 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+            #line 30 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
  if (item.ReturnType.TSType != TSType.Void) { 
             
             #line default
             #line hidden
             this.Write("<");
             
-            #line 31 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+            #line 30 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.ReturnType));
             
             #line default
             #line hidden
             this.Write(">");
             
-            #line 31 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+            #line 30 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
  } 
             
             #line default
             #line hidden
             this.Write("(`");
             
-            #line 31 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+            #line 30 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.Route));
             
             #line default
             #line hidden
             
-            #line 31 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+            #line 30 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.QueryString));
             
             #line default
             #line hidden
             this.Write("`");
             
-            #line 31 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+            #line 30 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
 
     if (item.IsBodyRawFile) { 
             
@@ -233,13 +232,13 @@ namespace CSharp2TS.CLI.Templates
             #line hidden
             this.Write(", formData");
             
-            #line 32 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+            #line 31 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
  } 
             
             #line default
             #line hidden
             
-            #line 32 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+            #line 31 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
 
     else if (item.BodyParam != null) { 
             
@@ -247,19 +246,19 @@ namespace CSharp2TS.CLI.Templates
             #line hidden
             this.Write(", ");
             
-            #line 33 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+            #line 32 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.BodyParam.Name));
             
             #line default
             #line hidden
             
-            #line 33 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+            #line 32 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
  } 
             
             #line default
             #line hidden
             
-            #line 33 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+            #line 32 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
 
     if (item.ReturnType.TSType == TSType.File) { 
             
@@ -267,41 +266,41 @@ namespace CSharp2TS.CLI.Templates
             #line hidden
             this.Write(",\r\n      { responseType: \'blob\' }");
             
-            #line 35 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+            #line 34 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
  } 
             
             #line default
             #line hidden
             
-            #line 35 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+            #line 34 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
  if (item.BodyParam?.Property.TSType == TSType.File) { 
             
             #line default
             #line hidden
             this.Write(",\r\n      { headers: { \'Content-Type\': \'multipart/form-data\' } }");
             
-            #line 36 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+            #line 35 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
  } 
             
             #line default
             #line hidden
             this.Write(");\r\n");
             
-            #line 37 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+            #line 36 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
  if (item.ReturnType.TSType != TSType.Void) { 
             
             #line default
             #line hidden
             this.Write("    return response.data; \r\n");
             
-            #line 39 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+            #line 38 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
  } 
             
             #line default
             #line hidden
             this.Write("  },\r\n\r\n");
             
-            #line 42 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+            #line 41 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
  } 
             
             #line default
@@ -310,7 +309,7 @@ namespace CSharp2TS.CLI.Templates
             return this.GenerationEnvironment.ToString();
         }
         
-        #line 44 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+        #line 43 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
 
 public string TypeName { get; set; }
 public string ApiClientImportPath { get; set; }

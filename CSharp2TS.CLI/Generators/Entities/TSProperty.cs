@@ -1,5 +1,4 @@
-﻿using CSharp2TS.Core.Enums;
-using Mono.Cecil;
+﻿using Mono.Cecil;
 
 namespace CSharp2TS.CLI.Generators.Entities {
     public class TSProperty {

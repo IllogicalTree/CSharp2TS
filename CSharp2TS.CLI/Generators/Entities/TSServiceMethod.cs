@@ -1,6 +1,4 @@
-﻿using CSharp2TS.Core.Enums;
-
-namespace CSharp2TS.CLI.Generators.Entities {
+﻿namespace CSharp2TS.CLI.Generators.Entities {
     public record TSServiceMethod(
         string MethodName,
         string HttpMethod,

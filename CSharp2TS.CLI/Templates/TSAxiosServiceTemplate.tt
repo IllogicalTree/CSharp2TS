@@ -4,7 +4,6 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="CSharp2TS.CLI.Generators.Entities" #>
-<#@ import namespace="CSharp2TS.Core.Enums" #>
 // Auto-generated from <#= TypeName #>.cs
 
 import { apiClient } from '<#= ApiClientImportPath #>apiClient';

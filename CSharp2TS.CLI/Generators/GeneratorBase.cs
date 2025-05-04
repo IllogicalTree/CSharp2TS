@@ -1,7 +1,6 @@
 ﻿using CSharp2TS.CLI.Generators.Entities;
 using CSharp2TS.CLI.Utility;
 using CSharp2TS.Core.Attributes;
-using CSharp2TS.Core.Enums;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.AspNetCore.Mvc;
