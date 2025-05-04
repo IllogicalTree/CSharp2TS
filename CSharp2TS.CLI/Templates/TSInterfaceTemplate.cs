@@ -121,7 +121,7 @@ namespace CSharp2TS.CLI.Templates
             this.Write(": ");
             
             #line 17 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSInterfaceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(item.Type));
+            this.Write(this.ToStringHelper.ToStringWithCulture(item.Property));
             
             #line default
             #line hidden
@@ -147,7 +147,7 @@ namespace CSharp2TS.CLI.Templates
 
 public string TypeName { get; set; }
 public IList<TSImport> Imports { get; set; }
-public IList<TSProperty> Properties { get; set; }
+public IList<TSInterfaceProperty> Properties { get; set; }
 public IList<string> GenericParameters { get; set; }
 public bool HasGenericParameters => GenericParameters.Count > 0;
 

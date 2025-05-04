@@ -1,6 +1,7 @@
 ﻿using CSharp2TS.CLI.Generators.Entities;
 using CSharp2TS.CLI.Utility;
 using CSharp2TS.Core.Attributes;
+using CSharp2TS.Core.Enums;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.AspNetCore.Mvc;
@@ -40,9 +41,9 @@ namespace CSharp2TS.CLI.Generators {
             return Type.GetCustomFolderLocation() ?? string.Empty;
         }
 
-        protected TSType GetTSPropertyType(TypeReference type, string currentFolder, bool isNullableProperty = false) {
-            string tsType;
-            List<TSType> genericArguments = new();
+        protected TSProperty GetTSPropertyType(TypeReference type, string currentFolder, bool isNullableProperty = false) {
+            TSType tsType;
+            List<TSProperty> genericArguments = new();
 
             TryExtractFromGenericIfRequired(typeof(Task<>), ref type);
             TryExtractFromGenericIfRequired(typeof(ActionResult<>), ref type);
@@ -56,6 +57,7 @@ namespace CSharp2TS.CLI.Generators {
 
             bool isNullable = TryExtractFromGenericIfRequired(typeof(Nullable<>), ref type);
             bool isObject = false;
+            string? objectName = null;
             bool requiresImport = false;
 
             if (type.IsGenericInstance) {
@@ -67,64 +69,49 @@ namespace CSharp2TS.CLI.Generators {
             }
 
             if (stringTypes.Any(i => SimpleTypeCheck(type, i))) {
-                tsType = "string";
+                tsType = TSType.String;
 
                 if (!isNullable && SimpleTypeCheck(type, typeof(string)) && Options.UseNullableStrings) {
                     isNullable = true;
                 }
             } else if (numberTypes.Any(i => SimpleTypeCheck(type, i))) {
-                tsType = "number";
+                tsType = TSType.Number;
             } else if (type.FullName == typeof(bool).FullName) {
-                tsType = "boolean";
+                tsType = TSType.Boolean;
             } else if (dateTypes.Any(i => SimpleTypeCheck(type, i))) {
-                tsType = "Date";
+                tsType = TSType.Date;
             } else if (voidTypes.Any(i => SimpleTypeCheck(type, i))) {
-                tsType = "void";
+                tsType = TSType.Void;
             } else if (fileTypes.Any(i => SimpleTypeCheck(type, i))) {
                 isObject = true;
-                tsType = "File";
+                tsType = TSType.File;
 
                 if (fileCollectionTypes.Any(i => SimpleTypeCheck(type, i))) {
                     isCollection = true;
                 }
             } else if (formDataTypes.Any(i => SimpleTypeCheck(type, i))) {
                 isObject = true;
-                tsType = "FormData";
+                tsType = TSType.FormData;
             } else {
                 isObject = true;
                 requiresImport = true;
-                tsType = GetCleanedTypeName(type);
+                tsType = TSType.Object;
+                objectName = GetCleanedTypeName(type);
             }
 
-            string rawTsType = tsType;
+            var generationInfo = new TSProperty {
+                TSType = tsType,
+                GenericArguments = genericArguments,
+                IsCollection = isCollection,
+                IsDictionary = isDictionary,
+                IsTypeNullable = isNullable,
+                IsPropertyNullable = isNullableProperty,
+                IsObject = isObject,
+                ObjectName = objectName,
+                TypeRef = type,
+            };
 
-            if (isNullable) {
-                tsType += " | null";
-
-                if (isCollection || isDictionary) {
-                    tsType = $"({tsType})";
-                }
-            }
-
-            if (isDictionary) {
-                tsType = $"{{ [key: string]: {tsType} }}";
-            }
-
-            if (isCollection) {
-                tsType += "[]";
-            }
-
-            if (type.IsGenericInstance) {
-                tsType += "<" + string.Join(", ", genericArguments.Select(i => i.TSTypeFullName)) + ">";
-            }
-
-            if (isNullableProperty && !tsType.EndsWith(" | null")) {
-                tsType += " | null";
-            }
-
-            var generationInfo = new TSType(type, rawTsType, tsType, isObject);
-
-            if (requiresImport && Type != generationInfo.Type) {
+            if (requiresImport && Type != generationInfo.TypeRef) {
                 TryAddTSImport(generationInfo, currentFolder, Options.ModelOutputFolder);
             }
 
@@ -203,20 +190,20 @@ namespace CSharp2TS.CLI.Generators {
             return str;
         }
 
-        protected void TryAddTSImport(TSType tsType, string? currentFolderRoot, string? targetFolderRoot) {
-            if (currentFolderRoot == null || targetFolderRoot == null || Imports.ContainsKey(tsType.TSTypeShortName) || !tsType.IsObject || tsType.Type.IsGenericParameter) {
+        protected void TryAddTSImport(TSProperty tsType, string? currentFolderRoot, string? targetFolderRoot) {
+            if (currentFolderRoot == null || targetFolderRoot == null || Imports.ContainsKey(tsType.GetTypeName()) || !tsType.IsObject || tsType.TypeRef.IsGenericParameter) {
                 return;
             }
 
-            var targetCustomFolder = tsType.Type.Resolve().GetCustomFolderLocation();
+            var targetCustomFolder = tsType.TypeRef.Resolve().GetCustomFolderLocation();
 
             string currentFolder = Path.Combine(currentFolderRoot, GetFolderLocation());
             string targetFolder = Path.Combine(targetFolderRoot, targetCustomFolder ?? string.Empty);
 
             string relativePath = FolderUtility.GetRelativeImportPath(currentFolder, targetFolder);
-            string importPath = $"{relativePath}{ApplyCasing(tsType.TSTypeShortName)}";
+            string importPath = $"{relativePath}{ApplyCasing(tsType.GetTypeName())}";
 
-            Imports.Add(tsType.TSTypeShortName, new TSImport(tsType.TSTypeShortName, importPath));
+            Imports.Add(tsType.GetTypeName(), new TSImport(tsType.GetTypeName(), importPath));
         }
 
         protected string GetCleanedTypeName(TypeReference type) {

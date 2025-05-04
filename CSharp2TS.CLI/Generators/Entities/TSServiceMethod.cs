@@ -1,9 +1,11 @@
-﻿namespace CSharp2TS.CLI.Generators.Entities {
+﻿using CSharp2TS.Core.Enums;
+
+namespace CSharp2TS.CLI.Generators.Entities {
     public record TSServiceMethod(
         string MethodName,
         string HttpMethod,
         string Route,
-        string ReturnType,
+        TSProperty ReturnType,
         TSServiceMethodParam[] RouteParams,
         TSServiceMethodParam[] QueryParams,
         TSServiceMethodParam? BodyParam,
@@ -21,6 +23,6 @@
             }
         }
 
-        public bool IsBodyRawFile => BodyParam != null && BodyParam.IsFile && !BodyParam.IsFormData;
+        public bool IsBodyRawFile => BodyParam != null && BodyParam.Property.TSType == TSType.File && BodyParam.Property.TSType != TSType.FormData;
     }
 }

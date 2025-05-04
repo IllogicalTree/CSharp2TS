@@ -4,6 +4,7 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="CSharp2TS.CLI.Generators.Entities" #>
+<#@ import namespace="CSharp2TS.Core.Enums" #>
 // Auto-generated from <#= TypeName #>.cs
 
 import { apiClient } from '<#= ApiClientImportPath #>apiClient';
@@ -13,19 +14,19 @@ import <#= item.Name #> from '<#= item.Path #>';
 
 export default {
 <# foreach (var item in Items) { #>
-  async <#= item.MethodName #>(<#= string.Join(", ", item.AllParams.Select(i => $"{i.Name}: {(i.IsFormData ? "FormData" : i.Property.TSTypeFullName)}")) #>): Promise<<#= item.ReturnType #>> {
+  async <#= item.MethodName #>(<#= string.Join(", ", item.AllParams.Select(i => $"{i.Name}: {i.Property}")) #>): Promise<<#= item.ReturnType #>> {
   <# if (item.IsBodyRawFile) {#>
   const formData = new FormData();
     formData.append('<#= item.BodyParam.Name #>', <#= item.BodyParam.Name #>);
 
   <#}#>
-  <# if (item.ReturnType != "void") { #>const response = <# } #>await apiClient.instance.<#= item.HttpMethod #><# if (item.ReturnType != "void") { #><<#= item.ReturnType #>><# } #>(`<#= item.Route #><#= item.QueryString #>`<#
+  <# if (item.ReturnType.TSType != TSType.Void) { #>const response = <# } #>await apiClient.instance.<#= item.HttpMethod #><# if (item.ReturnType.TSType != TSType.Void) { #><<#= item.ReturnType #>><# } #>(`<#= item.Route #><#= item.QueryString #>`<#
     if (item.IsBodyRawFile) { #>, formData<# } #><#
     else if (item.BodyParam != null) { #>, <#= item.BodyParam.Name #><# } #><#
-    if (item.ReturnType == "File") { #>,
-      { responseType: 'blob' }<# } #><# if (item.BodyParam?.Property.TSTypeShortName == "File") { #>,
+    if (item.ReturnType.TSType == TSType.File) { #>,
+      { responseType: 'blob' }<# } #><# if (item.BodyParam?.Property.TSType == TSType.File) { #>,
       { headers: { 'Content-Type': 'multipart/form-data' } }<# } #>);
-<# if (item.ReturnType != "void") { #>
+<# if (item.ReturnType.TSType != TSType.Void) { #>
     return response.data; 
 <# } #>
   },

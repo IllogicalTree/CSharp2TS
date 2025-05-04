@@ -45,7 +45,7 @@ namespace CSharp2TS.CLI.Generators {
 
                 var allParams = ParseParams(method.Parameters.ToArray());
                 var routeParams = GetRouteParams(route, allParams);
-                var queryParams = GetQueryParams(allParams);
+                var queryParams = GetQueryParams(route, allParams);
                 TSServiceMethodParam? bodyParam = null;
 
                 if (httpMethodAttribute.HttpMethod != Consts.HttpGet) {
@@ -58,7 +58,7 @@ namespace CSharp2TS.CLI.Generators {
                     name,
                     httpMethodAttribute.HttpMethod,
                     route,
-                    returnType.TSTypeFullName,
+                    returnType,
                     routeParams,
                     queryParams,
                     bodyParam,
@@ -79,11 +79,9 @@ namespace CSharp2TS.CLI.Generators {
 
             foreach (ParameterDefinition param in parameterDefinitions) {
                 var tsProperty = GetTSPropertyType(param.ParameterType, Options.ServicesOutputFolder!);
-                bool isBodyParam = param.HasAttribute<FromBodyAttribute>() || (!tsProperty.Type.Resolve().IsEnum && tsProperty.IsObject);
-                bool isFile = tsProperty.TSTypeShortName == "File";
-                bool isFromForm = param.HasAttribute<FromFormAttribute>();
+                bool isBodyParam = param.HasAttribute<FromBodyAttribute>() || (!tsProperty.TypeRef.Resolve().IsEnum && tsProperty.IsObject);
 
-                converted.Add(new TSServiceMethodParam(param.Name.ToCamelCase(), tsProperty, isBodyParam, isFromForm, isFile));
+                converted.Add(new TSServiceMethodParam(param.Name.ToCamelCase(), tsProperty, isBodyParam));
             }
 
             return converted;
@@ -111,7 +109,11 @@ namespace CSharp2TS.CLI.Generators {
             return routeParams;
         }
 
-        private TSServiceMethodParam[] GetQueryParams(List<TSServiceMethodParam> allParams) {
+        private TSServiceMethodParam[] GetQueryParams(string template, List<TSServiceMethodParam> allParams) {
+            if (string.IsNullOrWhiteSpace(template)) {
+                return [];
+            }
+
             var queryParams = allParams
                 .Where(row => !row.IsBodyParam)
                 .ToArray();
@@ -173,8 +175,7 @@ namespace CSharp2TS.CLI.Generators {
             IList<string> querySections = [];
 
             foreach (var param in queryParameters) {
-                bool isNullable = param.Property.TSTypeFullName.EndsWith(" | null");
-                querySections.Add($"{param.Name}=${{{param.Name}{(isNullable ? " ?? ''" : string.Empty)}}}");
+                querySections.Add($"{param.Name}=${{{param.Name}{(param.Property.IsNullable ? " ?? ''" : string.Empty)}}}");
             }
 
             if (querySections.Count == 0) {
@@ -184,7 +185,7 @@ namespace CSharp2TS.CLI.Generators {
             return $"?{string.Join('&', querySections)}";
         }
 
-        private TSType GetReturnType(MethodDefinition method) {
+        private TSProperty GetReturnType(MethodDefinition method) {
             if (method.TryGetAttribute<TSEndpointAttribute>(out CustomAttribute? attribute)) {
                 var customReturnType = attribute!.ConstructorArguments[0].Value as TypeReference;
 

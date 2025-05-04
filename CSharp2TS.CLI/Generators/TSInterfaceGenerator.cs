@@ -6,7 +6,7 @@ using Mono.Cecil;
 
 namespace CSharp2TS.CLI.Generators {
     public class TSInterfaceGenerator : GeneratorBase<TSInterfaceAttribute> {
-        private IList<TSProperty> properties;
+        private IList<TSInterfaceProperty> properties;
         private IList<string> genericParameters;
 
         public TSInterfaceGenerator(TypeDefinition type, Options options) : base(type, options) {
@@ -32,7 +32,7 @@ namespace CSharp2TS.CLI.Generators {
 
                 var tsType = GetTSPropertyType(property.PropertyType, Options.ModelOutputFolder!, property.HasAttribute<TSNullableAttribute>());
 
-                properties.Add(new TSProperty(property.Name.ToCamelCase(), tsType.TSTypeFullName));
+                properties.Add(new TSInterfaceProperty(property.Name.ToCamelCase(), tsType));
             }
 
             if (typeDef.BaseType != null) {

@@ -14,7 +14,7 @@ import <#= item.Name #> from '<#= item.Path #>';
 
 interface <#= TypeName #><# if (HasGenericParameters) {#><<#= string.Join(", ", GenericParameters) #>><# } #> {
 <# foreach (var item in Properties) { #>
-  <#= item.Name #>: <#= item.Type #>;
+  <#= item.Name #>: <#= item.Property #>;
 <# } #>
 }
 
@@ -22,7 +22,7 @@ export default <#= TypeName #>;
 <#+
 public string TypeName { get; set; }
 public IList<TSImport> Imports { get; set; }
-public IList<TSProperty> Properties { get; set; }
+public IList<TSInterfaceProperty> Properties { get; set; }
 public IList<string> GenericParameters { get; set; }
 public bool HasGenericParameters => GenericParameters.Count > 0;
 #>
