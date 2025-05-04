@@ -15,12 +15,20 @@ import <#= item.Name #> from '<#= item.Path #>';
 export default {
 <# foreach (var item in Items) { #>
   async <#= item.MethodName #>(<#= string.Join(", ", item.AllParams.Select(i => $"{i.Name}: {i.Property}")) #>): Promise<<#= item.ReturnType #>> {
-  <# if (item.IsBodyRawFile) {#>
-  const formData = new FormData();
+<# if (item.IsBodyRawFile) {#>
+    const formData = new FormData();
+<# if (!item.BodyParam.Property.IsCollection) {#>
     formData.append('<#= item.BodyParam.Name #>', <#= item.BodyParam.Name #>);
 
-  <#}#>
-  <# if (item.ReturnType.TSType != TSType.Void) { #>const response = <# } #>await apiClient.instance.<#= item.HttpMethod #><# if (item.ReturnType.TSType != TSType.Void) { #><<#= item.ReturnType #>><# } #>(`<#= item.Route #><#= item.QueryString #>`<#
+<#} else {#>
+    for (let i = 0; i < <#= item.BodyParam.Name #>.length; i++) {
+        const f = <#= item.BodyParam.Name #>[i];
+        formData.append('<#= item.BodyParam.Name #>[' + i + ']', f);
+    }
+
+<#}#>
+<#}#>
+    <# if (item.ReturnType.TSType != TSType.Void) { #>const response = <# } #>await apiClient.instance.<#= item.HttpMethod #><# if (item.ReturnType.TSType != TSType.Void) { #><<#= item.ReturnType #>><# } #>(`<#= item.Route #><#= item.QueryString #>`<#
     if (item.IsBodyRawFile) { #>, formData<# } #><#
     else if (item.BodyParam != null) { #>, <#= item.BodyParam.Name #><# } #><#
     if (item.ReturnType.TSType == TSType.File) { #>,
