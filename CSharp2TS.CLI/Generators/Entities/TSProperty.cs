@@ -19,7 +19,6 @@ namespace CSharp2TS.CLI.Generators.Entities {
                 TSType.String => "string",
                 TSType.Number => "number",
                 TSType.Boolean => "boolean",
-                TSType.Date => "Date",
                 TSType.File => "File",
                 TSType.FormData => "FormData",
                 TSType.Void => "void",

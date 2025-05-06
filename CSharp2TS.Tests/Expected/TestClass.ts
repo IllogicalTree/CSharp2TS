@@ -38,10 +38,10 @@ interface TestClass {
   nullableStringProperty: string | null;
   guidProperty: string;
   nullableGuidProperty: string | null;
-  dateTimeProperty: Date;
-  nullableDateTimeProperty: Date | null;
-  dateTimeOffsetProperty: Date;
-  nullableDateTimeOffsetProperty: Date | null;
+  dateTimeProperty: string;
+  nullableDateTimeProperty: string | null;
+  dateTimeOffsetProperty: string;
+  nullableDateTimeOffsetProperty: string | null;
   thisClass: TestClass;
   class2: TestClass2;
   classInFolder: TestClassInFolder;

@@ -8,8 +8,8 @@ using Mono.Cecil;
 
 namespace CSharp2TS.CLI.Generators {
     public abstract class GeneratorBase<TAttribute> where TAttribute : TSAttributeBase {
-        private static readonly Type[] stringTypes = [typeof(char), typeof(string), typeof(Guid)];
         private static readonly Type[] dateTypes = [typeof(DateTime), typeof(DateTimeOffset)];
+        private static readonly Type[] stringTypes = [typeof(char), typeof(string), typeof(Guid), .. dateTypes];
         private static readonly Type[] voidTypes = [typeof(void), typeof(Task), typeof(ActionResult), typeof(IActionResult)];
         private static readonly Type[] fileCollectionTypes = [typeof(FormFileCollection), typeof(IFormFileCollection)];
         private static readonly Type[] fileReturnTypes = [typeof(FileContentResult), typeof(FileStreamResult), typeof(FileResult)];
@@ -77,8 +77,6 @@ namespace CSharp2TS.CLI.Generators {
                 tsType = TSType.Number;
             } else if (type.FullName == typeof(bool).FullName) {
                 tsType = TSType.Boolean;
-            } else if (dateTypes.Any(i => SimpleTypeCheck(type, i))) {
-                tsType = TSType.Date;
             } else if (voidTypes.Any(i => SimpleTypeCheck(type, i))) {
                 tsType = TSType.Void;
             } else if (fileTypes.Any(i => SimpleTypeCheck(type, i))) {

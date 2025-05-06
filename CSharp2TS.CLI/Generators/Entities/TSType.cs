@@ -3,7 +3,6 @@
         String,
         Number,
         Boolean,
-        Date,
         File,
         FormData,
         Void,
