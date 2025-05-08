@@ -141,14 +141,14 @@ namespace CSharp2TS.CLI.Templates
             
             #line default
             #line hidden
-            this.Write(".length; i++) {\r\n        const f = ");
+            this.Write(".length; i++) {\r\n      const f = ");
             
             #line 24 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.BodyParam.Name));
             
             #line default
             #line hidden
-            this.Write("[i];\r\n        formData.append(\'");
+            this.Write("[i];\r\n      formData.append(\'");
             
             #line 25 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.BodyParam.Name));
@@ -291,7 +291,7 @@ namespace CSharp2TS.CLI.Templates
             
             #line default
             #line hidden
-            this.Write("    return response.data; \r\n");
+            this.Write("    return response.data;\r\n");
             
             #line 38 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
  } 

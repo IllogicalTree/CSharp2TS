@@ -42,6 +42,8 @@ namespace CSharp2TS.Tests {
         [TestCase("IActionResult_TestService.ts", "Expected\\TestService.ts")]
         [TestCase("AsyncActionResult_TestService.ts", "Expected\\TestService.ts")]
         [TestCase("AsyncIActionResult_TestService.ts", "Expected\\TestService.ts")]
+        [TestCase("FileService.ts", "Expected\\FileService.ts")]
+        [TestCase("FormService.ts", "Expected\\FormService.ts")]
         public void Generation_TestService(string generatedFile, string expectedFile) {
             TestFilesMatch(generatedFile, expectedFile);
         }

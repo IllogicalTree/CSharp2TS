@@ -21,8 +21,8 @@ export default {
 
 <#} else {#>
     for (let i = 0; i < <#= item.BodyParam.Name #>.length; i++) {
-        const f = <#= item.BodyParam.Name #>[i];
-        formData.append('<#= item.BodyParam.Name #>[' + i + ']', f);
+      const f = <#= item.BodyParam.Name #>[i];
+      formData.append('<#= item.BodyParam.Name #>[' + i + ']', f);
     }
 
 <#}#>
@@ -34,7 +34,7 @@ export default {
       { responseType: 'blob' }<# } #><# if (item.BodyParam?.Property.TSType == TSType.File) { #>,
       { headers: { 'Content-Type': 'multipart/form-data' } }<# } #>);
 <# if (item.ReturnType.TSType != TSType.Void) { #>
-    return response.data; 
+    return response.data;
 <# } #>
   },
 
