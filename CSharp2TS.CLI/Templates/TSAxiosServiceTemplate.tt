@@ -31,7 +31,7 @@ export default {
     if (item.IsBodyRawFile) { #>, formData<# } #><#
     else if (item.BodyParam != null) { #>, <#= item.BodyParam.Name #><# } #><#
     if (item.ReturnType.TSType == TSType.File) { #>,
-      { responseType: 'blob' }<# } #><# if (item.BodyParam?.Property.TSType == TSType.File) { #>,
+      { responseType: 'blob' }<# } #><# if (item.BodyParam?.IsFormData ?? false) { #>,
       { headers: { 'Content-Type': 'multipart/form-data' } }<# } #>);
 <# if (item.ReturnType.TSType != TSType.Void) { #>
     return response.data;

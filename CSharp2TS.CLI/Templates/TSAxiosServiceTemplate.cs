@@ -273,7 +273,7 @@ namespace CSharp2TS.CLI.Templates
             #line hidden
             
             #line 34 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
- if (item.BodyParam?.Property.TSType == TSType.File) { 
+ if (item.BodyParam?.IsFormData ?? false) { 
             
             #line default
             #line hidden
