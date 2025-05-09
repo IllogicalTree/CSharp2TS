@@ -69,6 +69,8 @@ namespace CSharp2TS.Tests.Stubs.Models {
         public int[] IntArray { get; set; }
         public Dictionary<int, int> IntDictionary { get; set; }
         public IDictionary<int, int> IntIDictionary { get; set; }
+        public IDictionary<int, int[]> IntArrayIDictionary { get; set; }
+        public IDictionary<int, IList<string>> StringListIDictionary { get; set; }
         public HashSet<int> IntHashSet { get; set; }
         public ISet<int> IntISet { get; set; }
         public Queue<int> IntQueue { get; set; }

@@ -62,6 +62,8 @@ interface TestClass {
   intArray: number[];
   intDictionary: { [key: string]: number };
   intIDictionary: { [key: string]: number };
+  intArrayIDictionary: { [key: string]: number[] };
+  stringListIDictionary: { [key: string]: string[] };
   intHashSet: number[];
   intISet: number[];
   intQueue: number[];

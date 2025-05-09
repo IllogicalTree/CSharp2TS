@@ -48,11 +48,7 @@ namespace CSharp2TS.CLI.Generators {
             TryExtractFromGenericIfRequired(typeof(ActionResult<>), ref type);
 
             bool isDictionary = TryExtractFromDictionary(ref type);
-            bool isCollection = false;
-
-            if (!isDictionary) {
-                isCollection = TryExtractFromCollection(ref type);
-            }
+            bool isCollection = TryExtractFromCollection(ref type);
 
             bool isNullable = TryExtractFromGenericIfRequired(typeof(Nullable<>), ref type);
             bool isObject = false;

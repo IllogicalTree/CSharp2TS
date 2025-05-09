@@ -38,12 +38,12 @@ namespace CSharp2TS.CLI.Generators.Entities {
                 }
             }
 
-            if (IsDictionary) {
-                tsType = $"{{ [key: string]: {tsType} }}";
-            }
-
             if (IsCollection) {
                 tsType += "[]";
+            }
+
+            if (IsDictionary) {
+                tsType = $"{{ [key: string]: {tsType} }}";
             }
 
             if (TypeRef.IsGenericInstance) {
