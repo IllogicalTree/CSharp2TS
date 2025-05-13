@@ -258,49 +258,68 @@ namespace CSharp2TS.CLI.Templates
             #line default
             #line hidden
             
-            #line 32 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
-
-    if (item.ReturnType.TSType == TSType.File) { 
+            #line 33 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+ if (item.IsResponseFile || item.IsBodyFormData) { 
             
             #line default
             #line hidden
-            this.Write(",\r\n      { responseType: \'blob\' }");
-            
-            #line 34 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
- } 
-            
-            #line default
-            #line hidden
-            
-            #line 34 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
- if (item.BodyParam?.IsFormData ?? false) { 
-            
-            #line default
-            #line hidden
-            this.Write(",\r\n      { headers: { \'Content-Type\': \'multipart/form-data\' } }");
+            this.Write(", {\r\n");
             
             #line 35 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+ if (item.IsResponseFile) { 
+            
+            #line default
+            #line hidden
+            this.Write("      responseType: \'blob\',\r\n");
+            
+            #line 37 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
  } 
+            
+            #line default
+            #line hidden
+            
+            #line 38 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+ if (item.IsBodyFormData) { 
+            
+            #line default
+            #line hidden
+            this.Write("      headers: { \'Content-Type\': \'multipart/form-data\' },\r\n");
+            
+            #line 40 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("    });\r\n");
+            
+            #line 42 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+ } else { 
             
             #line default
             #line hidden
             this.Write(");\r\n");
             
-            #line 36 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+            #line 44 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+ } 
+            
+            #line default
+            #line hidden
+            
+            #line 45 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
  if (item.ReturnType.TSType != TSType.Void) { 
             
             #line default
             #line hidden
             this.Write("    return response.data;\r\n");
             
-            #line 38 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+            #line 47 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
  } 
             
             #line default
             #line hidden
             this.Write("  },\r\n\r\n");
             
-            #line 41 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+            #line 50 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
  } 
             
             #line default
@@ -309,7 +328,7 @@ namespace CSharp2TS.CLI.Templates
             return this.GenerationEnvironment.ToString();
         }
         
-        #line 43 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
+        #line 52 "C:\Working\CSharp2TS\CSharp2TS.CLI\Templates\TSAxiosServiceTemplate.tt"
 
 public string TypeName { get; set; }
 public string ApiClientImportPath { get; set; }

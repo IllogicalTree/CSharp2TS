@@ -4,8 +4,9 @@ import { apiClient } from './apiClient';
 
 export default {
   async getFile(): Promise<File> {
-    const response = await apiClient.instance.get<File>(`api/file`,
-      { responseType: 'blob' });
+    const response = await apiClient.instance.get<File>(`api/file`, {
+      responseType: 'blob',
+    });
     return response.data;
   },
 
@@ -13,8 +14,9 @@ export default {
     const formData = new FormData();
     formData.append('file', file);
 
-    await apiClient.instance.post(`api/file`, formData,
-      { headers: { 'Content-Type': 'multipart/form-data' } });
+    await apiClient.instance.post(`api/file`, formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
   },
 
   async postFiles(files: File[]): Promise<void> {
@@ -24,8 +26,20 @@ export default {
       formData.append('files[' + i + ']', f);
     }
 
-    await apiClient.instance.post(`api/file`, formData,
-      { headers: { 'Content-Type': 'multipart/form-data' } });
+    await apiClient.instance.post(`api/file`, formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+  },
+
+  async postAndReceiveFile(file: File): Promise<File> {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await apiClient.instance.post<File>(`api/file`, formData, {
+      responseType: 'blob',
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+    return response.data;
   },
 
 };

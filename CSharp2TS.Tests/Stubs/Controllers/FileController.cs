@@ -21,5 +21,10 @@ namespace CSharp2TS.Tests.Stubs.Controllers {
         public ActionResult PostFiles(IFormFileCollection files) {
             return Ok();
         }
+
+        [HttpPost]
+        public ActionResult<FileContentResult> PostAndReceiveFile(IFormFile file) {
+            return File(Array.Empty<byte>(), "application/download");
+        }
     }
 }

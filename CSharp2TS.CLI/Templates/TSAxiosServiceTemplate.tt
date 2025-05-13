@@ -29,10 +29,19 @@ export default {
 <#}#>
     <# if (item.ReturnType.TSType != TSType.Void) { #>const response = <# } #>await apiClient.instance.<#= item.HttpMethod #><# if (item.ReturnType.TSType != TSType.Void) { #><<#= item.ReturnType #>><# } #>(`<#= item.Route #><#= item.QueryString #>`<#
     if (item.IsBodyRawFile) { #>, formData<# } #><#
-    else if (item.BodyParam != null) { #>, <#= item.BodyParam.Name #><# } #><#
-    if (item.ReturnType.TSType == TSType.File) { #>,
-      { responseType: 'blob' }<# } #><# if (item.BodyParam?.IsFormData ?? false) { #>,
-      { headers: { 'Content-Type': 'multipart/form-data' } }<# } #>);
+    else if (item.BodyParam != null) { #>, <#= item.BodyParam.Name #><# } #>
+<# if (item.IsResponseFile || item.IsBodyFormData) { #>
+, {
+<# if (item.IsResponseFile) { #>
+      responseType: 'blob',
+<# } #>
+<# if (item.IsBodyFormData) { #>
+      headers: { 'Content-Type': 'multipart/form-data' },
+<# } #>
+    });
+<# } else { #>
+);
+<# } #>
 <# if (item.ReturnType.TSType != TSType.Void) { #>
     return response.data;
 <# } #>
