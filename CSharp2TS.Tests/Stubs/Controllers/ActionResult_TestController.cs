@@ -59,5 +59,10 @@ namespace CSharp2TS.Tests.Stubs.Controllers {
         public ActionResult Delete(int id) {
             throw new NotImplementedException();
         }
+
+        [HttpGet("{id:int}")]
+        public ActionResult GetWithTypedParam(int id) {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -55,4 +55,8 @@ export default {
     await apiClient.instance.delete(`api/Test/${id}`);
   },
 
+  async getWithTypedParam(id: number): Promise<void> {
+    await apiClient.instance.get(`api/Test/${id}`);
+  },
+
 };

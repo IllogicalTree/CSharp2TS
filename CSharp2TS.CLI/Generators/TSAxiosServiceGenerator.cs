@@ -162,7 +162,8 @@ namespace CSharp2TS.CLI.Generators {
             }
 
             if (!string.IsNullOrWhiteSpace(httpMethodAttribute.Template)) {
-                controllerRoute += "/" + httpMethodAttribute.Template.Replace("{", "${");
+                var template = GeneratorUtility.GetCleanRouteConstraints(httpMethodAttribute.Template);
+                controllerRoute += "/" + template;
             }
 
             return controllerRoute;
