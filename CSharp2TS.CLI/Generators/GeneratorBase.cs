@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.AspNetCore.Mvc;
 using Mono.Cecil;
+using System.Text.Json;
 
 namespace CSharp2TS.CLI.Generators {
     public abstract class GeneratorBase<TAttribute> where TAttribute : TSAttributeBase {
@@ -15,6 +16,7 @@ namespace CSharp2TS.CLI.Generators {
         private static readonly Type[] fileReturnTypes = [typeof(FileContentResult), typeof(FileStreamResult), typeof(FileResult)];
         private static readonly Type[] fileTypes = [typeof(FormFile), typeof(IFormFile), .. fileCollectionTypes, .. fileReturnTypes];
         private static readonly Type[] formDataTypes = [typeof(IFormCollection)];
+        private static readonly Type[] unknownTypes = [typeof(JsonElement)];
         private static readonly Type[] numberTypes = [
             typeof(sbyte), typeof(byte), typeof(short),
             typeof(ushort), typeof(int), typeof(uint),
@@ -85,6 +87,8 @@ namespace CSharp2TS.CLI.Generators {
             } else if (formDataTypes.Any(i => SimpleTypeCheck(type, i))) {
                 isObject = true;
                 tsType = TSType.FormData;
+            } else if (unknownTypes.Any(i => SimpleTypeCheck(type, i))) {
+                tsType = TSType.Unknown;
             } else {
                 isObject = true;
                 requiresImport = true;

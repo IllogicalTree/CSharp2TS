@@ -23,6 +23,7 @@ namespace CSharp2TS.CLI.Generators.Entities {
                 TSType.FormData => "FormData",
                 TSType.Void => "void",
                 TSType.Object => ObjectName ?? "Object",
+                TSType.Unknown => "unknown",
                 _ => throw new NotSupportedException($"Type '{TSType}' is not supported.")
             };
         }
