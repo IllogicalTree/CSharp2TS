@@ -7,5 +7,6 @@
         FormData,
         Void,
         Object,
+        Unknown,
     }
 }
