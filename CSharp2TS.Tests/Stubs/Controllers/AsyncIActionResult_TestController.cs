@@ -77,7 +77,7 @@ namespace CSharp2TS.Tests.Stubs.Controllers {
             throw new NotImplementedException();
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<IActionResult> GetWithTypedParam(int id) {
             await Task.CompletedTask;
             throw new NotImplementedException();
