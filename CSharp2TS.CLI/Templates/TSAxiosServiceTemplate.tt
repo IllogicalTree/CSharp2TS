@@ -7,13 +7,16 @@
 // Auto-generated from <#= TypeName #>.cs
 
 import { apiClient } from '<#= ApiClientImportPath #>apiClient';
+<# if (Items.Any(item => item.IsBodyRawFile)) { #>
+import type { AxiosProgressEvent } from 'axios';
+<#}#>
 <# foreach (var item in Imports) { #>
 import <#= item.Name #> from '<#= item.Path #>';
-<# } #>
+<#}#>
 
 export default {
 <# foreach (var item in Items) { #>
-  async <#= item.MethodName #>(<#= string.Join(", ", item.AllParams.Select(i => $"{i.Name}: {i.Property}")) #>): Promise<<#= item.ReturnType #>> {
+  async <#= item.MethodName #>(<#= string.Join(", ", item.AllParams.Select(i => $"{i.Name}: {i.Property}")) #><# if (item.IsBodyRawFile) {#>, onUploadProgress?: (event: AxiosProgressEvent) => void<#}#>): Promise<<#= item.ReturnType #>> {
 <# if (item.IsBodyRawFile) {#>
     const formData = new FormData();
 <# if (!item.BodyParam.Property.IsCollection) {#>
@@ -37,6 +40,9 @@ export default {
 <# } #>
 <# if (item.IsBodyFormData) { #>
       headers: { 'Content-Type': 'multipart/form-data' },
+<# } #>
+<# if (item.IsBodyRawFile) { #>
+      onUploadProgress,
 <# } #>
     });
 <# } else { #>
